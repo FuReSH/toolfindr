@@ -1,0 +1,19 @@
+//Here you can customize bootstrap
+body {
+  font-family: "Roboto Condensed", "Roboto", "Helvetica","Arial",sans-serif;
+  color: #212529;
+  padding-top: 70px;
+}
+
+nav {
+  border-bottom-style: solid;
+  border-bottom-width: 1.3px;
+  border-bottom-color: #c865c9;
+}
+
+.start-page-container {
+    //background: radial-gradient(circle, rgba(197,197,249,1) 0%, rgba(239,239,240,1) 100%);
+    color: white;
+    background: rgb(0,0,102);
+    background: linear-gradient(90deg, rgba(0,0,102,0.75) 0%, rgba(68,68,175,0.75) 29%, rgba(200,101,201,0.75) 54%, rgba(200,101,201,0.75) 82%, rgba(68,68,175,0.75) 100%); 
+}
