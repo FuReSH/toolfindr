@@ -4,6 +4,12 @@
 
 * https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/conceptual/data-fetching.md
 
+### SPARQL
+
+See JS-Library
+
+* https://zazuko.com/get-started/developers/#further-documentation-support-questions
+
 ## Issues
 
 1. At the moment react-json-schema-from doesn't support `patternProperties` of Json Schema

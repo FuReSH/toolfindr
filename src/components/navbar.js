@@ -13,7 +13,7 @@ const ExactNavLink = props => (
 
 const Navbar = ({ siteTitle }) => {
   return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+    <nav id="nav-top" className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
       <div className="container">
         <Link to="/" className="navbar-brand" href="#">
         <StaticImage

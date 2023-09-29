@@ -43,9 +43,10 @@ const ToolsComponent = () => {
         <thead>
           <tr>
             <th scope="col"> </th>
-            <th scope="col">Tool Label</th>
+            <th scope="col">Label</th>
             <th scope="col">TAPOR URI</th>
             <th scope="col">SSHOC Marketplace URI</th>
+            <th scope="col">TaDiRAH ID</th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +69,7 @@ const ToolsComponent = () => {
                           {item.p973Value[1]}
                         </a>
                         </td>
+                        <td> </td>
                       </tr>
                     ))}
         </tbody>
