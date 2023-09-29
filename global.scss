@@ -1,11 +1,28 @@
-$primary: #4444af;
+$primary: #0000ff;
 @import "~bootstrap/scss/bootstrap";
 
 @font-face {
-    font-family: 'Roboto Condensed';
-    font-weight: 100 900;
+    font-family: 'DDIN-Bold';
+    //font-weight: 100 900;
+    font-display: swap;
+    font-style: normal;
+    font-named-instance: 'Bold';
+    src: url(./static/fonts/D-DIN-Bold.woff2) format("woff2");
+  }
+
+  @font-face {
+    font-family: 'DDINCondensed';
+    //font-weight: 100 900;
     font-display: swap;
     font-style: normal;
     font-named-instance: 'Regular';
-    src: url(./static/fonts/Roboto-Condensed-Regular.woff2) format("woff2");
+    src: url(./static/fonts/D-DINCondensed.woff2) format("woff2");
+  }
+
+  #subtitle {
+    color: $primary;
+  }
+
+  .react-icons {
+    vertical-align: middle;
   }

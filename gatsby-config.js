@@ -1,8 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `Scholarly Makerspace`,
-    description: `Tool Storage Website`,
+    title: `KWDH | Tool Storage`,
+    description: `Wikidata based tool registry used by the Kompetenzwerkstatt Digital Humanities.`,
     author: `@sopheck`,
+    organisation: `Project FuReSH II - Universitätsbibliothek der Humboldt-Universität zu Berlin`
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -32,7 +33,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `standalone`,
-        icon: `static/images/blackbox_makerspace-inside.png`, // This path is relative to the root of the site.
+        icon: `static/images/favicon.png`, // This path is relative to the root of the site.
       },
     },
     `gatsby-plugin-gatsby-cloud`,

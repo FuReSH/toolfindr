@@ -1,22 +1,17 @@
 import * as React from "react"
 import { Link } from "gatsby"
-
 import Layout from "../components/layout"
 import {Seo} from "../components/seo"
+import { BsFillInfoCircleFill } from "react-icons/bs";
+
 
 const AboutPage = () => (
   <Layout>
     <div className="container my-5">
 
       <div className="container">
-        <h1 >What you need to know</h1>
-        <p>
-          <ul>
-            <li>Bootstrap 5 support with SASS</li>
-            <li>Customize theme via <span className="font-monospace ">layout.scss</span></li>
-            <li>If any issue report to <a href="https://github.com/r-ichard/gatsby-starter-bootstrap-5" target="_blank" rel="noopener noreferrer">Github Repo</a></li>
-          </ul>
-        </p>
+        <h1><span className="pe-3"><BsFillInfoCircleFill /></span>The Digital Tool Storage</h1>
+        <p>...coming soon...</p>
       </div>
       <Link to="/">Go back to Home</Link>
     </div>

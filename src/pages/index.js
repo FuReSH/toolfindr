@@ -1,53 +1,48 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
-
 import Layout from "../components/layout"
 import { Seo } from "../components/seo"
+import { BsTools, BsFillPencilFill, BsFillInfoCircleFill } from "react-icons/bs";
 
 const IndexPage = () => (
   <Layout>
     <section className="py-4">
       <div className="container">
-        <div className=" p-5 mb-4 start-page-container rounded-3">
-      <div className="row g-0 p-5">
-          <div className="col-sm-6">
-            <h1 className="display-4 fw-light">Scholarly Makerspace</h1>
-            <h2 className="display-6 fw-light">Tool Storage</h2>
-        </div> 
-        <div className="col-sm-4">      
-          <StaticImage
-                src="../../static/images/blackbox_makerspace-inside.png"
-                width={450}
-                quality={100}
-                formats={["AUTO", "WEBP"]}
-                alt="An opened Scholarly Makerspace box"
-                className="img-fluid"
-              /></div>
-              </div> 
-            </div>
+        <div className="p-5 mb-4 start-page-container sketchy rounded-3">
+          <div className="row g-0 p-5">
+              <div className="col-sm-8">
+                <h1 className="display-4 fw-light mb-5">Kompetenzwerkstatt Digital Humanities</h1>
+                <h2 id="subtitle" className="display-6 fw-light">Digital Tool Storage</h2>
+            </div> 
+
+            <div className="col-sm-2 justify-content-start">   
+              
+            </div> 
+            
+                  </div> 
+                </div>
       </div>
       <div className="container">
       <div className="row align-items-sm-stretch">
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>About the Tool Storage</h2>
-            <p>Here you can find more information about the Tool Storage</p>
-            <Link to="/about/" className="btn btn-outline-primary">About Tool Storage</Link>
+            <h2>About</h2>
+            <p>Here you can find more information about the Digital Tool Storage of the KWDH</p>
+            <Link to="/about/" className="btn btn-outline-primary"><BsFillInfoCircleFill /> About</Link>
           </div>
         </div>
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Tool List</h2>
-            <p>Here you can find all the tools of the Scholarly Makerspace. You can also edit the information of the tools.</p>
-            <Link to="/list/" className="btn btn-outline-primary">Tool List</Link>
+            <h2>Find Tools</h2>
+            <p>Here you can find DH tools classified with the TaDiRAH taxonomy and stored in Wikidata.</p>
+            <Link to="/list/" className="btn btn-outline-primary"><BsTools /> Search</Link>
           </div>
         </div>
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>Edit Tool</h2>
-            <p>Here you add new or edit existing tools.</p>
-            <Link to="/edit/" className="btn btn-outline-primary">Edit Tool</Link>
+            <p>Here you add new or edit existing DH tools to Wikidata.</p>
+            <Link to="/edit/" className="btn btn-outline-primary"><BsFillPencilFill /> Edit</Link>
           </div>
         </div>
       </div>
