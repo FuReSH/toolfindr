@@ -1,6 +1,7 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 const isActive = ({ isCurrent }) => {
   return isCurrent ? { className: "nav-link active" } : {className: "nav-link"}
@@ -14,7 +15,18 @@ const Navbar = ({ siteTitle }) => {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
       <div className="container">
-        <Link to="/" className="navbar-brand" href="#">{siteTitle} <i>Tool Storage</i></Link>
+        <Link to="/" className="navbar-brand" href="#">
+        <StaticImage
+                    src="../../static/images/point.png"
+                    width={20}
+                    quality={20}
+                    formats={["AUTO", "WEBP"]}
+                    alt="Just a white filled circle"
+                    className="mt-1"
+                  />   
+          
+          <span className="ps-2">{siteTitle}</span>
+        </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar"
                 aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -34,6 +46,13 @@ const Navbar = ({ siteTitle }) => {
                 to="/about"
               >
                 About
+              </ExactNavLink>
+            </li>
+            <li className="nav-item">
+              <ExactNavLink
+                to="/list"
+              >
+                Search
               </ExactNavLink>
             </li>
             <li className="nav-item">
