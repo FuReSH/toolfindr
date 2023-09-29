@@ -1,19 +1,36 @@
 //Here you can customize bootstrap
 body {
-  font-family: "Roboto Condensed", "Roboto", "Helvetica","Arial",sans-serif;
-  color: #212529;
+  font-family: "DDIN-Bold","Helvetica","Arial",sans-serif;
+  color: #0a0a19;
   padding-top: 70px;
 }
 
 nav {
-  border-bottom-style: solid;
-  border-bottom-width: 1.3px;
-  border-bottom-color: #c865c9;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15),inset 0 -1px 0 rgba(255,255,255,0.15);
 }
 
 .start-page-container {
-    //background: radial-gradient(circle, rgba(197,197,249,1) 0%, rgba(239,239,240,1) 100%);
-    color: white;
-    background: rgb(0,0,102);
-    background: linear-gradient(90deg, rgba(0,0,102,0.75) 0%, rgba(68,68,175,0.75) 29%, rgba(200,101,201,0.75) 54%, rgba(200,101,201,0.75) 82%, rgba(68,68,175,0.75) 100%); 
+  //font-family: "DDIN-Bold","Helvetica","Arial",sans-serif;
+  padding: 4rem 8rem;
+  display: inline-block;
+  border: 3px solid #333333;
+  font-size: 2.5rem;
+  border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+  text-transform: uppercase;
+  letter-spacing: 0.3ch;
+  background: #ffffff;
+  position: relative;
+  
+  &::before {
+      content: '';
+      border: 2px solid #353535;
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+      border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
+  }
 }

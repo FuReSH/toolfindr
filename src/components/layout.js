@@ -12,18 +12,22 @@ const Layout = ({ children }) => {
       site {
         siteMetadata {
           title
+          organisation
         }
       }
     }
   `)
 
   return (
-    <div className="container-fluid p-0">
-      <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <main>
+    <div className="container-fluid p-0 skippy overflow-hidden">
+   <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
+ 
+ 
+ 
+    <main className="my-5">
         {children}
       </main>
-      <Footer />
+      <Footer siteOrganisation={data.site.siteMetadata?.organisation || `Organisation`}/>
       </div>
   )
 }
@@ -33,3 +37,5 @@ Layout.propTypes = {
 }
 
 export default Layout
+
+
