@@ -6,74 +6,73 @@
 
 // You can delete this file if you're not using it
 
-const SparqlClient = require('sparql-http-client');
+const SparqlHttpClient = require('sparql-http-client');
+const crypto = require('crypto');
 
-exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
-  const itemsCache = {}; // Define itemsCache here to store the items temporarily
-  const client = new SparqlClient({ endpointUrl: 'https://query.wikidata.org/sparql' });
+exports.sourceNodes = async ({ actions, createNodeId, reporter }) => {
+  const { createNode } = actions;
+
+  const endpointUrl = 'https://query.wikidata.org/sparql';
+  const client = new SparqlHttpClient({ endpointUrl });
+  
   const query = `
   PREFIX wd: <http://www.wikidata.org/entity/>
   PREFIX wdt: <http://www.wikidata.org/prop/direct/>
   PREFIX p: <http://www.wikidata.org/prop/>
   PREFIX ps: <http://www.wikidata.org/prop/statement/>
-  PREFIX psv: <http://www.wikidata.org/prop/statement/value/>
   PREFIX bd: <http://www.bigdata.com/rdf#>
   PREFIX wikibase: <http://wikiba.se/ontology#>
-  
-  SELECT DISTINCT ?item ?itemLabel ?p973Value WHERE {
-    ?item p:P31 ?statement0.
-    ?statement0 (ps:P31/(wdt:P279*)) wd:Q7397.
-    ?item p:P973 ?statement1.
-    ?statement1 ps:P973 ?url.
-    FILTER(REGEX(STR(?url), "^https://tapor.ca/tools/")) .
-    ?item wdt:P973 ?p973Value.
+
+  SELECT DISTINCT ?toolID ?toolLabel ?tadirahID WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-  }   
+    ?method p:P9309 ?statement0.
+    ?statement0 ps:P9309 ?tadirahID.
+    ?tool wdt:P366 ?method;
+          wdt:P31/wdt:P279* wd:Q7397.  
+    BIND(STR(?tool) AS ?toolID)  # Bind the URI of the tool as its ID
+  }
   `;
 
-  const stream = await client.query.select(query);
-
-  stream.on('data', row => {
-    const itemId = row.item.value;
-
-    if (!itemsCache[itemId]) {
-      itemsCache[itemId] = {
-        item: itemId,
-        itemLabel: row.itemLabel.value,
-        p973Value: [],
+  try {
+    const stream = await client.query.select(query);
+    
+    stream.on('data', row => {
+      const nodeData = {
+          toolID: row.toolID.value,
+          toolLabel: row.toolLabel.value,
+          tadirahID: row.tadirahID.value,
       };
-    }
-
-    itemsCache[itemId].p973Value.push(row.p973Value.value);
+  
+      const nodeId = createNodeId(`sparql-tool-${nodeData.toolID}`);
+      const nodeContentDigest = crypto
+          .createHash('md5')
+          .update(JSON.stringify(nodeData))
+          .digest('hex');
+  
+      const node = {
+          ...nodeData,
+          id: nodeId,
+          parent: null,
+          children: [],
+          internal: {
+              type: 'SparqlTool',
+              contentDigest: nodeContentDigest,
+          },
+      };
+  
+      createNode(node);
   });
-
+  
   stream.on('end', () => {
-    Object.values(itemsCache).forEach(itemData => {
-      const nodeMeta = {
-        id: createNodeId(`item-${itemData.item}`),
-        parent: null,
-        children: [],
-        internal: {
-          type: 'ItemData',
-          contentDigest: createContentDigest(itemData.item),
-        },
-      };
-
-      const node = Object.assign({}, itemData, nodeMeta);
-      actions.createNode(node);
-    });
-  });
-
-  stream.on('error', error => {
-    console.error(error);
+      console.log('Finished processing SPARQL data.');
   });
 
   await new Promise((resolve, reject) => {
     stream.on('end', resolve);
     stream.on('error', reject);
   });
-};
-
-
   
-
+  } catch (error) {
+    reporter.panic('Error fetching SPARQL data:', error);
+  }
+};

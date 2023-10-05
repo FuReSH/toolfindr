@@ -26,3 +26,16 @@ $primary: #0000ff;
   .react-icons {
     vertical-align: middle;
   }
+
+  a:hover {
+    /*   --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
+      
+     */
+     color: $primary;
+     text-decoration: underline;
+    }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
