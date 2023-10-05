@@ -2,7 +2,7 @@ import * as React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout"
 import { Seo } from "../components/seo"
-import { BsTools, BsFillPencilFill, BsFillInfoCircleFill } from "react-icons/bs";
+import { BsTools, BsFillPencilFill, BsFillInfoCircleFill, BsSearch } from "react-icons/bs";
 
 const IndexPage = () => (
   <Layout>
@@ -23,7 +23,7 @@ const IndexPage = () => (
                 </div>
       </div>
       <div className="container">
-      <div className="row align-items-sm-stretch">
+      <div className="row g-2 align-items-sm-stretch">
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>About</h2>
@@ -34,8 +34,8 @@ const IndexPage = () => (
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>Find Tools</h2>
-            <p>Here you can find DH tools classified with the TaDiRAH taxonomy and stored in Wikidata.</p>
-            <Link to="/list/" className="btn btn-outline-primary"><BsTools /> Search</Link>
+            <p>Here you can search for DH tools classified with the TaDiRAH taxonomy and find more information about a specific tool.</p>
+            <Link to="/list/" className="btn btn-outline-primary"><BsSearch /> Search</Link>
           </div>
         </div>
         <div className="col-md-4">
@@ -43,6 +43,13 @@ const IndexPage = () => (
             <h2>Edit Tool</h2>
             <p>Here you add new or edit existing DH tools to Wikidata.</p>
             <Link to="/edit/" className="btn btn-outline-primary"><BsFillPencilFill /> Edit</Link>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="h-100 p-5 bg-light border rounded-3">
+            <h2>Explore Wikidata</h2>
+            <p>Here you can explore various result sets from Wikidata.</p>
+            <Link to="/explore/" className="btn btn-outline-primary"><BsTools /> Explore</Link>
           </div>
         </div>
       </div>
