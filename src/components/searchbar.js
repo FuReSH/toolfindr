@@ -18,7 +18,7 @@ const SearchBar = ({ search, setSearch }) => {
           type="text" 
           value={search} 
           onChange={handleInputChange} 
-          placeholder="Search for tool label..."
+          placeholder="Search..."
         />
       </div>
       </div>
@@ -34,6 +34,7 @@ const SearchBar = ({ search, setSearch }) => {
       </select>
       </div>
       </div>
+      
     </div>
 
 

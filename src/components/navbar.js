@@ -62,6 +62,13 @@ const Navbar = ({ siteTitle }) => {
                 Edit
               </ExactNavLink>
             </li>
+            <li className="nav-item">
+              <ExactNavLink
+                to="/explore"
+              >
+                Explore
+              </ExactNavLink>
+            </li>
           </ul>
           <ul className="navbar-nav flex-row flex-wrap ms-md-auto">
           <li className="nav-item">
