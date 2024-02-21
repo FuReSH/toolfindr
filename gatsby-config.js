@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `KWDH | Tool Storage`,
+    title: `KDH | Tool Storage`,
     description: `Wikidata based tool registry used by the Kompetenzwerkstatt Digital Humanities.`,
     author: `@sopheck`,
     organisation: `Project FuReSH II - Universitätsbibliothek der Humboldt-Universität zu Berlin`
