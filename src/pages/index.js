@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import { Seo } from "../components/seo"
 import { BsTools, BsFillPencilFill, BsFillInfoCircleFill, BsSearch } from "react-icons/bs";
@@ -8,15 +9,19 @@ const IndexPage = () => (
   <Layout>
     <section className="py-4">
       <div className="container">
-        <div className="p-5 mb-4 start-page-container sketchy rounded-3">
+        <div className="p-5 mb-4 start-page-container">
           <div className="row g-0 p-5">
+              <div className="col-sm-3">
+              <StaticImage
+                    src="../../static/images/KDH - Logo Symbol - HU Digital Blau.svg"
+                    quality={100}
+                    formats={["AUTO", "WEBP"]}
+                    alt="Logo of the Kompetenzwerkstatt Digital Humanities"
+                  /> 
+              </div>
               <div className="col-sm-8">
                 <h1 className="display-4 fw-light mb-5">Kompetenzwerkstatt Digital Humanities</h1>
-                <h2 id="subtitle" className="display-6 fw-light">Digital Tool Storage</h2>
-            </div> 
-
-            <div className="col-sm-2 justify-content-start">   
-              
+                <h2 id="subtitle" className="display-6 fw-light">Tool Registry</h2>
             </div> 
             
                   </div> 
@@ -27,13 +32,13 @@ const IndexPage = () => (
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>About</h2>
-            <p>Here you can find more information about the Digital Tool Storage of the KWDH</p>
+            <p>Here you can find more information about the Tool Registry of the KDH</p>
             <Link to="/about/" className="btn btn-outline-primary"><BsFillInfoCircleFill /> About</Link>
           </div>
         </div>
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Find Tools</h2>
+            <h2>Search Tools</h2>
             <p>Here you can search for DH tools classified with the TaDiRAH taxonomy and find more information about a specific tool.</p>
             <Link to="/list/" className="btn btn-outline-primary"><BsSearch /> Search</Link>
           </div>

@@ -17,15 +17,14 @@ const Navbar = ({ siteTitle }) => {
       <div className="container">
         <Link to="/" className="navbar-brand" href="#">
         <StaticImage
-                    src="../../static/images/point.png"
-                    width={20}
-                    quality={20}
+                    src="../../static/images/KDH - Logo Symbol - White.svg"
+                    width={40}
+                    quality={40}
                     formats={["AUTO", "WEBP"]}
-                    alt="Just a white filled circle"
-                    className="mt-1"
+                    alt="Logo of the Kompetenzwerkstatt Digital Humanities"
                   />   
           
-          <span className="ps-2">{siteTitle}</span>
+          <span className="ps-2 align-middle">{siteTitle}</span>
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar"
                 aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">

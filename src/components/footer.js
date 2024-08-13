@@ -8,7 +8,7 @@ const Footer = ({ siteOrganisation }) => {
         <div className="container text-center">
           <div className="row">
             <div className="col-sm-12">
-              <small>Created by {siteOrganisation}</small>
+              <small>Created by <a href="https://blogs.hu-berlin.de/furesh/" target="_blank" rel="noopener noreferrer">{siteOrganisation}</a></small>
             </div>
 
           </div>
@@ -19,7 +19,7 @@ const Footer = ({ siteOrganisation }) => {
                     width={200}
                     quality={100}
                     formats={["AUTO", "WEBP"]}
-                    alt="An opened Scholarly Makerspace box"
+                    alt="Logo the Humboldt University of Berlin"
                     className="img-fluid"
                   />
             </div>
