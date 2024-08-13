@@ -32,14 +32,14 @@ const IndexPage = () => (
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>About</h2>
-            <p>Here you can find more information about the Tool Registry of the KDH</p>
+            <p>Here you can find information about the DH Tool Registry</p>
             <Link to="/about/" className="btn btn-outline-primary"><BsFillInfoCircleFill /> About</Link>
           </div>
         </div>
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>Search Tools</h2>
-            <p>Here you can search for DH tools classified with the TaDiRAH taxonomy and find more information about a specific tool.</p>
+            <p>Here you can search for DH tools classified with the TaDiRAH taxonomy.</p>
             <Link to="/list/" className="btn btn-outline-primary"><BsSearch /> Search</Link>
           </div>
         </div>
