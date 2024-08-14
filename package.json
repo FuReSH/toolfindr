@@ -20,6 +20,7 @@
     "gatsby-plugin-sass": "^6.1.0",
     "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-source-filesystem": "^5.13.1",
+    "gatsby-transformer-remark": "^6.13.1",
     "gatsby-transformer-sharp": "^5.13.1",
     "prop-types": "^15.8.1",
     "rdf-utils-fs": "^2.3.1",

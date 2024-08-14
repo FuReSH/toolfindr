@@ -10,7 +10,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
     <link
       rel="preload"
-      href="/fonts/D-DINCondensed.woff2"
+      href="/fonts/D-DIN.woff2"
       as="font"
       type="font/woff2"
       crossOrigin="anonymous"
