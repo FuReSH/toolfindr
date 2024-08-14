@@ -1,33 +1,27 @@
 import * as React from "react"
 import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
 
 import Navbar from "./navbar"
 import Footer from "./footer"
 import "./layout.scss"
 
 const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-          organisation
-        }
-      }
-    }
-  `)
+
+  const { title, subtitle_short, organisation } = useSiteMetadata();
 
   return (
     <div className="container-fluid p-0 skippy overflow-hidden">
-   <Navbar siteTitle={data.site.siteMetadata?.title || `Title`} />
+   <Navbar siteTitle={title || `Title`}
+           siteSubtitleShort={subtitle_short || `Subtitle`}
+   />
  
  
  
     <main className="my-5">
         {children}
       </main>
-      <Footer siteOrganisation={data.site.siteMetadata?.organisation || `Organisation`}/>
+      <Footer siteOrganisation={organisation || `Organisation`}/>
       </div>
   )
 }

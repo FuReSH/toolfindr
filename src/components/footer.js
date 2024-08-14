@@ -8,18 +8,48 @@ const Footer = ({ siteOrganisation }) => {
         <div className="container text-center">
           <div className="row">
             <div className="col-sm-12">
-              <small>Created by <a href="https://blogs.hu-berlin.de/furesh/" target="_blank" rel="noopener noreferrer">{siteOrganisation}</a></small>
+              <small>
+                Created by <a href="https://blogs.hu-berlin.de/furesh/" target="_blank" rel="noopener noreferrer">{siteOrganisation}</a>
+                 <br />
+                
+              </small>
+              <StaticImage
+                    src="../../static/images/by-sa.png"
+                    width={90}
+                    quality={100}
+                    formats={["AUTO", "WEBP"]}
+                    alt="Logo"
+                    className="img-fluid m-2"
+                  />
             </div>
 
           </div>
           <div className="row">
-            <div className="col-sm-12">
+            <div className="col-sm-4 align-self-center">
             <StaticImage
-                    src="../../static/images/HU_Siegel-Kombi_HU-blau_RGB.svg"
-                    width={200}
+                    src="../../static/images/KDH - Primary Logo - HU Digital Blau.png"
+                    width={300}
                     quality={100}
                     formats={["AUTO", "WEBP"]}
-                    alt="Logo the Humboldt University of Berlin"
+                    alt="Logo"
+                    className="img-fluid"
+                  />
+            </div>
+            <div className="col-sm-4">
+            <StaticImage
+                    src="../../static/images/HU_Siegel_HU-blau_RGB.svg"
+                    quality={100}
+                    formats={["AUTO", "WEBP"]}
+                    alt="Logo"
+                    className="img-fluid"
+                  />
+            </div>
+            <div className="col-sm-4 align-self-center">
+            <StaticImage
+                    src="../../static/images/DFG-Logo.svg"
+                    quality={100}
+                    formats={["AUTO", "WEBP"]}
+                    alt="Logo"
                     className="img-fluid"
                   />
             </div>

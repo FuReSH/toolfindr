@@ -8,10 +8,15 @@ export const useSiteMetadata = () => {
             title
             description
             author
+            organisation
+            subtitle_short
+            subtitle_long
+            logo_title
+            logo_navbar
           }
       }
     }
   `)
-
-    return data.site.siteMetadata
+  
+    return data.site.siteMetadata 
 }
