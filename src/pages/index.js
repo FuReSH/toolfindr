@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import { Seo } from "../components/seo"
 import { TitleBox } from "../components/titlebox"
-import { BsTools, BsFillPencilFill, BsFillInfoCircleFill, BsSearch } from "react-icons/bs";
+import { GoInfo, GoSearch, GoPencil, GoGlobe } from "react-icons/go";
 
 const IndexPage = () => (
   <Layout>
@@ -17,28 +17,28 @@ const IndexPage = () => (
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>About</h2>
             <p>Find information about the DH Tool Registry</p>
-            <Link to="/about/" className="btn btn-outline-primary"><BsFillInfoCircleFill /> About</Link>
+            <Link to="/about/" className="btn btn-outline-primary"><GoInfo /> About</Link>
           </div>
         </div>
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>Search Tools</h2>
             <p>Search for DH tools classified with the TaDiRAH taxonomy.</p>
-            <Link to="/list/" className="btn btn-outline-primary"><BsSearch /> Search</Link>
+            <Link to="/list/" className="btn btn-outline-primary"><GoSearch /> Search</Link>
           </div>
         </div>
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
             <h2>Edit Tool</h2>
             <p>Add new or edit existing DH tools to Wikidata.</p>
-            <Link to="/edit/" className="btn btn-outline-primary"><BsFillPencilFill /> Edit</Link>
+            <Link to="/edit/" className="btn btn-outline-primary"><GoPencil /> Edit</Link>
           </div>
         </div>
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Explore Wikidata</h2>
-            <p>Explore various result sets from Wikidata.</p>
-            <Link to="/explore/" className="btn btn-outline-primary"><BsTools /> Explore</Link>
+            <h2>Browse</h2>
+            <p>Browse various result sets directly from Wikidata.</p>
+            <Link to="/browse/" className="btn btn-outline-primary"><GoGlobe /> Browse</Link>
           </div>
         </div>
       </div>

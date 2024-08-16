@@ -17,20 +17,22 @@ const ToolsComponent = () => {
 
   const data = fetchedData.allSparqlTool.nodes;
 
-  console.log(data);
+  const sortedData = data //data.sort((a, b) => a.toolLabel.localeCompare(b.toolLabel)); // Uncomment if data is not ordered by Sparql query
+
+  console.log(sortedData);
 
    // Ensure data is an array before setting it as the initial state of filteredData
    const [search, setSearch] = useState('');
-   const [filteredData, setFilteredData] = useState(data);
+   const [filteredData, setFilteredData] = useState(sortedData);
 
    useEffect(() => {
     setFilteredData(
-        data.filter(item => 
-            item.toolLabel.toLowerCase().includes(search.toLowerCase()) ||
-            item.tadirahID.toLowerCase().includes(search.toLowerCase())
+        sortedData.filter(item => 
+            item.toolLabel.toLowerCase().includes(search.toLowerCase()) //||
+            //item.tadirahID.toLowerCase().includes(search.toLowerCase())
         )
     );
-}, [search, data]);
+}, [search, sortedData]);
  
 
    const regex = /\/([^\/]+)$/;
@@ -41,29 +43,27 @@ const ToolsComponent = () => {
     <div className='my-2'>
         {filteredData.length} result{filteredData.length !== 1 && 's'} found.
     </div>
-    <table className="table table-responsive align-middle table-hover my-4">
+    <table className="table table-responsive-sm align-middle table-hover table-sm table-striped my-4">
         <thead>
           <tr>
-            <th scope="col"> </th>
-            <th scope="col">Tool Label</th>
-            <th scope="col">TaDiRAH ID</th>
+            <th width="20%">Wikidata ID</th>
+            <th width="30%">Tool Label</th>
+            <th width="50%">TaDiRAH ID</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table-group-divider ">
         {filteredData.map(item => (
           <tr key={item.toolID}>
             <td>
               <img width="50" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' />
               <br />
-              <small><small><small>{item.toolID.match(regex)[1]}</small></small></small>
+              <small><small>{item.toolID.match(regex)[1]}</small></small>
             </td>
             <td>
               <a href={item.toolID} target="_blank" rel="noopener noreferrer">{item.toolLabel}</a>
             </td>
             <td>
-              <a href={item.tadirahID} target="_blank" rel="noopener noreferrer">
                 {item.tadirahID}
-              </a>
             </td>
             <td> </td>
           </tr>
@@ -77,7 +77,3 @@ const ToolsComponent = () => {
 
 
 export default ToolsComponent;
-
-
-
-

@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import { siteMetadata } from "../../gatsby-config"
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-import { useAllFile } from "../hooks/use-all-file"
+import { useAllImageFile } from "../hooks/use-all-image-file"
 
 const isActive = ({ isCurrent }) => {
   return isCurrent ? { className: "nav-link active" } : { className: "nav-link" }
@@ -17,7 +17,7 @@ const Navbar = ({ siteTitle }) => {
   
   const filename = siteMetadata.logo_navbar
 
-  const imgData = useAllFile()
+  const imgData = useAllImageFile()
   const imageNode = imgData.allFile.edges.find(edge => edge.node.relativePath === filename)?.node.childImageSharp.gatsbyImageData
   const image = getImage(imageNode)
 
@@ -65,25 +65,27 @@ const Navbar = ({ siteTitle }) => {
             </li>
             <li className="nav-item">
               <ExactNavLink
-                to="/explore"
+                to="/browse"
               >
-                Explore
+                Browse
               </ExactNavLink>
             </li>
           </ul>
-          <ul className="navbar-nav flex-row flex-wrap ms-md-auto">
-            <li className="nav-item">
-              <a className="nav-link" href="#">EN</a>
-            </li>
-            <li className="nav-item"><span className="nav-link">|</span></li>
-            <li className="nav-item"><a className="nav-link" href="#">DE</a></li>
-          </ul>
+         
         </div>
       </div>
     </nav>
   )
 }
 
+// Snippet for Multilingual support
+/*<ul className="navbar-nav flex-row flex-wrap ms-md-auto">
+            <li className="nav-item">
+              <a className="nav-link" href="#">EN</a>
+            </li>
+            <li className="nav-item"><span className="nav-link">|</span></li>
+            <li className="nav-item"><a className="nav-link" href="#">DE</a></li>
+          </ul> */
 Navbar.propTypes = {
   siteTitle: PropTypes.string,
   filename: PropTypes.string,

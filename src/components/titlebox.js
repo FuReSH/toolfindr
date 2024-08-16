@@ -1,17 +1,21 @@
 import React from 'react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { useSiteMetadata } from "../hooks/use-site-metadata"
-import { useAllFile } from "../hooks/use-all-file"
+import { useAllImageFile } from "../hooks/use-all-image-file"
 
 export const TitleBox = ({ title, subtitle_long, description, logo_title }) => {
 
-  const { title: defaultTitle, subtitle_long: defaultSubtitleLong, description: defaultDescription, logo_title: defaultLogoTitle } = useSiteMetadata()
+  const { 
+    title: defaultTitle, 
+    subtitle_long: defaultSubtitleLong, 
+    description: defaultDescription, 
+    logo_title: defaultLogoTitle } = useSiteMetadata()
   const actualTitle = title || defaultTitle
   const actualSubtitleLong = subtitle_long || defaultSubtitleLong
   const actualDescription = description || defaultDescription
   const filename = logo_title || defaultLogoTitle
 
-    const imgData = useAllFile()
+    const imgData = useAllImageFile()
     const imageNode = imgData.allFile.edges.find(edge => edge.node.relativePath === filename)?.node.childImageSharp.gatsbyImageData
 
     if (!imageNode) {

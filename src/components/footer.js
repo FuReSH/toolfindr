@@ -11,16 +11,17 @@ const Footer = ({ siteOrganisation }) => {
               <small>
                 Created by <a href="https://blogs.hu-berlin.de/furesh/" target="_blank" rel="noopener noreferrer">{siteOrganisation}</a>
                  <br />
-                
+                All data on tools licensed under 
               </small>
+              <h3>👇</h3>
               <StaticImage
                     src="../../static/images/by-sa.png"
                     width={90}
                     quality={100}
                     formats={["AUTO", "WEBP"]}
                     alt="Logo"
-                    className="img-fluid m-2"
-                  />
+                    className="img-fluid m-2 verctical-align-center"
+                  /> + <big>❤️</big>
             </div>
 
           </div>

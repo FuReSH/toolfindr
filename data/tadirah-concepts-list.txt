@@ -1,0 +1,157 @@
+Abstract Thinking
+Academic Publishing
+Adding
+Aggregating
+Analyzing
+Annotating
+Archiving
+Associating
+Associate
+Audio Annotation
+Audio Conferencing
+Audio Recording
+Authorship Attribution
+Blogging
+Bit Stream Preservation
+Browsing
+Cataloging
+Capturing
+Cluster Analysis
+Co-Occurrence
+Collating
+Collecting
+Collocation Analysis
+Communicating
+Comparing
+Compiling
+Concordance
+Conceptualizing
+Contextualizing
+Contrastive Analysis
+Converting
+Correcting
+Creating
+Cropping
+Crowdsourcing
+Data Cleansing
+Data Ingestion
+Data Mapping
+Data Mining
+Data Visualization
+Data Recognition
+Defining
+Designing
+Description
+Diagramming
+Digital Object Identifier
+Digital Publishing
+Discovering
+Distance Measures
+Discussing
+Disseminating
+Drawing
+Editing
+E-mailing
+Emulation
+Encoding
+Enriching
+Exploration
+Expressing Opinion
+Extracting
+Finding
+Formatting
+Gamification
+Gathering
+Genre Recognition
+Georeferencing
+Graphics Programming
+Identifying
+Imaging
+Improving
+Information Mining
+Information Retrieval
+Instant Messaging
+Integrating
+Interpreting
+Knowledge Discovery
+Knowledge Extraction
+Lettering
+Lemmatizing
+Linked Open Data
+Machine Learning
+Managing
+Mapping
+Merging
+Microblogging
+Migration
+Mind Mapping
+Modeling
+Modifying
+Natural Language Processing
+Named Entity Recognition
+Naming Convention
+Organizing
+Optical Character Recognition
+Optical Music Recognition
+Parsing
+Pattern Recognition
+Persistent Identifier
+Photographing
+Plotting
+POS-Tagging
+Posting
+Preprocessing
+Preservation Metadata
+Preserving
+Principal Component Analysis
+Programming
+Pseudo Coding
+Publishing
+Querying
+Reasoning
+Recording
+Relational Analysis
+Replication
+Removing
+Rhetorical Analysis
+Scanning
+Screencast
+Searching
+Segmenting
+Semantification
+Sentiment Analysis
+Sequence Alignment
+Sharing
+Social Networking
+Spatial Analysis
+Speech Recognizing
+Storing
+Stylometry
+Structural Analysis
+Stylistic Analysis
+Supplementing
+Tagging
+Teaching
+Text Categorization
+Text Messaging
+Theorizing
+Topic Modeling
+Transcoding
+Transcribing
+Transformation
+Translating
+Tree-Tagging
+Tweet
+Uniform Resource Identifier
+Upload
+User Generated Content
+Video Capture
+Video Conference
+Video Editing
+Visual Analysis
+Visual Annotation
+Web Crawling
+Web Development
+Web Scraping
+Wireframing
+Writing
