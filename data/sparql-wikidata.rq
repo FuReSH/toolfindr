@@ -6,9 +6,18 @@ PREFIX wd: <http://www.wikidata.org/entity/>
   PREFIX wikibase: <http://wikiba.se/ontology#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX schema: <http://schema.org/>
-  PREFIX tadirah: <https://vocabs.dariah.eu/tadirah/>
 
-   SELECT ?toolID ?toolLabel ?toolDesc (GROUP_CONCAT(DISTINCT ?image; separator = ", ") AS ?images) ?copyrightLabel ?licenseLabel (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites) (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs) WHERE {
+   SELECT ?toolID 
+    ?toolLabel 
+    ?toolDesc 
+    ?copyrightLabel 
+    ?licenseLabel 
+    (GROUP_CONCAT(DISTINCT ?image; separator = ", ") AS ?images) 
+    (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) 
+    (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites) 
+    (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) 
+    (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs) 
+  WHERE {
  ?method wdt:P9309 ?tadirahID.
   # select all items which are linked to these methods through has use
   ?tool wdt:P366 ?method;

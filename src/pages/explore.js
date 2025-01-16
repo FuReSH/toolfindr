@@ -10,11 +10,11 @@ const ExplorePage = () => (
     <div className="container my-4">
       <div className="row">
       <div className="col-sm-8">
-        <h1><span className="pe-3"><GoGlobe /></span>Browse Tools in Wikidata</h1>
+        <h1><span className="pe-3"><GoGlobe /></span>Explore Tools in Wikidata</h1>
       <Link to="/">Go back to Home</Link>
     </div>
     </div>
-    </div>
+    </div>  
   </Layout>
 )
 

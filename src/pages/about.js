@@ -11,6 +11,40 @@ export default function AboutPageTemplate({
 }) {
   const { markdownRemark } = data // data.markdownRemark holds your content data
   const { frontmatter, html } = markdownRemark
+
+  const links = [
+    {
+      icon: frontmatter.link_icon_01,
+      link: frontmatter.link_01,
+      title: frontmatter.link_title_01,
+      width: 30
+    },
+    {
+      icon: frontmatter.link_icon_02,
+      link: frontmatter.link_02,
+      title: frontmatter.link_title_02,
+      width: 30
+    },
+    {
+      icon: frontmatter.link_icon_03,
+      link: frontmatter.link_03,
+      title: frontmatter.link_title_03,
+      width: 30
+    },
+    {
+      icon: frontmatter.link_icon_04,
+      link: frontmatter.link_04,
+      title: frontmatter.link_title_04,
+      width: 30
+    },
+    {
+      icon: frontmatter.link_icon_05,
+      link: frontmatter.link_05,
+      title: frontmatter.link_title_05,
+      width: 30
+    }
+  ];
+
   return (
     <Layout>
     <div className="container my-4">
@@ -30,13 +64,12 @@ export default function AboutPageTemplate({
       
           <strong className="h5"><GoLinkExternal /> Further information</strong>
           <hr />
-          <p>
-          <img width="40" src={frontmatter.wikidata_icon} />
-            <a href={frontmatter.wikiproject_link} target="_blank" rel="noopener"> {frontmatter.wikiproject_link_title}</a></p>
-          <p>
-          <img width="30" src={frontmatter.github_icon} />
-            <a href={frontmatter.github_link} target="_blank" rel="noopener"> {frontmatter.github_link_title}</a></p>
-
+          {links.map((link, index) => (
+              <p className="fs-6" key={index}>
+                <img width={link.width} src={link.icon} />
+                <a href={link.link} target="_blank" rel="noopener"> {link.title}</a>
+              </p>
+            ))}
           
           </div>
     </div> 
@@ -56,12 +89,27 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        wikiproject_link_title
-        wikiproject_link
-        github_link
-        github_link_title
-        wikidata_icon
-        github_icon
+
+        link_01
+        link_title_01
+        link_icon_01
+
+        link_02
+        link_title_02
+        link_icon_02
+
+        link_03
+        link_title_03
+        link_icon_03
+
+        link_04
+        link_title_04
+        link_icon_04
+
+        link_05
+        link_title_05
+        link_icon_05
+
       }
     }
   }

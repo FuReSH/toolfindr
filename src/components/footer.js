@@ -67,7 +67,7 @@ const Footer = ({ siteOrganisation }) => {
     siteOrganisation: PropTypes.string,
   }
   
-  Footer.defaultProps = {
+  Footer.default = {
     siteOrganisation: ``,
   }
 

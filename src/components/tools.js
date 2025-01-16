@@ -1,79 +1,101 @@
 import React, { useState, useEffect } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import SearchBar from './searchbar';
+import AlphabetFilter from './alphabetfilter';
 
-const ToolsComponent = () => {
+const ToolsComponent = ({ conceptsFilter }) => {
   const fetchedData = useStaticQuery(graphql`
-  query {
-    allSparqlTool {
-      nodes {
-        toolID
-        toolLabel
-        tadirahID
+    query {
+      allSparqlTool {
+        nodes {
+          id
+          toolID
+          toolLabel
+          tadirahID
+          tadirahLabel
+        }
       }
     }
-  }
   `);
 
   const data = fetchedData.allSparqlTool.nodes;
 
-  const sortedData = data //data.sort((a, b) => a.toolLabel.localeCompare(b.toolLabel)); // Uncomment if data is not ordered by Sparql query
+  const sortedData = data.sort((a, b) => a.toolLabel.localeCompare(b.toolLabel));
 
-  console.log(sortedData);
+  const [search, setSearch] = useState('');
+  const [alphabetFilter, setAlphabetFilter] = useState('');
+  const [filteredData, setFilteredData] = useState(sortedData);
 
-   // Ensure data is an array before setting it as the initial state of filteredData
-   const [search, setSearch] = useState('');
-   const [filteredData, setFilteredData] = useState(sortedData);
-
-   useEffect(() => {
+  useEffect(() => {
+    console.log("Concepts Filter:", conceptsFilter);
+    sortedData.forEach(item => {
+      const tadirahLabels = item.tadirahLabel 
+        ? item.tadirahLabel.split(',').map(label => label.trim()) 
+        : [];
+      console.log("Tool:", item.toolLabel, "TaDiRAH Labels (as array):", tadirahLabels);
+    });
+  
     setFilteredData(
-        sortedData.filter(item => 
-            item.toolLabel.toLowerCase().includes(search.toLowerCase()) //||
-            //item.tadirahID.toLowerCase().includes(search.toLowerCase())
-        )
+      sortedData.filter(item => {
+        const matchesSearch = item.toolLabel.toLowerCase().includes(search.toLowerCase());
+        const matchesAlphabet = alphabetFilter ? item.toolLabel.startsWith(alphabetFilter) : true;
+        const matchesConcepts = 
+          conceptsFilter.length > 0 
+            ? conceptsFilter.some(concept => {
+                const tadirahLabels = item.tadirahLabel
+                  ? item.tadirahLabel.split(',').map(label => label.trim())
+                  : [];
+                return tadirahLabels.some(label => label.toLowerCase().includes(concept.toLowerCase()));
+              })
+            : true;
+  
+        return matchesSearch && matchesAlphabet && matchesConcepts;
+      })
     );
-}, [search, sortedData]);
- 
+  }, [search, alphabetFilter, conceptsFilter, sortedData]);
+  
+  
 
-   const regex = /\/([^\/]+)$/;
+  const regex = /\/([^\/]+)$/;
 
   return (
     <div>
-    <SearchBar search={search} setSearch={setSearch} />
-    <div className='my-2'>
+      <SearchBar search={search} setSearch={setSearch} />
+      <AlphabetFilter alphabetFilter={alphabetFilter} setAlphabetFilter={setAlphabetFilter} />
+
+      <div className='my-2'>
         {filteredData.length} result{filteredData.length !== 1 && 's'} found.
-    </div>
-    <table className="table table-responsive-sm align-middle table-hover table-sm table-striped my-4">
+      </div>
+      
+      <table className="table table-responsive-sm align-middle table-hover table-sm table-striped my-4">
         <thead>
           <tr>
             <th width="20%">Wikidata ID</th>
             <th width="30%">Tool Label</th>
-            <th width="50%">TaDiRAH ID</th>
+            <th width="50%">TaDiRAH Label</th>
           </tr>
         </thead>
         <tbody className="table-group-divider ">
-        {filteredData.map(item => (
-          <tr key={item.toolID}>
-            <td>
-              <img width="50" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' />
-              <br />
-              <small><small>{item.toolID.match(regex)[1]}</small></small>
-            </td>
-            <td>
-              <a href={item.toolID} target="_blank" rel="noopener noreferrer">{item.toolLabel}</a>
-            </td>
-            <td>
-                {item.tadirahID}
-            </td>
-            <td> </td>
-          </tr>
-        ))}
+          {filteredData.map(item => (
+            <tr key={item.toolID}>
+              <td>
+                <img width="50" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' />
+                <br />
+                <small><small>{item.toolID.match(regex)[1]}</small></small>
+              </td>
+              <td>
+                <a href={`/tool/${item.id}`}>{item.toolLabel}</a>
+              </td>
+              <td>
+                {item.tadirahLabel}
+              </td>
+              <td> </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      
-      </div>  
+    </div>
   );
 };
-
 
 export default ToolsComponent;

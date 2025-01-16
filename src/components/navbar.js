@@ -56,18 +56,12 @@ const Navbar = ({ siteTitle }) => {
                 Search
               </ExactNavLink>
             </li>
+            
             <li className="nav-item">
               <ExactNavLink
-                to="/edit"
+                to="/explore"
               >
-                Edit
-              </ExactNavLink>
-            </li>
-            <li className="nav-item">
-              <ExactNavLink
-                to="/browse"
-              >
-                Browse
+                Explore
               </ExactNavLink>
             </li>
           </ul>
@@ -77,6 +71,15 @@ const Navbar = ({ siteTitle }) => {
     </nav>
   )
 }
+
+// Edit snippet
+/*<li className="nav-item">
+              <ExactNavLink
+                to="/edit"
+              >
+                Edit
+              </ExactNavLink>
+            </li>*/
 
 // Snippet for Multilingual support
 /*<ul className="navbar-nav flex-row flex-wrap ms-md-auto">
@@ -91,7 +94,7 @@ Navbar.propTypes = {
   filename: PropTypes.string,
 }
 
-Navbar.defaultProps = {
+Navbar.default = {
   siteTitle: ``,
   filename: ``,
 }

@@ -27,18 +27,12 @@ const IndexPage = () => (
             <Link to="/list/" className="btn btn-outline-primary"><GoSearch /> Search</Link>
           </div>
         </div>
+       
         <div className="col-md-4">
           <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Edit Tool</h2>
-            <p>Add new or edit existing DH tools to Wikidata.</p>
-            <Link to="/edit/" className="btn btn-outline-primary"><GoPencil /> Edit</Link>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Browse</h2>
-            <p>Browse various result sets directly from Wikidata.</p>
-            <Link to="/browse/" className="btn btn-outline-primary"><GoGlobe /> Browse</Link>
+            <h2>Explore</h2>
+            <p>Explore various result sets directly in Wikidata.</p>
+            <Link to="/explore/" className="btn btn-outline-primary"><GoGlobe /> Explore</Link>
           </div>
         </div>
       </div>
@@ -52,3 +46,11 @@ export default IndexPage
 export const Head = () => (
     <Seo />
 )
+
+/*<div className="col-md-4">
+<div className="h-100 p-5 bg-light border rounded-3">
+  <h2>Edit Tool</h2>
+  <p>Add new or edit existing DH tools to Wikidata.</p>
+  <Link to="/edit/" className="btn btn-outline-primary"><GoPencil /> Edit</Link>
+</div>
+</div>*/
