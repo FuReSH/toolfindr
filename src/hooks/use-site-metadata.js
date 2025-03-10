@@ -5,15 +5,19 @@ export const useSiteMetadata = () => {
     query {
       site {
         siteMetadata {
-            title
-            description
-            author
-            organisation
-            subtitle_short
-            subtitle_long
+          title
+          description
+          author
+          organisation
+          subtitle_short
+          subtitle_long
+          images {
             logo_title
             logo_navbar
+            logos_footer
+            logo_license
           }
+        }
       }
     }
   `)

@@ -6,16 +6,16 @@ const AlphabetFilter = ({ alphabetFilter, setAlphabetFilter }) => {
 
   return (
     <div className="alphabet-buttons my-2">
-  <button onClick={() => setAlphabetFilter('')} className="btn btn-outline-secondary me-2">All</button>
   {alphabet.map(letter => (
     <button
       key={letter}
       onClick={() => setAlphabetFilter(letter)}
-      className={`btn ${alphabetFilter === letter ? 'btn-primary' : 'btn-outline-secondary'} me-2`}
+      className={`shadow-sm btn ${alphabetFilter === letter ? 'btn-primary' : 'btn-outline-secondary'} me-2`}
     >
       {letter}
     </button>
   ))}
+   <button onClick={() => setAlphabetFilter('')} className="btn btn-outline-secondary my-2">All</button>
 </div>
   );
 };

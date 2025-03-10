@@ -16,7 +16,7 @@ See JS-Library
     * see Issue on GitHub: https://github.com/rjsf-team/react-jsonschema-form/issues/1514
     * that means we need a workaround here
 
-## Execute SPARQL queries with `@comunica`
+## Execute SPARQL queries with `@comunica/query-sparql`
 
 Website of the library: https://comunica.dev/
 

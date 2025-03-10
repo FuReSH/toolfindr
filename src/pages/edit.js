@@ -33,7 +33,6 @@ const EditPage = () => (
         <button type="button" className="btn btn-primary btn-lg">Save</button>
         </div>
       </div>
-      
     </div>
   </Layout>
 )

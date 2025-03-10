@@ -1,3 +1,14 @@
+# This query is a federated query that combines data from Wikidata and Tadirah
+# This query retrieves tools and their metadata from Wikidata and Tadirah
+# It retrieves the tool's ID, label, description, copyright, license, images, source repositories, websites, instance of, Tadirah IDs, and Tadirah labels
+# It filters the results by language and limits the results to 5000
+# It orders the results by tool label
+# It uses the Tadirah ontology to retrieve the prefLabel using the Tadirah ID
+# It uses the Wikidata service to query for tools and their Tadirah IDs
+# It uses the Wikidata label service to retrieve the labels and descriptions in English
+# NOTICE: Since requests to the Wikidata Query Service are rate-limited to many items in a single query is inefficient
+# This query is for demonstration purposes only and should be optimized for production use
+
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -13,9 +24,9 @@ SELECT ?toolID
   ?toolDesc
   ?copyrightLabel 
   ?licenseLabel 
-  (GROUP_CONCAT(DISTINCT ?image; separator = ", ") AS ?images) 
+  ?image
   (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) 
-  (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites) 
+  (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites)
   (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) 
   (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs)
   (GROUP_CONCAT(DISTINCT ?tadirahLabel; separator = ", ") AS ?tadirahLabels) 
@@ -29,16 +40,19 @@ WHERE {
     wdt:P31/wdt:P279* wd:Q7397.
   # retrieve properties that are part of our data model
   ?tool wdt:P31 ?instanceOf.
-  OPTIONAL { ?tool  wdt:P6216 ?copyright;
-    wdt:P275 ?license;
-    wdt:P1324 ?sourceRepo;
-    wdt:P856 ?website .}
-  # retrieve the logos and images for those tools that have them
+  OPTIONAL { ?tool wdt:P6216 ?copyright. }
+  OPTIONAL { ?tool wdt:P275 ?license. }
+  OPTIONAL { ?tool wdt:P1324 ?sourceRepo. }
+  OPTIONAL { ?tool wdt:P856 ?website. }
+  # fetch images (logo preferred, otherwise regular image)
   OPTIONAL { ?tool wdt:P154 ?logo. }
   OPTIONAL { ?tool wdt:P18 ?pic. }
   BIND(COALESCE(?logo, ?pic) AS ?image).
-  BIND(STR(?tool) AS ?toolID) .
-  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", ?tadirahIDString)) AS ?tadirahID)
+
+  BIND(STR(?tool) AS ?toolID).
+
+  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", ?tadirahIDString)) AS ?tadirahID).
+
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en".
     ?tool rdfs:label ?toolLabel;
@@ -50,9 +64,9 @@ WHERE {
   }
   
   # Query Tadirah ontology for prefLabel using the Tadirah ID
-  ?tadirahID skos:prefLabel ?tadirahLabel .
+  ?tadirahID skos:prefLabel ?tadirahLabel.
   FILTER (lang(?tadirahLabel) = "en")
 }
-GROUP BY ?toolID ?toolLabel ?toolDesc ?copyrightLabel ?licenseLabel
+GROUP BY ?toolID ?toolLabel ?toolDesc ?image ?copyrightLabel ?licenseLabel
 ORDER BY ?toolLabel
 LIMIT 5000

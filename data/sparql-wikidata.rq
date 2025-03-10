@@ -1,48 +1,56 @@
 PREFIX wd: <http://www.wikidata.org/entity/>
-  PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-  PREFIX p: <http://www.wikidata.org/prop/>
-  PREFIX ps: <http://www.wikidata.org/prop/statement/>
-  PREFIX bd: <http://www.bigdata.com/rdf#>
-  PREFIX wikibase: <http://wikiba.se/ontology#>
-  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
 
-   SELECT ?toolID 
-    ?toolLabel 
-    ?toolDesc 
-    ?copyrightLabel 
-    ?licenseLabel 
-    (GROUP_CONCAT(DISTINCT ?image; separator = ", ") AS ?images) 
-    (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) 
-    (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites) 
-    (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) 
-    (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs) 
-  WHERE {
- ?method wdt:P9309 ?tadirahID.
-  # select all items which are linked to these methods through has use
+SELECT ?toolID 
+       ?toolLabel 
+       ?toolDesc 
+       ?copyrightLabel 
+       ?licenseLabel
+       ?image
+       (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) 
+       (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites)
+       (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) 
+       (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs)
+WHERE {
+  ?method wdt:P9309 ?tadirahID.
+  
+  # Auswahl aller Tools, die mit diesen Methoden durch "has use" verknüpft sind
   ?tool wdt:P366 ?method;
-    # limit tools to software in the broadest sense
-    wdt:P31/wdt:P279* wd:Q7397.
-  # retrieve properties that are part of our data model
+        wdt:P31/wdt:P279* wd:Q7397.  # Software oder Subklasse von Software
+
+  # Instanztypen abrufen
   ?tool wdt:P31 ?instanceOf.
-  OPTIONAL { ?tool  wdt:P6216 ?copyright;
-    wdt:P275 ?license;
-    wdt:P1324 ?sourceRepo;
-    wdt:P856 ?website .}
-  # retrieve the logos and images for those tools that have them
+
+  # Optionale Eigenschaften getrennt abrufen
+  OPTIONAL { ?tool wdt:P6216 ?copyright. }
+  OPTIONAL { ?tool wdt:P275 ?license. }
+  OPTIONAL { ?tool wdt:P1324 ?sourceRepo. }
+  OPTIONAL { ?tool wdt:P856 ?website. }
+
+  # Bilder abrufen (Logo bevorzugt, ansonsten reguläres Bild)
   OPTIONAL { ?tool wdt:P154 ?logo. }
   OPTIONAL { ?tool wdt:P18 ?pic. }
-  BIND(COALESCE(?logo, ?pic) AS ?image).
+  BIND(COALESCE(?logo, ?pic) AS ?image)
+
+  # Tool-ID als String
   BIND(STR(?tool) AS ?toolID)
+
+  # Labels effizient abrufen
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en".
     ?tool rdfs:label ?toolLabel;
-      schema:description ?toolDesc.
+          schema:description ?toolDesc.
     ?instanceOf rdfs:label ?instanceOfLabel.
-          ?copyright rdfs:label ?copyrightLabel.
-          ?license rdfs:label ?licenseLabel.
+    ?copyright rdfs:label ?copyrightLabel.
+    ?license rdfs:label ?licenseLabel.
   }
 }
-GROUP BY ?toolID ?toolLabel ?toolDesc ?copyrightLabel ?licenseLabel
+GROUP BY ?toolID ?toolLabel ?toolDesc ?image ?copyrightLabel ?licenseLabel
 ORDER BY ?toolLabel
-LIMIT 5000
+LIMIT 100

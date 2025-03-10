@@ -1,26 +1,16 @@
 ---
 title: "About"
 
-link_01: "https://www.wikidata.org/wiki/Wikidata:WikiProject_DH_Tool_Registry"
-link_title_01: "Wikidata:Wikiproject DH Tool Registry"
-link_icon_01: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg"
+links:
+  - url: "https://www.wikidata.org/wiki/Wikidata:WikiProject_DH_Tool_Registry"
+    title: "Wikidata:Wikiproject DH Tool Registry"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg"
 
-link_02: "https://github.com/FuReSH"
-link_title_02: "Kompetenzwerkstatt Digital Humanities on GitHub"
-link_icon_02: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-
-link_03: ""
-link_title_03: ""
-link_icon_03: ""
-
-link_04: ""
-link_title_04: ""
-link_icon_04: ""
-
-link_05: ""
-link_title_05: ""
-link_icon_05: ""
+  - url: "https://github.com/FuReSH"
+    title: "Kompetenzwerkstatt Digital Humanities on GitHub"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
 ---
+
 
 ## The DH Tool Registry
 

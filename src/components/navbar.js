@@ -15,7 +15,7 @@ const ExactNavLink = props => (
 
 const Navbar = ({ siteTitle }) => {
   
-  const filename = siteMetadata.logo_navbar
+  const filename = siteMetadata.images.logo_navbar
 
   const imgData = useAllImageFile()
   const imageNode = imgData.allFile.edges.find(edge => edge.node.relativePath === filename)?.node.childImageSharp.gatsbyImageData

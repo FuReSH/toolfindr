@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import SearchBar from './searchbar';
 import AlphabetFilter from './alphabetfilter';
+import Pagination from './pagination';
 
 const ToolsComponent = ({ conceptsFilter }) => {
   const fetchedData = useStaticQuery(graphql`
     query {
-      allSparqlTool {
+      allWikidataTadirahTool {
         nodes {
           id
           toolID
@@ -18,23 +19,18 @@ const ToolsComponent = ({ conceptsFilter }) => {
     }
   `);
 
-  const data = fetchedData.allSparqlTool.nodes;
-
+  const data = fetchedData.allWikidataTadirahTool.nodes;
   const sortedData = data.sort((a, b) => a.toolLabel.localeCompare(b.toolLabel));
 
   const [search, setSearch] = useState('');
   const [alphabetFilter, setAlphabetFilter] = useState('');
   const [filteredData, setFilteredData] = useState(sortedData);
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+
   useEffect(() => {
-    console.log("Concepts Filter:", conceptsFilter);
-    sortedData.forEach(item => {
-      const tadirahLabels = item.tadirahLabel 
-        ? item.tadirahLabel.split(',').map(label => label.trim()) 
-        : [];
-      console.log("Tool:", item.toolLabel, "TaDiRAH Labels (as array):", tadirahLabels);
-    });
-  
     setFilteredData(
       sortedData.filter(item => {
         const matchesSearch = item.toolLabel.toLowerCase().includes(search.toLowerCase());
@@ -42,19 +38,22 @@ const ToolsComponent = ({ conceptsFilter }) => {
         const matchesConcepts = 
           conceptsFilter.length > 0 
             ? conceptsFilter.some(concept => {
-                const tadirahLabels = item.tadirahLabel
-                  ? item.tadirahLabel.split(',').map(label => label.trim())
-                  : [];
+                const tadirahLabels = Array.isArray(item.tadirahLabel) ? item.tadirahLabel : [];
                 return tadirahLabels.some(label => label.toLowerCase().includes(concept.toLowerCase()));
               })
             : true;
-  
+
         return matchesSearch && matchesAlphabet && matchesConcepts;
       })
     );
+    setCurrentPage(1); // Reset to page 1 when filters change
   }, [search, alphabetFilter, conceptsFilter, sortedData]);
-  
-  
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const paginatedData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
   const regex = /\/([^\/]+)$/;
 
@@ -66,8 +65,8 @@ const ToolsComponent = ({ conceptsFilter }) => {
       <div className='my-2'>
         {filteredData.length} result{filteredData.length !== 1 && 's'} found.
       </div>
-      
-      <table className="table table-responsive-sm align-middle table-hover table-sm table-striped my-4">
+
+      <table className="table table-responsive-sm table-sm shadow-sm align-middle table-hover table-striped rounded-3 my-4">
         <thead>
           <tr>
             <th width="20%">Wikidata ID</th>
@@ -75,11 +74,11 @@ const ToolsComponent = ({ conceptsFilter }) => {
             <th width="50%">TaDiRAH Label</th>
           </tr>
         </thead>
-        <tbody className="table-group-divider ">
-          {filteredData.map(item => (
+        <tbody className="table-group-divider">
+          {paginatedData.map(item => (
             <tr key={item.toolID}>
               <td>
-                <img width="50" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' />
+                <img width="50" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' alt='Wikidata Logo' />
                 <br />
                 <small><small>{item.toolID.match(regex)[1]}</small></small>
               </td>
@@ -87,13 +86,19 @@ const ToolsComponent = ({ conceptsFilter }) => {
                 <a href={`/tool/${item.id}`}>{item.toolLabel}</a>
               </td>
               <td>
-                {item.tadirahLabel}
+                {Array.isArray(item.tadirahLabel) ? item.tadirahLabel.join(', ') : 'No labels'}
               </td>
-              <td> </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Pagination component */}
+      <Pagination 
+        currentPage={currentPage} 
+        totalPages={totalPages} 
+        onPageChange={setCurrentPage} 
+      />
     </div>
   );
 };

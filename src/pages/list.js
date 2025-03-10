@@ -1,14 +1,15 @@
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "gatsby";
 import ToolsComponent from "../components/tools";
 import Layout from "../components/layout";
 import { Seo } from "../components/seo";
 import { GoSearch } from "react-icons/go";
 import Concepts from "../components/concepts";
+import BackButton from "../components/backbutton";
+import BuildTime from "../components/buildtime";
 
 const ToolsPage = () => {
-  const [conceptsFilter, setConceptsFilter] = useState([]); // Zentraler Zustand für Concepts
+  const [conceptsFilter, setConceptsFilter] = useState([]);
 
   return (
     <Layout>
@@ -21,7 +22,7 @@ const ToolsPage = () => {
               </span>
               Tools
             </h1>
-            <p>Search for DH tools classified with the TaDiRAH taxonomy.</p>
+            <p className="kdh-short-desc">Search for DH tools classified with the TaDiRAH taxonomy.</p>
           </div>
         </div>
         <div className="row">
@@ -32,11 +33,8 @@ const ToolsPage = () => {
             <Concepts onConceptsChange={setConceptsFilter} />
           </div>
         </div>
-        <div className="row my-3">
-          <div className="col-xs-4 col-sm-5">
-            <Link to="/">Go back to Home</Link>
-          </div>
-        </div>
+        <BuildTime />
+        <BackButton />
       </div>
     </Layout>
   );

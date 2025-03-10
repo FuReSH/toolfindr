@@ -12,27 +12,27 @@ const IndexPage = () => (
         <TitleBox/>
       </div>
       <div className="container">
-      <div className="row g-2 align-items-sm-stretch">
+      <div className="row g-2 align-items-lg-stretch">
         <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
+          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
             <h2>About</h2>
-            <p>Find information about the DH Tool Registry</p>
-            <Link to="/about/" className="btn btn-outline-primary"><GoInfo /> About</Link>
+            <p>Find information about the DH Tool Registry and how it is used in the Kompetenzwerkstatt Digital Humanities.</p>
+            <Link to="/about/" className="btn btn-primary shadow-sm"><GoInfo /> About</Link>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Search Tools</h2>
+          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
+            <h2>Search</h2>
             <p>Search for DH tools classified with the TaDiRAH taxonomy.</p>
-            <Link to="/list/" className="btn btn-outline-primary"><GoSearch /> Search</Link>
+            <Link to="/list/" className="btn btn-primary shadow-sm"><GoSearch /> Search</Link>
           </div>
         </div>
        
         <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
+          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
             <h2>Explore</h2>
-            <p>Explore various result sets directly in Wikidata.</p>
-            <Link to="/explore/" className="btn btn-outline-primary"><GoGlobe /> Explore</Link>
+            <p>Explore how you can query and edit the Tool Registry data in Wikidata.</p>
+            <Link to="/explore/" className="btn btn-primary shadow-sm"><GoGlobe /> Explore</Link>
           </div>
         </div>
       </div>

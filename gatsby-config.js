@@ -6,8 +6,17 @@ module.exports = {
     description: `Open and community-oriented tool registry based on Wikidata and TaDiRAH.`,
     author: `@sopheck`,
     organisation: `Project FuReSH II - Universitätsbibliothek der Humboldt-Universität zu Berlin`,
-    logo_title: `KDH - Logo Symbol - HU Digital Blau.png`,
-    logo_navbar: `KDH - Logo Symbol - White.png`
+    images: {
+      logo_title: `KDH - Logo Symbol - HU Digital Blau.png`,
+      logo_navbar: `KDH - Logo Symbol - White.png`,
+      logos_footer: [
+        `KDH - Primary Logo - HU Digital Blau.png`,
+        `Logo_for_memory_RGB.png`,
+        `HU_Siegel_HU-blau_RGB.svg`,
+        `DFG-Logo.svg`
+      ],
+      logo_license: `by-sa.png`,
+    }
   },
       plugins: [
         `gatsby-plugin-image`,

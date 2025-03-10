@@ -4,6 +4,7 @@ import { useSiteMetadata } from "../hooks/use-site-metadata"
 
 import Navbar from "./navbar"
 import Footer from "./footer"
+
 import "./layout.scss"
 
 const Layout = ({ children }) => {
@@ -12,17 +13,20 @@ const Layout = ({ children }) => {
 
   return (
     <div className="container-fluid p-0 skippy overflow-hidden">
-   <Navbar siteTitle={title || `Title`}
-           siteSubtitleShort={subtitle_short || `Subtitle`}
-   />
- 
- 
- 
-    <main className="my-5">
+      <Navbar siteTitle={title || `Title`}
+        siteSubtitleShort={subtitle_short || `Subtitle`}
+      />
+
+
+
+      <main className="my-5">
+
         {children}
+
+
       </main>
-      <Footer siteOrganisation={organisation || `Organisation`}/>
-      </div>
+      <Footer siteOrganisation={organisation || `Organisation`} />
+    </div>
   )
 }
 

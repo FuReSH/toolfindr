@@ -29,13 +29,13 @@ const Concepts = ({ onConceptsChange }) => {
   return (
     <div>
       <strong className="h5"><GoFilter /> Choose TaDiRAH concepts</strong>
+      <hr />
       <p className="fs-6 my-2">Use the Ctrl key to select and deselect one or more concepts.</p>
       <p className="fs-6 my-3">Further information on the TaDiRAH concepts can be found on the <Link to="https://de.dariah.eu/tadirah">official taxonomy website</Link>.</p>
-      <hr />
-      <div className="input-group">
+      <div className="input-group shadow-sm">
         <select 
           multiple
-          size="100"
+          size="20"
           className="form-select" 
           aria-label="Select TaDiRAH concept" 
           onChange={handleSelectChange}

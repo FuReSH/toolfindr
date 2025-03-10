@@ -1,74 +1,53 @@
-import * as React from "react"
-import PropTypes from "prop-types"
-import { StaticImage } from "gatsby-plugin-image"
+import React from "react"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
 
-const Footer = ({ siteOrganisation }) => {
-    return (
-      <footer className="pt-3 mt-4 text-muted border-top">
-        <div className="container text-center">
-          <div className="row">
-            <div className="col-sm-12">
-              <small>
-                Created by <a href="https://blogs.hu-berlin.de/furesh/" target="_blank" rel="noopener noreferrer">{siteOrganisation}</a>
-                 <br />
-                All data on tools licensed under 
-              </small>
-              <h3>👇</h3>
-              <StaticImage
-                    src="../../static/images/by-sa.png"
-                    width={90}
-                    quality={100}
-                    formats={["AUTO", "WEBP"]}
-                    alt="Logo"
-                    className="img-fluid m-2 verctical-align-center"
-                  /> + <big>❤️</big>
-            </div>
+const Footer = () => {
+  const { organisation, images } = useSiteMetadata()
 
+  return (
+    <footer className="pt-3 mt-4 text-muted border-top">
+      <div className="container text-center">
+        {/* Organisation & Lizenz */}
+        <div className="row">
+          <div className="col-sm-12">
+            <small>
+              Created by <a href="https://blogs.hu-berlin.de/furesh/" target="_blank" rel="noopener noreferrer">{organisation}</a>
+              <br />
+              All data on tools licensed under: 
+              <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer"> CC BY-SA 4.0</a>
+            </small>
+            <br />
+            {/* Lizenz-Logo */}
+            <img
+              src={`/images/${images.logo_license}`} 
+              width="90"
+              alt="License Logo"
+              className="img-fluid m-2 vertical-align-center"
+            />
           </div>
-          <div className="row">
-            <div className="col-sm-4 align-self-center">
-            <StaticImage
-                    src="../../static/images/KDH - Primary Logo - HU Digital Blau.png"
-                    width={300}
-                    quality={100}
-                    formats={["AUTO", "WEBP"]}
-                    alt="Logo"
-                    className="img-fluid"
-                  />
-            </div>
-            <div className="col-sm-4">
-            <StaticImage
-                    src="../../static/images/HU_Siegel_HU-blau_RGB.svg"
-                    quality={100}
-                    formats={["AUTO", "WEBP"]}
-                    alt="Logo"
-                    className="img-fluid"
-                  />
-            </div>
-            <div className="col-sm-4 align-self-center">
-            <StaticImage
-                    src="../../static/images/DFG-Logo.svg"
-                    quality={100}
-                    formats={["AUTO", "WEBP"]}
-                    alt="Logo"
-                    className="img-fluid"
-                  />
-            </div>
-
-          </div>
-                
-               
         </div>
-      </footer>
-    )
-  }
 
-  Footer.propTypes = {
-    siteOrganisation: PropTypes.string,
-  }
-  
-  Footer.default = {
-    siteOrganisation: ``,
-  }
+        {/* Logos */}
+        <div className="row">
+          {images.logos_footer.map((filename, index) => {
+            const imgSrc = `/images/${filename}`
+            return (
+              <div key={index} className="col-sm-3 align-self-center">
+                {/* Use Gatsby-Image here */}
+                <img
+                  src={imgSrc}
+                  width="200"
+                  onError={(e) => { e.target.src = "/images/placeholder.png" }} // Fallback-Bild bei Fehler
+                  alt={`Footer Logo ${index + 1}`}
+                  className="img-fluid"
+                />
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </footer>
+  )
+}
 
-  export default Footer
+export default Footer

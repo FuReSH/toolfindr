@@ -5,4 +5,4 @@ WHERE {
   ?tadirahID skos:prefLabel ?tadirahLabel .
   FILTER (lang(?tadirahLabel) = "en")
 }
-LIMIT 10
+LIMIT 1000
