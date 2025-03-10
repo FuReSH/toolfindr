@@ -32,6 +32,7 @@
     "sparql-http-client": "^3.0.0"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "prettier": "2.5.1"
   },
   "overrides": {
@@ -49,6 +50,7 @@
   ],
   "license": "0BSD",
   "scripts": {
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",

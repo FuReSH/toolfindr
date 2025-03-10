@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/tool-storage-interface",
   siteMetadata: {
     title: `DH Tool Registry`,
     subtitle_short: `KDH`,
