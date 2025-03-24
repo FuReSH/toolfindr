@@ -15,22 +15,19 @@ import BackButton from "../components/backbutton";
 const ToolsPage = () => {
   
   const storedFilters = useMemo(() => {
-    const stored = sessionStorage.getItem("searchFilters");
-    return stored ? JSON.parse(stored) : { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
+    if (typeof window !== "undefined") {
+      const stored = sessionStorage.getItem("searchFilters");
+      return stored ? JSON.parse(stored) : { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
+    }
+    return { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
   }, []);
+  
 
   const [search, setSearch] = useState(storedFilters.search);
   const [alphabetFilter, setAlphabetFilter] = useState(storedFilters.alphabetFilter);
   const [conceptsFilter, setConceptsFilter] = useState(storedFilters.conceptsFilter);
   const [currentPage, setCurrentPage] = useState(storedFilters.currentPage);
   const [selectedOptions, setSelectedOptions] = useState([]); // Zustand für das Select-Feld
-  
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      sessionStorage.setItem("searchFilters", JSON.stringify({ search, alphabetFilter, conceptsFilter, currentPage }));
-    }, 300);
-    return () => clearTimeout(timeout);
-  }, [search, alphabetFilter, conceptsFilter, currentPage]);
 
   const handleConceptsChange = useCallback((newConcepts) => {
     setConceptsFilter(newConcepts);
@@ -84,11 +81,14 @@ const ToolsPage = () => {
 
   // useEffect zum Speichern der Filter in sessionStorage
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      sessionStorage.setItem("searchFilters", JSON.stringify({ search, alphabetFilter, conceptsFilter, currentPage }));
-    }, 300);
-    return () => clearTimeout(timeout);
+    if (typeof window !== "undefined") {
+      const timeout = setTimeout(() => {
+        sessionStorage.setItem("searchFilters", JSON.stringify({ search, alphabetFilter, conceptsFilter, currentPage }));
+      }, 300);
+      return () => clearTimeout(timeout);
+    }
   }, [search, alphabetFilter, conceptsFilter, currentPage]);
+  
 
   return (
     <Layout>

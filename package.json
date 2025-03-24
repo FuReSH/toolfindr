@@ -45,14 +45,14 @@
   },
   "keywords": [
     "gatsby",
-    "starter",
+    "wikidata",
     "bootstrap",
     "sass"
   ],
   "license": "0BSD",
   "scripts": {
     "deploy": "gatsby build --prefix-paths && gatsby serve --prefix-paths",
-    "build": "gatsby build",
+    "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
