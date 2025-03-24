@@ -1,4 +1,14 @@
 $primary: #0000ff;
+$position-values: (
+  0: 0,
+  5: 5%,
+  10: 10%,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%
+);
+
 @import "~bootstrap/scss/bootstrap";
 
 @font-face {
@@ -69,4 +79,16 @@ label {
 
 .kdh-short-desc {
   font-size: calc(1.275rem + .2vw);
+}
+
+hr {
+  margin: 0.6rem 0;
+}
+
+a.anchor {
+  fill: "red";
+}
+
+.custom-anchor {
+  fill: $primary;
 }

@@ -23,7 +23,8 @@ SELECT ?toolID
   ?toolLabel 
   ?toolDesc
   ?copyrightLabel 
-  ?licenseLabel 
+  ?licenseLabel
+  ?currentVersion
   ?image
   (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) 
   (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites)
@@ -44,14 +45,15 @@ WHERE {
   OPTIONAL { ?tool wdt:P275 ?license. }
   OPTIONAL { ?tool wdt:P1324 ?sourceRepo. }
   OPTIONAL { ?tool wdt:P856 ?website. }
+  OPTIONAL {?tool wdt:P348 ?currentVersion. }
   # fetch images (logo preferred, otherwise regular image)
   OPTIONAL { ?tool wdt:P154 ?logo. }
   OPTIONAL { ?tool wdt:P18 ?pic. }
-  BIND(COALESCE(?logo, ?pic) AS ?image).
+  BIND(COALESCE(?logo, ?pic) AS ?image)
 
-  BIND(STR(?tool) AS ?toolID).
+  BIND(STR(?tool) AS ?toolID)
 
-  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", ?tadirahIDString)) AS ?tadirahID).
+  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahIDString))) AS ?tadirahID)
 
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en".
@@ -67,6 +69,6 @@ WHERE {
   ?tadirahID skos:prefLabel ?tadirahLabel.
   FILTER (lang(?tadirahLabel) = "en")
 }
-GROUP BY ?toolID ?toolLabel ?toolDesc ?image ?copyrightLabel ?licenseLabel
+GROUP BY ?toolID ?toolLabel ?toolDesc ?image ?currentVersion ?copyrightLabel ?licenseLabel
 ORDER BY ?toolLabel
 LIMIT 5000

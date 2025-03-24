@@ -1,3 +1,4 @@
+# Query for retrieving tools from Wikidata that are linked to Tadirah methods
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
@@ -12,17 +13,18 @@ SELECT ?toolID
        ?toolDesc 
        ?copyrightLabel 
        ?licenseLabel
+       ?currentVersion
        ?image
        (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) 
        (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites)
        (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) 
        (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs)
 WHERE {
-  ?method wdt:P9309 ?tadirahID.
+  ?method wdt:P9309 ?tadirahIDString.
   
   # Auswahl aller Tools, die mit diesen Methoden durch "has use" verknüpft sind
   ?tool wdt:P366 ?method;
-        wdt:P31/wdt:P279* wd:Q7397.  # Software oder Subklasse von Software
+        (wdt:P31/(wdt:P279*)) wd:Q7397.  # Software oder Subklasse von Software
 
   # Instanztypen abrufen
   ?tool wdt:P31 ?instanceOf.
@@ -32,6 +34,7 @@ WHERE {
   OPTIONAL { ?tool wdt:P275 ?license. }
   OPTIONAL { ?tool wdt:P1324 ?sourceRepo. }
   OPTIONAL { ?tool wdt:P856 ?website. }
+  OPTIONAL {?tool wdt:P348 ?currentVersion. }
 
   # Bilder abrufen (Logo bevorzugt, ansonsten reguläres Bild)
   OPTIONAL { ?tool wdt:P154 ?logo. }
@@ -40,6 +43,8 @@ WHERE {
 
   # Tool-ID als String
   BIND(STR(?tool) AS ?toolID)
+  # Tadirah-ID als IRI for further processing
+  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahIDString))) AS ?tadirahID)
 
   # Labels effizient abrufen
   SERVICE wikibase:label {
@@ -51,6 +56,6 @@ WHERE {
     ?license rdfs:label ?licenseLabel.
   }
 }
-GROUP BY ?toolID ?toolLabel ?toolDesc ?image ?copyrightLabel ?licenseLabel
+GROUP BY ?toolID ?toolLabel ?toolDesc ?image ?currentVersion ?copyrightLabel ?licenseLabel
 ORDER BY ?toolLabel
-LIMIT 100
+LIMIT 5000

@@ -6,7 +6,8 @@ import { graphql } from "gatsby";
 import BackButton from "../components/backbutton";
 import Toc from "../components/toc";
 
-export default function AboutPageTemplate({ data }) {
+
+export default function ExplorePage({ data }) {
   const { markdownRemark } = data;
   const { frontmatter, html, headings } = markdownRemark;
   const { links } = frontmatter;
@@ -49,7 +50,7 @@ export default function AboutPageTemplate({ data }) {
                     </div>
                   </div>
                 ))}
-              </div>) : <div></div> }
+              </div>) : <div></div>}
           </div>
         </div>
         <BackButton />
@@ -60,7 +61,7 @@ export default function AboutPageTemplate({ data }) {
 
 export const pageQuery = graphql`
   query {
-    markdownRemark(fileAbsolutePath: {regex: "/about\\.md$/"}) {
+    markdownRemark(fileAbsolutePath: {regex: "/get-involved\\.md$/"}) {
       html
       frontmatter {
         title
@@ -80,5 +81,5 @@ export const pageQuery = graphql`
 `
 
 export const Head = () => (
-  <Seo title="About the DH Tool Registry" />
+  <Seo title="Edit Tools in Wikidata" />
 )

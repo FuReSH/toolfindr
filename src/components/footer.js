@@ -1,49 +1,70 @@
 import React from "react"
+import { GatsbyImage } from "gatsby-plugin-image"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
+import { GoLinkExternal } from "react-icons/go";
+
+
+import "./footer.scss"
 
 const Footer = () => {
-  const { organisation, images } = useSiteMetadata()
+  const { organisation, organisation_url, images } = useSiteMetadata()
 
   return (
     <footer className="pt-3 mt-4 text-muted border-top">
       <div className="container text-center">
         {/* Organisation & Lizenz */}
-        <div className="row">
+        <div className="row mb-4">
           <div className="col-sm-12">
             <small>
-              Created by <a href="https://blogs.hu-berlin.de/furesh/" target="_blank" rel="noopener noreferrer">{organisation}</a>
+              Created by{" "}
+              <a
+                href={organisation_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-link icon-hover-link"
+              >
+                {organisation} <GoLinkExternal />
+              </a>
               <br />
-              All data on tools licensed under: 
-              <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer"> CC BY-SA 4.0</a>
+              All data on tools retrieved from Wikidata licensed under:{" "}
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-link icon-hover-link"
+              >
+                CC0 1.0 Universal <GoLinkExternal />
+              </a>
             </small>
             <br />
             {/* Lizenz-Logo */}
             <img
-              src={`/images/${images.logo_license}`} 
-              width="90"
-              alt="License Logo"
-              className="img-fluid m-2 vertical-align-center"
-            />
+                src="/images/cc-zero.png"
+                alt="License Logo"
+                className="img-fluid m-2"
+                style={{ width: "90px" }}
+              />
           </div>
         </div>
 
         {/* Logos */}
-        <div className="row">
-          {images.logos_footer.map((filename, index) => {
-            const imgSrc = `/images/${filename}`
-            return (
-              <div key={index} className="col-sm-3 align-self-center">
-                {/* Use Gatsby-Image here */}
-                <img
-                  src={imgSrc}
-                  width="200"
-                  onError={(e) => { e.target.src = "/images/placeholder.png" }} // Fallback-Bild bei Fehler
-                  alt={`Footer Logo ${index + 1}`}
+        <div className="row justify-content-center">
+          {images.logos_footer.map((logo) =>
+            logo.image ? (
+              <div key={logo.name} className="col-sm-3 align-self-center mb-3">
+                <GatsbyImage
+                  image={logo.image}
+                  alt={`Footer Logo ${logo.name}`}
                   className="img-fluid"
+                  style={{ width: "80%" }}
                 />
               </div>
+            ) : (
+              <div key={logo.name} className="col-sm-3 align-self-center">
+                Image not found: {logo.name}
+              </div>
             )
-          })}
+          )}
         </div>
       </div>
     </footer>

@@ -1,50 +1,110 @@
-import React, { useState, useEffect } from 'react';
-import { useAllDataFile } from '../hooks/use-all-data-file';
-import { GoFilter } from "react-icons/go";
-import { Link } from 'gatsby';
+import React, { useEffect } from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
+import { GoMultiSelect, GoLinkExternal } from "react-icons/go";
+import Select from 'react-select';
 
-const Concepts = ({ onConceptsChange }) => {
-  const [options, setOptions] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
+const Concepts = ({ selectedOptions, setSelectedOptions, onConceptsChange }) => {
+  
+  const data = useStaticQuery(graphql`
+    query {
+      allTadirahConcept {
+        nodes {
+          tadirahLabel
+        }
+      }
+    }
+  `);
 
-  const tadirahConcepts = useAllDataFile();
-  const filename = tadirahConcepts.allFile.edges.find(edge => edge.node.extension === "txt").node.publicURL;
+  const options = data.allTadirahConcept.nodes.map(concept => ({
+    value: concept.tadirahLabel,
+    label: concept.tadirahLabel
+  }));
 
+  // useEffect zum Setzen der initialen ausgewählten Optionen, basierend auf gespeicherten Werten
   useEffect(() => {
-    fetch(filename)
-      .then(response => response.text())
-      .then(text => {
-        const lines = text.split('\n');
-        setOptions(lines.filter(line => line.trim() !== ''));
-      })
-      .catch(error => console.error('Error loading the data file:', error));
-  }, [filename]);
+    const storedFilters = sessionStorage.getItem("searchFilters");
+    if (storedFilters) {
+      const parsedFilters = JSON.parse(storedFilters);
+      if (parsedFilters.conceptsFilter) {
+        // Setze die initialen ausgewählten Optionen aus sessionStorage
+        const storedSelectedOptions = options.filter(opt =>
+          parsedFilters.conceptsFilter.includes(opt.value)
+        );
+        setSelectedOptions(storedSelectedOptions);
+      }
+    }
+  }, []);
 
-  const handleSelectChange = (event) => {
-    const values = Array.from(event.target.selectedOptions, option => option.value);
-    setSelectedOptions(values);
-    onConceptsChange(values); // Callback-Funktion aufrufen
+  // Aktualisiert sessionStorage und übergibt Werte an onConceptsChange
+  const handleChange = (selected) => {
+    setSelectedOptions(selected);
+    const values = selected ? selected.map(opt => opt.value) : [];
+    sessionStorage.setItem("searchFilters", JSON.stringify({
+      ...JSON.parse(sessionStorage.getItem("searchFilters") || "{}"),
+      conceptsFilter: values
+    }));
+    onConceptsChange(values);
+  };
+
+  // CSS-Variablen abrufen
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim();
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-gray-300').trim();
+
+  // Eigene Styles für react-select
+  const customStyles = {
+    control: (styles) => ({
+      ...styles,
+      backgroundColor: 'white',
+      borderColor: primaryColor,
+      '&:hover': { borderColor: primaryColor },
+      fontSize: 'initial',
+      height: 'initial',
+      minHeight: 'initial',
+      width: '100%',
+    }),
+    option: (styles, { isSelected, isFocused }) => ({
+      ...styles,
+      backgroundColor: isSelected ? primaryColor : isFocused ? secondaryColor : undefined,
+      color: isSelected ? 'white' : 'black',
+      cursor: 'pointer',
+      fontSize: 'initial',
+      padding: '0.2rem 0.8rem',
+    }),
+    multiValue: (styles) => ({
+      ...styles,
+      backgroundColor: primaryColor,
+    }),
+    multiValueLabel: (styles) => ({
+      ...styles,
+      color: 'white',
+    }),
+    multiValueRemove: (styles) => ({
+      ...styles,
+      color: 'white',
+      ':hover': { backgroundColor: primaryColor, color: 'white' },
+    }),
   };
 
   return (
-    <div>
-      <strong className="h5"><GoFilter /> Choose TaDiRAH concepts</strong>
+    <div className='sticky-top top-10'>
+      <h5><GoMultiSelect /> Filter by Tool Categories</h5>
       <hr />
-      <p className="fs-6 my-2">Use the Ctrl key to select and deselect one or more concepts.</p>
-      <p className="fs-6 my-3">Further information on the TaDiRAH concepts can be found on the <Link to="https://de.dariah.eu/tadirah">official taxonomy website</Link>.</p>
-      <div className="input-group shadow-sm">
-        <select 
-          multiple
-          size="20"
-          className="form-select" 
-          aria-label="Select TaDiRAH concept" 
-          onChange={handleSelectChange}
+      <p className="fs-6 my-2">Select one or more categories from the list below.</p>
+      <p className="fs-6 my-3">
+      We use the TaDiRAH taxonomy established in the DH to group tools. Further information on the TaDiRAH concepts can be found on the <a href="https://de.dariah.eu/tadirah" target="_blank" rel="noopener noreferrer" className='icon-link icon-hover-link'>official taxonomy website <GoLinkExternal /></a>.
+      </p>
+      <div className="shadow-sm">
+        <Select
+          closeMenuOnSelect={false}
+          isClearable
+          isSearchable
+          options={options}
+          isMulti
           value={selectedOptions}
-        >
-          {options.map((option, index) => (
-            <option key={index} value={option}>{option}</option>
-          ))}
-        </select>
+          onChange={handleChange}
+          placeholder="Select categories..."
+          styles={customStyles} 
+        />
       </div>
     </div>
   );

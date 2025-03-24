@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
   const { title, subtitle_short, organisation } = useSiteMetadata();
 
   return (
-    <div className="container-fluid p-0 skippy overflow-hidden">
+    <div className="container-fluid p-0 skippy">
       <Navbar siteTitle={title || `Title`}
         siteSubtitleShort={subtitle_short || `Subtitle`}
       />
@@ -37,3 +37,4 @@ Layout.propTypes = {
 export default Layout
 
 
+//container-fluid p-0 skippy overflow-hidden

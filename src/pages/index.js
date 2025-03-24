@@ -3,13 +3,13 @@ import { Link } from "gatsby"
 import Layout from "../components/layout"
 import { Seo } from "../components/seo"
 import { TitleBox } from "../components/titlebox"
-import { GoInfo, GoSearch, GoPencil, GoGlobe } from "react-icons/go";
+import { GoInfo, GoSearch, GoPencil, GoCommentDiscussion } from "react-icons/go";
 
 const IndexPage = () => (
   <Layout>
     <section className="py-4">
       <div className="container">
-        <TitleBox/>
+        <TitleBox />
       </div>
       <div className="container">
       <div className="row g-2 align-items-lg-stretch">
@@ -23,16 +23,16 @@ const IndexPage = () => (
         <div className="col-md-4">
           <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
             <h2>Search</h2>
-            <p>Search for DH tools classified with the TaDiRAH taxonomy.</p>
+            <p>Search for DH tools that are categorised according to the TaDiRAH taxonomy.</p>
             <Link to="/list/" className="btn btn-primary shadow-sm"><GoSearch /> Search</Link>
           </div>
         </div>
        
         <div className="col-md-4">
           <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
-            <h2>Explore</h2>
-            <p>Explore how you can query and edit the Tool Registry data in Wikidata.</p>
-            <Link to="/explore/" className="btn btn-primary shadow-sm"><GoGlobe /> Explore</Link>
+            <h2>Get Involved</h2>
+            <p>Learn how you can contribute to continuously improving the data quality of DH tools in Wikidata.</p>
+            <Link to="/get-involved/" className="btn btn-primary shadow-sm"><GoCommentDiscussion /> Get Involved</Link>
           </div>
         </div>
       </div>

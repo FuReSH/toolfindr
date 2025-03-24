@@ -1,0 +1,13 @@
+// Dependencies: bootstrap
+.toolstable { 
+    --bs-table-bg: transparent !important;
+    --bs-table-border-color: rgba(0,0,0,0) !important;
+}
+
+tbody {
+    border-top-color: #0A05F9 !important;
+}
+
+.toolstable tr:hover {
+   background-color: white !important;
+}
