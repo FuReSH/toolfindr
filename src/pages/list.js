@@ -11,11 +11,16 @@ import AlphabetFilter from "../components/alphabetfilter";
 import Pagination from "../components/pagination";
 import { useStaticQuery, graphql } from "gatsby";
 import BackButton from "../components/backbutton";
+import useIsBrowser from "../hooks/use-is-browser";
+
 
 const ToolsPage = () => {
   
+  const isBrowser = useIsBrowser();
+  
   const storedFilters = useMemo(() => {
-    if (typeof window !== "undefined") {
+    // do a browser environment check
+    if (isBrowser) {
       const stored = sessionStorage.getItem("searchFilters");
       return stored ? JSON.parse(stored) : { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
     }
@@ -81,7 +86,8 @@ const ToolsPage = () => {
 
   // useEffect zum Speichern der Filter in sessionStorage
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    // do a browser environment check
+    if (isBrowser) {
       const timeout = setTimeout(() => {
         sessionStorage.setItem("searchFilters", JSON.stringify({ search, alphabetFilter, conceptsFilter, currentPage }));
       }, 300);

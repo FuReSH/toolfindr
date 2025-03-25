@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { GoMultiSelect, GoLinkExternal } from "react-icons/go";
 import Select from 'react-select';
+import useIsBrowser from "../hooks/use-is-browser";
+
 
 const Concepts = ({ selectedOptions, setSelectedOptions, onConceptsChange }) => {
+
+  const isBrowser = useIsBrowser();
   
   const data = useStaticQuery(graphql`
     query {
@@ -47,8 +51,8 @@ const Concepts = ({ selectedOptions, setSelectedOptions, onConceptsChange }) => 
   };
 
   // CSS-Variablen abrufen
-  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim();
-  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-gray-300').trim();
+  const primaryColor = isBrowser ? getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim() : "";
+  const secondaryColor = isBrowser ? getComputedStyle(document.documentElement).getPropertyValue('--bs-gray-300').trim() : ""; 
 
   // Eigene Styles für react-select
   const customStyles = {

@@ -5,6 +5,7 @@ import BackButton from '../components/backbutton';
 import { GoTools, GoPencil, GoTag, GoRepo, GoHome, GoNote, GoDatabase, GoLog, GoInfo, GoLinkExternal, GoVersions } from "react-icons/go";
 import { LiaCopyrightSolid } from "react-icons/lia";
 import BuildTime from '../components/buildtime';
+import { withPrefix } from 'gatsby'
 
 const ToolTemplate = ({ pageContext }) => {
   const { tool } = pageContext;
@@ -26,11 +27,12 @@ const ToolTemplate = ({ pageContext }) => {
             <div className="card bg-light shadow-sm">
               <div className="card-header ps-3">{tool.instanceOfLabels?.join(', ')}</div>
               <div className="clearfix card-body p-3">
-                 {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats */}
+                 {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
+                  use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
                 <img
                   className="img-fluid col-sm-3 float-sm-end mb-3 ms-sm-3"
-                  src={tool.image || "/images/tool-dummy.png"}
-                  onError={(e) => { e.target.src = "/images/tool-dummy.png" }}
+                  src={tool.image || withPrefix("/images/tool-dummy.png")}
+                  onError={(e) => { e.target.src = withPrefix("/images/tool-dummy.png") }}
                   alt={tool.toolLabel || 'No Image'}
                 />
                 <div>

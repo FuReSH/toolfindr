@@ -39,7 +39,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     <nav aria-label="Page navigation" className="mt-4">
       <ul className="pagination justify-content-center">
         {/* Previous Button */}
-        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+        <li key="prev" className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
           <button 
             className="shadow-sm page-link" 
             onClick={() => onPageChange(currentPage - 1)}
@@ -63,7 +63,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         ))}
 
         {/* Next Button */}
-        <li className={`page-item ${(currentPage === totalPages || totalPages === 0) ? "disabled" : ""}`}>
+        <li key='next' className={`page-item ${(currentPage === totalPages || totalPages === 0) ? "disabled" : ""}`}>
           <button 
             className="shadow-sm page-link" 
             onClick={() => onPageChange(currentPage + 1)}
