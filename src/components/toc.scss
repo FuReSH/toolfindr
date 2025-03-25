@@ -1,0 +1,36 @@
+.bd-toc nav a {
+    display: block;
+    padding: .125rem 0 .125rem .75rem;
+    color: inherit;
+    text-decoration: none;
+    border-left: .125rem solid transparent;
+    //&.depth-1 { padding-left: 10px; }
+    &.depth-2 { padding-left: 20px; }
+    &.depth-3 { padding-left: 30px; }
+    &.depth-4 { padding-left: 40px; }
+    &.depth-5 { padding-left: 50px; }
+  }
+  
+  .bd-toc nav a:hover, .bd-toc nav a.active {
+    color: #0A05F9;
+    border-left-color: #0A05F9;
+    font-weight: bold;
+  }
+  
+  .bd-toc nav {
+    font-size: .890rem;
+  }
+  
+  .bd-toc nav ul {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+  }
+  
+  .bd-toc nav ul ul {
+    padding-left: 1rem;
+  }
+  
+  .bd-toc nav ul ul ul {
+    padding-left: 1rem;
+  }

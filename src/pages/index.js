@@ -2,54 +2,37 @@ import * as React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout"
 import { Seo } from "../components/seo"
-import { BsTools, BsFillPencilFill, BsFillInfoCircleFill, BsSearch } from "react-icons/bs";
+import { TitleBox } from "../components/titlebox"
+import { GoInfo, GoSearch, GoPencil, GoCommentDiscussion } from "react-icons/go";
 
 const IndexPage = () => (
   <Layout>
     <section className="py-4">
       <div className="container">
-        <div className="p-5 mb-4 start-page-container sketchy rounded-3">
-          <div className="row g-0 p-5">
-              <div className="col-sm-8">
-                <h1 className="display-4 fw-light mb-5">Kompetenzwerkstatt Digital Humanities</h1>
-                <h2 id="subtitle" className="display-6 fw-light">Digital Tool Storage</h2>
-            </div> 
-
-            <div className="col-sm-2 justify-content-start">   
-              
-            </div> 
-            
-                  </div> 
-                </div>
+        <TitleBox />
       </div>
       <div className="container">
-      <div className="row g-2 align-items-sm-stretch">
+      <div className="row g-2 align-items-lg-stretch">
         <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
+          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
             <h2>About</h2>
-            <p>Here you can find more information about the Digital Tool Storage of the KWDH</p>
-            <Link to="/about/" className="btn btn-outline-primary"><BsFillInfoCircleFill /> About</Link>
+            <p>Find information about the DH Tool Registry and how it is used in the Kompetenzwerkstatt Digital Humanities.</p>
+            <Link to="/about/" className="btn btn-primary shadow-sm"><GoInfo /> About</Link>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Find Tools</h2>
-            <p>Here you can search for DH tools classified with the TaDiRAH taxonomy and find more information about a specific tool.</p>
-            <Link to="/list/" className="btn btn-outline-primary"><BsSearch /> Search</Link>
+          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
+            <h2>Search</h2>
+            <p>Search for DH tools that are categorised according to the TaDiRAH taxonomy.</p>
+            <Link to="/list/" className="btn btn-primary shadow-sm"><GoSearch /> Search</Link>
           </div>
         </div>
+       
         <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Edit Tool</h2>
-            <p>Here you add new or edit existing DH tools to Wikidata.</p>
-            <Link to="/edit/" className="btn btn-outline-primary"><BsFillPencilFill /> Edit</Link>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="h-100 p-5 bg-light border rounded-3">
-            <h2>Explore Wikidata</h2>
-            <p>Here you can explore various result sets from Wikidata.</p>
-            <Link to="/explore/" className="btn btn-outline-primary"><BsTools /> Explore</Link>
+          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
+            <h2>Get Involved</h2>
+            <p>Learn how you can contribute to continuously improving the data quality of DH tools in Wikidata.</p>
+            <Link to="/get-involved/" className="btn btn-primary shadow-sm"><GoCommentDiscussion /> Get Involved</Link>
           </div>
         </div>
       </div>
@@ -63,3 +46,11 @@ export default IndexPage
 export const Head = () => (
     <Seo />
 )
+
+/*<div className="col-md-4">
+<div className="h-100 p-5 bg-light border rounded-3">
+  <h2>Edit Tool</h2>
+  <p>Add new or edit existing DH tools to Wikidata.</p>
+  <Link to="/edit/" className="btn btn-outline-primary"><GoPencil /> Edit</Link>
+</div>
+</div>*/

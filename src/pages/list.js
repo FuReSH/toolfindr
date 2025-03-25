@@ -1,90 +1,144 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import ToolsComponent from "../components/tools"
-import Layout from "../components/layout"
-import {Seo} from "../components/seo"
-import { BsSearch } from "react-icons/bs";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import ToolsTableComponent from "../components/toolstable";
+import Layout from "../components/layout";
+import { Seo } from "../components/seo";
+import { GoSearch } from "react-icons/go";
+import Concepts from "../components/concepts";
+import BuildTime from "../components/buildtime";
+import ResetFilters from "../components/resetfilters";
+import SearchBar from "../components/searchbar";
+import AlphabetFilter from "../components/alphabetfilter";
+import Pagination from "../components/pagination";
+import { useStaticQuery, graphql } from "gatsby";
+import BackButton from "../components/backbutton";
 
-const ToolsPage = () => (
-  <Layout>
-    <div className="container my-4">
-      <div className="row">
-      <div className="col-xs-4 col-sm-10">
-        <h1><span className="pe-3"><BsSearch /></span>Tools</h1>
-        <p>List of tools</p>
-      </div>
-      
-      </div>
-      <div className="row">
-        <div className="col-xs-4 col-sm-10">
-        
+const ToolsPage = () => {
+  
+  const storedFilters = useMemo(() => {
+    if (typeof window !== "undefined") {
+      const stored = sessionStorage.getItem("searchFilters");
+      return stored ? JSON.parse(stored) : { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
+    }
+    return { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
+  }, []);
+  
 
-          
-        <ToolsComponent />
+  const [search, setSearch] = useState(storedFilters.search);
+  const [alphabetFilter, setAlphabetFilter] = useState(storedFilters.alphabetFilter);
+  const [conceptsFilter, setConceptsFilter] = useState(storedFilters.conceptsFilter);
+  const [currentPage, setCurrentPage] = useState(storedFilters.currentPage);
+  const [selectedOptions, setSelectedOptions] = useState([]); // Zustand für das Select-Feld
 
+  const handleConceptsChange = useCallback((newConcepts) => {
+    setConceptsFilter(newConcepts);
+  }, []);
 
-        </div>
-        <div className="col-xs-4 col-sm-2">
-        <div class="bd-toc mt-3 mb-5 my-lg-0 mb-lg-5 px-sm-1 text-body-secondary">
-          <button class="btn btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
-            TaDiRAH ID
-          </button>
-          <strong class="d-none d-md-block h6 my-2 ms-3">TaDiRAH ID (to be completed)</strong>
-          <hr class="d-none d-md-block my-2 ms-3" />
-          <div class="bd-toc-collapse" id="tocContents">
-            <nav id="TableOfContents">
-            
-  <ul>
-    <li><a href="#example" class="">Analyzing</a>
-    <ul>
-        <li><a href="#variables" class="">Content Analysis</a></li>
-        <li><a href="#sass-variables" class="">Network Analysis</a></li>
-        <ul>
-        <li><a href="#variables" class="">...</a></li>
-        <li><a href="#sass-variables" class="">...</a></li>
-      </ul>
-      </ul></li>
-    <li><a href="#dividers" class="">Capturing</a>
-    <ul>
-        <li><a href="#variables" class="">Converting</a></li>
-        <li><a href="#sass-variables" class="">Transcribing</a></li>
-        <ul>
-        <li><a href="#variables" class="">...</a></li>
-        <li><a href="#sass-variables" class="">...</a></li>
-      </ul>
-      </ul>
-    
-    </li>
-    <li><a href="#accessibility" class="">Creating</a></li>
-    <li><a href="#css" class="">Disseminating</a>
-    <li><a href="#variables" class="">Enriching</a></li>
-        <li><a href="#sass-variables" class="">Interpreting</a></li>
-      <ul>
-        <li><a href="#variables" class="">...</a></li>
-        <li><a href="#sass-variables" class="">...</a></li>
-        <ul>
-        <li><a href="#variables" class="">...</a></li>
-        <li><a href="#sass-variables" class="">...</a></li>
-      </ul>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </div>
+  const fetchedData = useStaticQuery(graphql`
+    query {
+      allWikidataTadirahTool {
+        nodes {
+          id
+          toolID
+          toolLabel
+          tadirah {
+            tadirahID
+            tadirahLabel
+          }
+        }
+      }
+    }
+  `);
+
+  const data = fetchedData.allWikidataTadirahTool.nodes;
+  const sortedData = data.sort((a, b) => a.toolLabel.localeCompare(b.toolLabel));
+
+  const filteredData = useMemo(() => {
+    return sortedData.filter(item => {
+      const matchesSearch = item.toolLabel.toLowerCase().includes(search.toLowerCase());
+      const matchesAlphabet = alphabetFilter ? item.toolLabel.startsWith(alphabetFilter) : true;
+      const matchesConcepts =
+        conceptsFilter.length > 0
+          ? conceptsFilter.some(concept => {
+            const tadirahLabels = Array.isArray(item.tadirah)
+              ? item.tadirah.map(t => t.tadirahLabel)
+              : [];
+            return tadirahLabels.some(label => label.toLowerCase().includes(concept.toLowerCase()));
+          })
+          : true;
+      return matchesSearch && matchesAlphabet && matchesConcepts;
+    });
+  }, [search, alphabetFilter, conceptsFilter, sortedData]);
+
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const totalResults = filteredData.length;
+
+  const paginatedData = useMemo(() => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    return filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  }, [filteredData, currentPage]);
+
+  // useEffect zum Speichern der Filter in sessionStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const timeout = setTimeout(() => {
+        sessionStorage.setItem("searchFilters", JSON.stringify({ search, alphabetFilter, conceptsFilter, currentPage }));
+      }, 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [search, alphabetFilter, conceptsFilter, currentPage]);
+  
+
+  return (
+    <Layout>
+      <div className="container my-4">
+        {/* Hauptbereich mit drei Spalten */}
+        <div className="row">
+          {/* Linke Spalte für tba 
+          <div className="col-sm-1">
+          </div>*/}
+
+          {/* Mittlere Spalte mit dem Hauptinhalt */}
+          <div className="col-sm-8">
+            <h1>
+              <span className="pe-3">
+                <GoSearch />
+              </span>
+              Tools
+            </h1>
+            <p className="kdh-short-desc">Search for DH tools that are categorised according to the TaDiRAH taxonomy.</p>
+
+            <SearchBar search={search} setSearch={setSearch} />
+            <AlphabetFilter alphabetFilter={alphabetFilter} setAlphabetFilter={setAlphabetFilter} />
+            <div className="row align-items-end">
+              <div className='col-9'>
+                {totalResults} result{totalResults !== 1 ? 's' : ''} found.
+              </div>
+              <div className='col-3 text-end'>
+                <ResetFilters
+                  setSearch={setSearch}
+                  setAlphabetFilter={setAlphabetFilter}
+                  setConceptsFilter={setConceptsFilter}
+                  setCurrentPage={setCurrentPage}
+                  setSelectedOptions={setSelectedOptions} 
+                />
+              </div>
+            </div>
+            <ToolsTableComponent filteredData={paginatedData} />
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+            <BuildTime />
           </div>
-      </div>
-      <div className="row my-3">
-      <div className="col-xs-4 col-sm-5">
-        <Link to="/">Go back to Home</Link>
+          <div className="col-sm-3">
+            <Concepts selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} onConceptsChange={handleConceptsChange} />
+          </div>
         </div>
+        <BackButton />
       </div>
-      </div>
-    </div>
-  </Layout>
-)
+    </Layout>
+  );
+};
 
-export default ToolsPage
+export default ToolsPage;
 
-export const Head = () => (
-    <Seo title="List tools" />
-)
+export const Head = () => <Seo title="List tools" />;

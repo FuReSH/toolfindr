@@ -1,43 +1,74 @@
-import * as React from "react"
-import PropTypes from "prop-types"
-import { StaticImage } from "gatsby-plugin-image"
+import React from "react"
+import { GatsbyImage } from "gatsby-plugin-image"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
+import { GoLinkExternal } from "react-icons/go";
 
-const Footer = ({ siteOrganisation }) => {
-    return (
-      <footer className="pt-3 mt-4 text-muted border-top">
-        <div className="container text-center">
-          <div className="row">
-            <div className="col-sm-12">
-              <small>Created by {siteOrganisation}</small>
-            </div>
 
+import "./footer.scss"
+
+const Footer = () => {
+  const { organisation, organisation_url, images } = useSiteMetadata()
+
+  return (
+    <footer className="pt-3 mt-4 text-muted border-top">
+      <div className="container text-center">
+        {/* Organisation & Lizenz */}
+        <div className="row mb-4">
+          <div className="col-sm-12">
+            <small>
+              Created by{" "}
+              <a
+                href={organisation_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-link icon-hover-link"
+              >
+                {organisation} <GoLinkExternal />
+              </a>
+              <br />
+              All data on tools retrieved from Wikidata licensed under:{" "}
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-link icon-hover-link"
+              >
+                CC0 1.0 Universal <GoLinkExternal />
+              </a>
+            </small>
+            <br />
+            {/* Lizenz-Logo */}
+            <img
+                src="/images/cc-zero.png"
+                alt="License Logo"
+                className="img-fluid m-2"
+                style={{ width: "90px" }}
+              />
           </div>
-          <div className="row">
-            <div className="col-sm-12">
-            <StaticImage
-                    src="../../static/images/HU_Siegel-Kombi_HU-blau_RGB.svg"
-                    width={200}
-                    quality={100}
-                    formats={["AUTO", "WEBP"]}
-                    alt="An opened Scholarly Makerspace box"
-                    className="img-fluid"
-                  />
-            </div>
-
-          </div>
-                
-               
         </div>
-      </footer>
-    )
-  }
 
-  Footer.propTypes = {
-    siteOrganisation: PropTypes.string,
-  }
-  
-  Footer.defaultProps = {
-    siteOrganisation: ``,
-  }
+        {/* Logos */}
+        <div className="row justify-content-center">
+          {images.logos_footer.map((logo) =>
+            logo.image ? (
+              <div key={logo.name} className="col-sm-3 align-self-center mb-3">
+                <GatsbyImage
+                  image={logo.image}
+                  alt={`Footer Logo ${logo.name}`}
+                  className="img-fluid"
+                  style={{ width: "80%" }}
+                />
+              </div>
+            ) : (
+              <div key={logo.name} className="col-sm-3 align-self-center">
+                Image not found: {logo.name}
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    </footer>
+  )
+}
 
-  export default Footer
+export default Footer

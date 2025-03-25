@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import FormCard from "../components/form"
 import Layout from "../components/layout"
 import {Seo} from "../components/seo"
-import { BsFillPencilFill } from "react-icons/bs";
+import { GoPencil } from "react-icons/go";
 
 
 const EditPage = () => (
@@ -11,7 +11,7 @@ const EditPage = () => (
     <div className="container my-4">
       <div className="row justify-content-center">
       <div className="col-xs-4 col-sm-10">
-      <h1 className="card-title"><span className="pe-3"><BsFillPencilFill /></span>Edit tool</h1>
+      <h1 className="card-title"><span className="pe-3"><GoPencil /></span>Edit tool</h1>
       <p className="card-text">Edit tool information</p>
         </div>
       
@@ -33,7 +33,6 @@ const EditPage = () => (
         <button type="button" className="btn btn-primary btn-lg">Save</button>
         </div>
       </div>
-      
     </div>
   </Layout>
 )

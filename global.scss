@@ -1,41 +1,94 @@
 $primary: #0000ff;
+$position-values: (
+  0: 0,
+  5: 5%,
+  10: 10%,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%
+);
+
 @import "~bootstrap/scss/bootstrap";
 
 @font-face {
-    font-family: 'DDIN-Bold';
-    //font-weight: 100 900;
-    font-display: swap;
-    font-style: normal;
-    font-named-instance: 'Bold';
-    src: url(./static/fonts/D-DIN-Bold.woff2) format("woff2");
-  }
+  font-family: 'DDIN-Bold';
+  //font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Bold';
+  src: url(./static/fonts/D-DIN-Bold.woff2) format("woff2");
+}
 
-  @font-face {
-    font-family: 'DDINCondensed';
-    //font-weight: 100 900;
-    font-display: swap;
-    font-style: normal;
-    font-named-instance: 'Regular';
-    src: url(./static/fonts/D-DINCondensed.woff2) format("woff2");
-  }
+@font-face {
+  font-family: 'DDINCondensed';
+  //font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url(./static/fonts/D-DINCondensed.woff2) format("woff2");
+}
 
-  #subtitle {
-    color: $primary;
-  }
+body {
+  background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
 
-  .react-icons {
-    vertical-align: middle;
-  }
+#subtitle {
+  color: $primary;
+}
 
-  a:hover {
-    /*   --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
+.react-icons {
+  vertical-align: middle;
+}
+
+a:hover {
+  /*   --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
       
      */
-     color: $primary;
-     text-decoration: underline;
-    }
+  color: $primary;
+  text-decoration: underline;
+}
 
-  a {
-    text-decoration: none;
-    color: inherit;
+a {
+  color: inherit;
+}
+
+.btn {
+  background-color: white;
+  border-color: var(--bs-btn-hover-border-color);
+
+  &:hover {
+    color: white;
+    background-color: $primary;
   }
+}
+
+.btn-primary {
+  color: white;
+  background-color: $primary;
+}
+
+.start-page-container {
+  -webkit-filter: drop-shadow(1px 1px 5px #717171);
+  filter: drop-shadow(1px 1px 5px #717171);
+}
+
+label {
+  font-weight: bold;
+}
+
+.kdh-short-desc {
+  font-size: calc(1.275rem + .2vw);
+}
+
+hr {
+  margin: 0.6rem 0;
+}
+
+a.anchor {
+  fill: "red";
+}
+
+.custom-anchor {
+  fill: $primary;
+}

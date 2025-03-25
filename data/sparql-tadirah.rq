@@ -1,0 +1,8 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?tadirahID ?tadirahLabel
+WHERE {
+  ?tadirahID skos:prefLabel ?tadirahLabel .
+  FILTER (lang(?tadirahLabel) = "en")
+}
+LIMIT 1000
