@@ -1,4 +1,6 @@
-$primary: #0000ff;
+@import "~bootstrap/scss/bootstrap";
+@import "variables";
+
 $position-values: (
   0: 0,
   5: 5%,
@@ -8,8 +10,6 @@ $position-values: (
   75: 75%,
   100: 100%
 );
-
-@import "~bootstrap/scss/bootstrap";
 
 @font-face {
   font-family: 'DDIN-Bold';
@@ -30,7 +30,7 @@ $position-values: (
 }
 
 body {
-  background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+  background-image: $background;
 }
 
 #subtitle {
@@ -51,6 +51,11 @@ a:hover {
 
 a {
   color: inherit;
+  text-decoration-color: $primary;
+}
+
+.icon-link {
+  text-decoration-color: $primary;
 }
 
 .btn {

@@ -42,7 +42,7 @@ const Concepts = ({ filters, updateFilter }) => {
   };
 
   const primaryColor =
-    isBrowser ? getComputedStyle(document.documentElement).getPropertyValue("--bs-primary").trim() : "";
+    isBrowser ? getComputedStyle(document.documentElement).getPropertyValue("--primary").trim() : "";
   const secondaryColor =
     isBrowser ? getComputedStyle(document.documentElement).getPropertyValue("--bs-gray-300").trim() : "";
 
@@ -97,7 +97,6 @@ const Concepts = ({ filters, updateFilter }) => {
       </p>
       <div className="shadow-sm">
         <Select
-          id="concepts-filter"
           closeMenuOnSelect={false}
           isClearable
           isSearchable

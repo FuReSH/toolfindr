@@ -57,7 +57,7 @@ module.exports = {
           resolve: `gatsby-plugin-sass`,
           options: {
             sassOptions: {
-              precision: 6,
+              precision: 6
             },
           },
         },

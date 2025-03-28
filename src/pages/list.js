@@ -17,7 +17,7 @@ const ToolsPage = () => {
   const { filters, updateFilter, resetFilters } = useSessionStorageFilter();
   const { search, alphabetFilter, conceptsFilter, currentPage } = filters;
 
-  console.log(filters);
+  //console.log(filters);
 
   const fetchedData = useStaticQuery(graphql`
     query {
