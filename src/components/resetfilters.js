@@ -1,14 +1,9 @@
 import React from "react";
 
-const ResetFilters = ({ setSearch, setAlphabetFilter, setConceptsFilter, setCurrentPage, setSelectedOptions }) => {
+const ResetFilters = ({ resetFilters }) => {
   // Funktion zum Zurücksetzen der Filter
   const handleReset = () => {
-    sessionStorage.removeItem("searchFilters"); // Löscht den gespeicherten Zustand
-    setSearch(""); // Setzt die Filter zurück
-    setAlphabetFilter("");
-    setConceptsFilter([]);
-    setCurrentPage(1);
-    setSelectedOptions([]); // Leert das Select-Feld
+    resetFilters();  // Aufruf von resetFilters
   };
 
   return (

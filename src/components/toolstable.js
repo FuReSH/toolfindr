@@ -20,7 +20,6 @@ const ToolsTableComponent = ({ filteredData }) => {
         </thead>
         <tbody className="table-group-divider">
           {filteredData.map(item => (
-            console.log(item),
             <tr key={item.toolID}>
               <td className='p-2'>
                 <div className='badge bg-light text-dark font-monospace'>
