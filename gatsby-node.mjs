@@ -10,8 +10,7 @@ import { QueryEngine } from '@comunica/query-sparql';
 import { LoggerPretty } from '@comunica/logger-pretty';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import path from 'path';
+import path, { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

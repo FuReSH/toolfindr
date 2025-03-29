@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, withPrefix } from 'gatsby';
 import Layout from "../components/layout";
 import BackButton from '../components/backbutton';
@@ -6,8 +6,11 @@ import { GoTools, GoPencil, GoTag, GoRepo, GoHome, GoNote, GoDatabase, GoLog, Go
 import { LiaCopyrightSolid } from "react-icons/lia";
 import BuildTime from '../components/buildtime';
 
+
 const ToolTemplate = ({ pageContext }) => {
   const { tool } = pageContext;
+
+  const [loading, setLoading] = useState(true);
 
   return (
     <Layout>
@@ -26,14 +29,28 @@ const ToolTemplate = ({ pageContext }) => {
             <div className="card bg-light shadow-sm">
               <div className="card-header ps-3">{tool.instanceOfLabels?.join(', ')}</div>
               <div className="clearfix card-body p-3">
+                <div className="position-relative">
+                {/* Spinner for loading status */}
+                {loading && (
+                      <div className="spinner-grow spinner-grow-sm float-end m-3 text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                  )}
+                 
                  {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
                   use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
                 <img
-                  className="img-fluid col-sm-3 float-sm-end mb-3 ms-sm-3"
+                  className={`img-fluid col-sm-3 float-sm-end mb-3 ms-sm-3 ${loading ? "d-none" : ""}`}
                   src={tool.image || withPrefix("/images/tool-dummy.png")}
-                  onError={(e) => { e.target.src = withPrefix("/images/tool-dummy.png") }}
-                  alt={tool.toolLabel || 'No Image'}
-                />
+                  onLoad={() => setLoading(false)}
+                  onError={(e) => {
+                    setLoading(false);
+                    e.target.src = withPrefix("/images/tool-dummy.png");
+                    console.error(e);
+                  }}
+                  alt={tool.toolLabel || 'Image not available'}
+                /> 
+                </div>                
                 <div>
                   <h2 className="card-title d-inline">{tool.toolLabel} </h2>
                   

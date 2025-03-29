@@ -6,4 +6,5 @@ $text: #0a0a19; // Textfarbe
 // CSS-Variablen (zur Laufzeit verfügbar für JS & Stylesheets)
 :root {
   --primary: #{$primary};
+  --text-primary: #{$primary};
 }
