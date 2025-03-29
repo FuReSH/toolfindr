@@ -6,7 +6,7 @@ import { GoTools, GoTag } from "react-icons/go";
 import "./toolstable.scss"
 
 const ToolsTableComponent = ({ filteredData }) => {
-  const regex = /\/([^\/]+)$/;
+  const regex = /\/([^/]+)$/;
 
   return (
     <div>
