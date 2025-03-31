@@ -235,7 +235,7 @@ const ToolTemplate = ({ pageContext }) => {
               <h5><GoPencil /> Enhance the Tool Info</h5>
               <hr />
               <p className='fs-6'>Help us to improve the information about this tool by editing the Wikidata item.</p>
-              <p className='fs-6'>Need help getting started with editing data in Wikidata? Then start <Link to='/explore' className='icon-link'>here</Link>.</p>
+              <p className='fs-6'>Need help getting started with editing data in Wikidata? Then start <Link to='/get-involved' className='icon-link'>here</Link>.</p>
               <div className="alert alert-info shadow-sm">
                 <p className='fs-6'>We recommend that you use your own Wikimedia account for editing on Wikidata. Otherwise, your current IP address will be saved and published as an editor.</p>
               </div>
