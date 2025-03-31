@@ -20,14 +20,14 @@ const ToolTemplate = ({ pageContext }) => {
   const [licenseUrl, setLicenseUrl] = useState(null);
 
   /*
-  JSDOM is used to extract text from HTML strings
-  We need this because the image description from the Wikimedia API is in HTML format sometimes
+  We need this HTML wrapper because the image description from the Wikimedia API is in HTML format sometimes
   and we want to display it as plain text.
   */ 
   const extractText = (htmlString) => {
     if (isBrowser) {
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = htmlString;
+      console.log(htmlString);
       return tempDiv.textContent || tempDiv.innerText || "";
     }
     return htmlString; // Falls Server-Side-Rendering (SSR) aktiv ist
@@ -36,7 +36,7 @@ const ToolTemplate = ({ pageContext }) => {
   /*
   ℹ️ WORKAROUND implentation:
   WikiMedia API requests to get image data 
-  Will be removed when the image data is available in the GraphQL query via local plugin
+  Will be removed in the future if the image data is available in the GraphQL query via local plugin
   */
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const ToolTemplate = ({ pageContext }) => {
             const imageInfo = pages[pageId].imageinfo[0];
             setImageUrl(imageInfo.url);
             setDescURL(imageInfo.descriptionurl);
-            setAuthor(extractText(imageInfo.extmetadata.Artist?.value) || "Unknown");
+            setAuthor(imageInfo.extmetadata.Artist ? extractText(imageInfo.extmetadata.Artist?.value) : "Author not specified");
             setLicense(imageInfo.extmetadata.LicenseShortName?.value || "Unknown");
             setLicenseUrl(imageInfo.extmetadata.LicenseUrl?.value || "#");
           } else {
@@ -77,7 +77,6 @@ const ToolTemplate = ({ pageContext }) => {
       setLoading(false);
     }
   }, [tool.image]);
-
 
   return (
     <Layout>
