@@ -1,16 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, withPrefix } from 'gatsby';
 import Layout from "../components/layout";
 import BackButton from '../components/backbutton';
 import { GoTools, GoPencil, GoTag, GoRepo, GoHome, GoNote, GoDatabase, GoLog, GoInfo, GoLinkExternal, GoVersions } from "react-icons/go";
 import { LiaCopyrightSolid } from "react-icons/lia";
 import BuildTime from '../components/buildtime';
+import useIsBrowser from '../hooks/use-is-browser';
 
 
 const ToolTemplate = ({ pageContext }) => {
   const { tool } = pageContext;
+  const isBrowser = useIsBrowser();
 
   const [loading, setLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [author, setAuthor] = useState(null);
+  const [descURL, setDescURL] = useState("#");
+  const [license, setLicense] = useState(null);
+  const [licenseUrl, setLicenseUrl] = useState(null);
+
+  /*
+  JSDOM is used to extract text from HTML strings
+  We need this because the image description from the Wikimedia API is in HTML format sometimes
+  and we want to display it as plain text.
+  */ 
+  const extractText = (htmlString) => {
+    if (isBrowser) {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = htmlString;
+      return tempDiv.textContent || tempDiv.innerText || "";
+    }
+    return htmlString; // Falls Server-Side-Rendering (SSR) aktiv ist
+  };
+
+  /*
+  ℹ️ WORKAROUND implentation:
+  WikiMedia API requests to get image data 
+  Will be removed when the image data is available in the GraphQL query via local plugin
+  */
+
+  useEffect(() => {
+    if (!tool.image) {
+      setImageUrl(withPrefix("/images/tool-dummy.png"));
+      setLoading(false);
+      return;
+    }
+
+    if (tool.image.includes("Special:FilePath")) {
+      const fileName = decodeURIComponent(tool.image.split("/Special:FilePath/")[1]);
+      const apiUrl = `https://commons.wikimedia.org/w/api.php?action=query&titles=File:${fileName}&prop=imageinfo&iiprop=url|extmetadata&format=json&origin=*`;
+
+      fetch(apiUrl)
+        .then((res) => res.json())
+        .then((data) => {
+          const pages = data.query.pages;
+          const pageId = Object.keys(pages)[0];
+
+          if (pageId !== "-1") {
+            const imageInfo = pages[pageId].imageinfo[0];
+            setImageUrl(imageInfo.url);
+            setDescURL(imageInfo.descriptionurl);
+            setAuthor(extractText(imageInfo.extmetadata.Artist?.value) || "Unknown");
+            setLicense(imageInfo.extmetadata.LicenseShortName?.value || "Unknown");
+            setLicenseUrl(imageInfo.extmetadata.LicenseUrl?.value || "#");
+          } else {
+            setImageUrl(withPrefix("/images/tool-dummy.png"));
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching image data:", error);
+          setImageUrl(withPrefix("/images/tool-dummy.png"));
+        })
+        .finally(() => setLoading(false));
+    } else {
+      setImageUrl(tool.image);
+      setLoading(false);
+    }
+  }, [tool.image]);
+
 
   return (
     <Layout>
@@ -30,35 +97,53 @@ const ToolTemplate = ({ pageContext }) => {
               <div className="card-header ps-3">{tool.instanceOfLabels?.join(', ')}</div>
               <div className="clearfix card-body p-3">
                 <div className="position-relative">
-                {/* Spinner for loading status */}
-                {loading && (
-                      <div className="spinner-grow spinner-grow-sm float-end m-3 text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
+                  {/* Spinner for loading status */}
+                  {loading && (
+                    <div className="spinner-grow spinner-grow-sm float-end m-3 text-primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
                   )}
-                 
-                 {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
+                </div>
+                {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
                   use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
-                <img
-                  className={`img-fluid col-sm-3 float-sm-end mb-3 ms-sm-3 ${loading ? "d-none" : ""}`}
-                  src={tool.image || withPrefix("/images/tool-dummy.png")}
-                  onLoad={() => setLoading(false)}
-                  onError={(e) => {
-                    setLoading(false);
-                    e.target.src = withPrefix("/images/tool-dummy.png");
-                    console.error(e);
-                  }}
-                  alt={tool.toolLabel || 'Image not available'}
-                /> 
-                </div>                
+                <div className="col-sm-3 float-sm-end ms-sm-3">
+                  <img
+                    className="img-fluid mb-2"
+                    src={imageUrl}
+                    onLoad={() => setLoading(false)}
+                    onError={(e) => {
+                      setLoading(false);
+                      e.target.src = withPrefix("/images/tool-dummy.png");
+                      console.error(e);
+                    }}
+                    alt={`${tool.toolLabel} Logo` || 'No image available'}
+                  />
+                  {license !== "Unknown" && tool.image && (
+                    <div className="text-start fs-6">
+                      <small>
+                        <strong>Credit: </strong>
+                        <a href={descURL} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
+                          {author}
+                        </a>
+                        {" | "}
+                        {licenseUrl !== '#' ? (
+                          <a href={licenseUrl} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
+                            {license}
+                          </a>
+                        ) : (
+                          <span>{license}</span>
+                        )}
+                        {" | via Wikimedia Commons"}
+                      </small>
+                    </div>
+                  )}
+                </div>
                 <div>
                   <h2 className="card-title d-inline">{tool.toolLabel} </h2>
-                  
-                  
-                <div className="badge bg-body-secondary text-dark font-monospace align-top">
-                  <img width="30" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' alt='Wikidata Logo' />
-                  {tool.toolID.match(/Q\d+/)?.[0]}
-                </div>
+                  <div className="badge bg-body-secondary text-dark font-monospace align-top">
+                    <img width="30" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' alt='Wikidata Logo' />
+                    {tool.toolID.match(/Q\d+/)?.[0]}
+                  </div>
                 </div>
                 <hr />
 
@@ -95,26 +180,26 @@ const ToolTemplate = ({ pageContext }) => {
                 <div className='row'>
                   <div className='col-sm-auto'>
 
-                  <GoVersions />
-                  <label htmlFor="currentVersion" className='col-form-label-sm ms-1'>Current Version</label>
-                  <p id="currentVersion">
-                    <span className="d-block">
-                      {tool.currentVersion || "No version information available."}
-                    </span>
-                  </p>
+                    <GoVersions />
+                    <label htmlFor="currentVersion" className='col-form-label-sm ms-1'>Current Version</label>
+                    <p id="currentVersion">
+                      <span className="d-block">
+                        {tool.currentVersion || "No version information available."}
+                      </span>
+                    </p>
                   </div>
                   <div className='col-sm-auto'>
 
-                  <LiaCopyrightSolid />
-                  <label htmlFor="copyright" className='col-form-label-sm ms-1'>Copyright</label>
-                  <p id="copyright">{tool.copyright || "No copyright information available."}</p>
+                    <LiaCopyrightSolid />
+                    <label htmlFor="copyright" className='col-form-label-sm ms-1'>Copyright</label>
+                    <p id="copyright">{tool.copyright || "No copyright information available."}</p>
                   </div>
 
                   <div className='col-sm-auto'>
-                  <GoLog />
-                  <label htmlFor="license" className='col-form-label-sm ms-1'>License</label>
-                  <p id="license">{tool.license || "No license information available."}</p>
-                </div>
+                    <GoLog />
+                    <label htmlFor="license" className='col-form-label-sm ms-1'>License</label>
+                    <p id="license">{tool.license || "No license information available."}</p>
+                  </div>
 
                 </div>
 
