@@ -244,7 +244,7 @@ const ToolTemplate = ({ pageContext }) => {
           {/* Rechte Spalte */}
           <div className="col-sm-3">
             <div>
-              <h5><GoPencil /> Enhance the Tool Info</h5>
+              <h5><GoPencil /> Enhance the Tool Data</h5>
               <hr />
               <p className='fs-6'>Help us to improve the information about this tool by editing the Wikidata item.</p>
               <p className='fs-6'>Need help getting started with editing data in Wikidata? Then start <Link to='/get-involved' className='icon-link'>here</Link>.</p>
@@ -263,7 +263,7 @@ const ToolTemplate = ({ pageContext }) => {
             <div className="mt-5">
               <h5><GoInfo /> About the Tool Data</h5>
               <hr />
-              <p className="fs-6">All the data about the tool in the box comes from Wikidata as the data source.</p>
+              <p className="fs-6">All metadata for the tool in the box comes from Wikidata as the data source. The image including credits are obtained directly from Commons.</p>
               <p className="fs-6">
                 Please note that you will only see selected properties for the tool here. For complete information, please refer to the Wikidata Linked Data Interface. Simply click on the ‘Edit on Wikidata’ button.</p>
 
