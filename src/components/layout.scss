@@ -1,20 +1,20 @@
 @import "variables";
 
 body {
-  font-family: "DDIN","Helvetica","Arial",sans-serif;
+  font-family: "DDIN", "Helvetica", sans-serif;
   font-size: 1.1rem;
   color: $text;
   padding-top: 70px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "DDIN-Bold","Helvetica","Arial",sans-serif;
+  font-family: "DDIN-Bold", "Helvetica", sans-serif;
 }
 
 #nav-top {
   background-color: $primary !important;
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15),inset 0 -1px 0 rgba(255,255,255,0.15);
-  font-family: "DDIN-Bold","Helvetica","Arial",sans-serif;
+  font-family: "DDIN-Bold", "Helvetica", sans-serif;
   img {
     width: 40px;
   }

@@ -14,21 +14,34 @@ $position-values: (
 
 @font-face {
   font-family: 'DDIN-Bold';
-  //font-weight: 100 900;
   font-display: swap;
   font-style: normal;
   font-named-instance: 'Bold';
-  src: url(./static/fonts/D-DIN-Bold.woff2) format("woff2");
+  src: 
+    local('DDIN-Bold'),
+    url('#{$font-path}/D-DIN-Bold.woff2') format("woff2");
 }
 
 @font-face {
-  font-family: 'DDINCondensed';
-  //font-weight: 100 900;
+  font-family: 'DDIN';
   font-display: swap;
   font-style: normal;
   font-named-instance: 'Regular';
-  src: url(./static/fonts/D-DINCondensed.woff2) format("woff2");
+  src:
+    local('DDIN'), 
+    url('#{$font-path}/D-DIN.woff2') format("woff2");
 }
+
+@font-face {
+  font-family: 'DDIN-Italic';
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Italic';
+  src: 
+    local('DDIN-Italic'),
+    url('#{$font-path}/D-DIN-Italic.woff2') format("woff2");
+}
+
 
 body {
   background-image: $background;
@@ -77,10 +90,6 @@ a {
 .start-page-container {
   -webkit-filter: drop-shadow(1px 1px 5px #717171);
   filter: drop-shadow(1px 1px 5px #717171);
-}
-
-label {
-  font-weight: bold;
 }
 
 .kdh-short-desc {

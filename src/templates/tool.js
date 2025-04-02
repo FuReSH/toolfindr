@@ -27,7 +27,6 @@ const ToolTemplate = ({ pageContext }) => {
     if (isBrowser) {
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = htmlString;
-      console.log(htmlString);
       return tempDiv.textContent || tempDiv.innerText || "";
     }
     return htmlString; // Falls Server-Side-Rendering (SSR) aktiv ist
@@ -118,7 +117,7 @@ const ToolTemplate = ({ pageContext }) => {
                     alt={`${tool.toolLabel} Logo` || 'No image available'}
                   />
                   {license !== "Unknown" && tool.image && (
-                    <div className="text-start fs-6">
+                    <div className="text-start fs-6" style={{ borderTop: "1.5px dotted #ccc"}}>
                       <small>
                         <strong>Credit: </strong>
                         <a href={descURL} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
@@ -147,13 +146,13 @@ const ToolTemplate = ({ pageContext }) => {
                 <hr />
 
                 <div className='mt-2'><GoNote />
-                  <label htmlFor="toolDesc" className='col-form-label-sm ms-1'>Description</label>
+                  <label htmlFor="toolDesc" className='col-form-label-sm text-uppercase fw-bold ms-1'>Description</label>
                   <p id="toolDesc">{tool.toolDesc}</p></div>
 
 
 
                 <div><GoHome />
-                  <label htmlFor="website" className='col-form-label-sm ms-1'>Website</label>
+                  <label htmlFor="website" className='col-form-label-sm text-uppercase fw-bold ms-1'>Website</label>
                   <p id="website">
                     {Array.isArray(tool.websites) ? tool.websites.map((url, index) => (
                       <span key={index} className="d-block">
@@ -165,7 +164,7 @@ const ToolTemplate = ({ pageContext }) => {
 
                 <div>
                   <GoRepo />
-                  <label htmlFor="sourceRepo" className='col-form-label-sm ms-1'>Source Repository</label>
+                  <label htmlFor="sourceRepo" className='col-form-label-sm text-uppercase fw-bold ms-1'>Source Repository</label>
                   <p id="sourceRepo">
                     {tool.sourceRepos ? tool.sourceRepos.map((url, index) => (
                       <span key={index} className="d-block">
@@ -180,7 +179,7 @@ const ToolTemplate = ({ pageContext }) => {
                   <div className='col-sm-auto'>
 
                     <GoVersions />
-                    <label htmlFor="currentVersion" className='col-form-label-sm ms-1'>Current Version</label>
+                    <label htmlFor="currentVersion" className='col-form-label-sm text-uppercase fw-bold ms-1'>Current Version</label>
                     <p id="currentVersion">
                       <span className="d-block">
                         {tool.currentVersion || "No version information available."}
@@ -190,13 +189,13 @@ const ToolTemplate = ({ pageContext }) => {
                   <div className='col-sm-auto'>
 
                     <LiaCopyrightSolid />
-                    <label htmlFor="copyright" className='col-form-label-sm ms-1'>Copyright</label>
+                    <label htmlFor="copyright" className='col-form-label-sm text-uppercase fw-bold ms-1'>Copyright</label>
                     <p id="copyright">{tool.copyright || "No copyright information available."}</p>
                   </div>
 
                   <div className='col-sm-auto'>
                     <GoLog />
-                    <label htmlFor="license" className='col-form-label-sm ms-1'>License</label>
+                    <label htmlFor="license" className='col-form-label-sm text-uppercase fw-bold ms-1'>License</label>
                     <p id="license">{tool.license || "No license information available."}</p>
                   </div>
 
@@ -205,7 +204,7 @@ const ToolTemplate = ({ pageContext }) => {
                 <div className="row">
                   <div className="col-sm-auto">
                     <GoTag />
-                    <label htmlFor="tadirah" className='col-form-label-sm ms-1'>Category</label>
+                    <label htmlFor="tadirah" className='col-form-label-sm text-uppercase fw-bold ms-1'>Category</label>
                     <p id="tadirah">
                       {tool.tadirah.map((concept, index) => (
                         <span key={index} className="d-block">
@@ -218,7 +217,7 @@ const ToolTemplate = ({ pageContext }) => {
                   </div>
                   {/*<div className="col-sm-auto">
                     <GoDatabase />
-                    <label htmlFor="collection" className='col-form-label-sm ms-1'>Collection</label>
+                    <label htmlFor="collection" className='col-form-label-sm text-uppercase fw-bold ms-1'>Collection</label>
                     <p id="collection">
                       {tool.collectionLabels?.join(', ') || "No collection information available."}
                     </p>
