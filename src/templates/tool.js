@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, withPrefix } from 'gatsby';
 import Layout from "../components/layout";
 import BackButton from '../components/backbutton';
-import { GoTools, GoPencil, GoTag, GoRepo, GoHome, GoNote, GoDatabase, GoLog, GoInfo, GoLinkExternal, GoVersions } from "react-icons/go";
+import { GoTools, GoPencil, GoTag, GoRepo, GoHome, GoNote, GoDatabase, GoLog, GoInfo, GoLinkExternal, GoVersions, GoAlertFill } from "react-icons/go";
 import { LiaCopyrightSolid } from "react-icons/lia";
 import BuildTime from '../components/buildtime';
 import useIsBrowser from '../hooks/use-is-browser';
@@ -13,6 +13,7 @@ const ToolTemplate = ({ pageContext }) => {
   const isBrowser = useIsBrowser();
 
   const [loading, setLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [author, setAuthor] = useState(null);
   const [descURL, setDescURL] = useState("#");
@@ -22,7 +23,7 @@ const ToolTemplate = ({ pageContext }) => {
   /*
   We need this HTML wrapper because the image description from the Wikimedia API is in HTML format sometimes
   and we want to display it as plain text.
-  */ 
+  */
   const extractText = (htmlString) => {
     if (isBrowser) {
       const tempDiv = document.createElement("div");
@@ -105,19 +106,32 @@ const ToolTemplate = ({ pageContext }) => {
                 {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
                   use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
                 <div className="col-sm-3 float-sm-end ms-sm-3">
-                  <img
-                    className="img-fluid mb-2"
-                    src={imageUrl}
-                    onLoad={() => setLoading(false)}
-                    onError={(e) => {
-                      setLoading(false);
-                      e.target.src = withPrefix("/images/tool-dummy.png");
-                      console.error(e);
-                    }}
-                    alt={`${tool.toolLabel} Logo` || 'No image available'}
-                  />
+                  {!imageError ? (
+                    <img
+                      className="img-fluid mb-2"
+                      src={imageUrl}
+                      width="100%"
+                      onLoad={() => setLoading(false)}
+                      onError={(e) => {
+                        setLoading(false);
+                        setImageError(true);
+                        console.error(e);
+                      }}
+                      alt={`${tool.toolLabel} Logo` || "No image available"}
+                    />
+                  ) : (
+                    <div className="alert alert-danger fs-6" role="alert">
+                      <div className="d-flex align-items-center">
+                        <GoAlertFill className='flex-shrink-0 me-2' />
+                        <p class="alert-heading fw-bold mb-0">Oops!</p>
+                      </div>
+                      <p className='mb-0'>There seems to be a problem with the image on Wikimedia Commons.</p>
+                      <hr />
+                      <p className='mb-0'>If you want to fix it: Please check the browser console for more details about the error and fix it directly in Commons if necessary. Follow the first link in the credits.</p>
+                    </div>
+                  )}
                   {license !== "Unknown" && tool.image && (
-                    <div className="text-start fs-6" style={{ borderTop: "1.5px dotted #ccc"}}>
+                    <div className="text-start fs-6" style={{ borderTop: "1.5px dotted #ccc" }}>
                       <small>
                         <strong>Credit: </strong>
                         <a href={descURL} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
