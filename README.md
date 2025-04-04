@@ -1,4 +1,31 @@
-[![Deploy Gatsby site to Pages](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
+<h1 align="center">
+  Frontend Template for the Digital Humanities Tool Registry with Wikidata
+<br />
+<img src="./docs/teaser-img.png" width="50%" alt="Demo DH Tool Registry Website" /> 
+<br />
+<video width="80%" autoplay>
+     <source src="./docs/tr-screencast.mp4" format="video/mp4"></source>
+    Your browser does not support the video tag.
+</video>
+</h1>
+
+[![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
+
+
+- powered by Wikidata SPARQL Service, MediaWiki Action API, GatsbyJS with React and GraphQL, Bootstrap
+<!-- - uses SSR and DFR strategies -->
+- additional libraries: communica for Wikidata retrieval, react-select for multi selection, pm2 for deployment
+
+<!-- Add Abstract here -->
+
+## Content
+
+- Project structure
+- Run locally
+    - ZIP Bundle
+    - Docker
+- Customize the template
+- Development
 
 ## Data Handling with Gatsby
 
