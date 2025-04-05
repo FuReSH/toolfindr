@@ -67,11 +67,11 @@ module.exports = {
         {
           resolve: `gatsby-plugin-manifest`,
           options: {
-            name: `gatsby-starter-bootstrap-5`,
-            short_name: `gb5-starter`,
+            name: `DH Tool Registry Frontend`,
+            short_name: `DH Tool Registry`,
             start_url: `/`,
-            background_color: `#663399`,
-            theme_color: `#663399`,
+            background_color: `#0A05F9`,
+            theme_color: `#0A05F9`,
             display: `standalone`,
             icon: `static/favicon.png`, // This path is relative to the root of the site.
           },
