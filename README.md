@@ -14,19 +14,27 @@
 
 <!-- Add Abstract here -->
 
+👉 **All data grounded by Wikidata and Commons.**
+
 ![](./docs/tr-screenshot.png)
 
 ## Content
 
-- Project structure
-- Run locally
-    - ZIP Bundle
+1. Project structure
+2. Data fetching and data handling
+    - 2.1 SPARQL (Wikidata request)
+    - 2.2 MediaWiki Action API (images)
+    - 2.3 GraphQL (schema)
+3. Installation
+    - Locally
     - Docker
-- Customize the template
-- Development
+4. Customize the template
+    - 4.1 Configure sites metadata
+    - 4.2 Configures styles
+5. Issues and development
 
 
-## Data Handling with Gatsby
+## Data fetching and data handling with Gatsby
 
 - https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/conceptual/data-fetching.md
 
