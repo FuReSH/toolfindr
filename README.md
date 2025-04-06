@@ -14,16 +14,7 @@
 
 <!-- Add Abstract here -->
 
-<div style="display:flex; font-size:0.7rem;">
-<figure>
-<img src="./docs/tr-screenshot-search.png" width="auto" als="Screenshot of the search" />
-<figcaption>Search the DH Tool Registry.</figcaption>
-</figure>
-<figure>
-<img src="./docs/tr-screenshot-detail.png" width="auto" alt="Sreenshot of the detail page">
-<figcaption>Detailed information on a specific DH tool.</figcaption>
-</figure>
-</div>
+![](./docs/tr-screenshot.png)
 
 ## Content
 
