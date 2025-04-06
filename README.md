@@ -3,10 +3,6 @@
 <br />
 <img src="./docs/teaser-img.png" width="50%" alt="Demo DH Tool Registry Website" /> 
 <br />
-<video width="80%" autoplay>
-     <source src="./docs/tr-screencast.mp4" format="video/mp4"></source>
-    Your browser does not support the video tag.
-</video>
 </h1>
 
 [![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
@@ -18,6 +14,17 @@
 
 <!-- Add Abstract here -->
 
+<div style="display:flex; font-size:0.7rem;">
+<figure>
+<img src="./docs/tr-screenshot-search.png" width="auto" als="Screenshot of the search" />
+<figcaption>Search the DH Tool Registry.</figcaption>
+</figure>
+<figure>
+<img src="./docs/tr-screenshot-detail.png" width="auto" alt="Sreenshot of the detail page">
+<figcaption>Detailed information on a specific DH tool.</figcaption>
+</figure>
+</div>
+
 ## Content
 
 - Project structure
@@ -26,6 +33,7 @@
     - Docker
 - Customize the template
 - Development
+
 
 ## Data Handling with Gatsby
 
