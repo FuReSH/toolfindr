@@ -18,21 +18,21 @@
 
 ![](./docs/tr-screenshot.png)
 
-## Content
+## Overview
 
-1. Project structure
-2. Data fetching and data handling
-    - 2.1 SPARQL (Wikidata request)
-    - 2.2 MediaWiki Action API (images)
-    - 2.3 GraphQL (schema)
-3. Installation
+- Project structure
+- Data fetching and data handling
+    - SPARQL (Wikidata request)
+    - MediaWiki Action API (images)
+    - GraphQL (schema)
+- Installation
     - Locally
     - Docker
-4. Customize the template
-    - 4.1 Configure sites metadata
-    - 4.2 Configures styles
-5. Issues and development
-
+- Customize the template
+    - Configure sites metadata
+    - Configures styles
+- Issues and development
+- Further Reading
 
 ## Data fetching and data handling with Gatsby
 

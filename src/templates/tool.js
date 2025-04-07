@@ -1,82 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Link, withPrefix } from 'gatsby';
+import React, { useState } from 'react';
+import { Link } from 'gatsby';
 import Layout from "../components/layout";
 import BackButton from '../components/backbutton';
 import { GoTools, GoPencil, GoTag, GoRepo, GoHome, GoNote, GoDatabase, GoLog, GoInfo, GoLinkExternal, GoVersions, GoAlertFill } from "react-icons/go";
 import { LiaCopyrightSolid } from "react-icons/lia";
 import BuildTime from '../components/buildtime';
-import useIsBrowser from '../hooks/use-is-browser';
+import { useCommonsImageInfo } from '../hooks/use-commons-image-info';
 
 
 const ToolTemplate = ({ pageContext }) => {
   const { tool } = pageContext;
-  const isBrowser = useIsBrowser();
+  const { url, author, license, licenseUrl, descUrl, loading } = useCommonsImageInfo(tool.image);
 
-  const [loading, setLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [author, setAuthor] = useState(null);
-  const [descURL, setDescURL] = useState("#");
-  const [license, setLicense] = useState(null);
-  const [licenseUrl, setLicenseUrl] = useState(null);
-
-  /*
-  We need this HTML wrapper because the image description from the Wikimedia API is in HTML format sometimes
-  and we want to display it as plain text.
-  */
-  const extractText = (htmlString) => {
-    if (isBrowser) {
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = htmlString;
-      return tempDiv.textContent || tempDiv.innerText || "";
-    }
-    return htmlString; // Falls Server-Side-Rendering (SSR) aktiv ist
-  };
-
-  /*
-  ℹ️ WORKAROUND implentation:
-  WikiMedia API requests to get image data 
-  Will be removed in the future if the image data is available in the GraphQL query via local plugin
-  */
-
-  useEffect(() => {
-    if (!tool.image) {
-      setImageUrl(withPrefix("/images/tool-dummy.png"));
-      setLoading(false);
-      return;
-    }
-
-    if (tool.image.includes("Special:FilePath")) {
-      const fileName = decodeURIComponent(tool.image.split("/Special:FilePath/")[1]);
-      const apiUrl = `https://commons.wikimedia.org/w/api.php?action=query&titles=File:${fileName}&prop=imageinfo&iiprop=url|extmetadata&format=json&origin=*`;
-
-      fetch(apiUrl)
-        .then((res) => res.json())
-        .then((data) => {
-          const pages = data.query.pages;
-          const pageId = Object.keys(pages)[0];
-
-          if (pageId !== "-1") {
-            const imageInfo = pages[pageId].imageinfo[0];
-            setImageUrl(imageInfo.url);
-            setDescURL(imageInfo.descriptionurl);
-            setAuthor(imageInfo.extmetadata.Artist ? extractText(imageInfo.extmetadata.Artist?.value) : "Author not specified");
-            setLicense(imageInfo.extmetadata.LicenseShortName?.value || "Unknown");
-            setLicenseUrl(imageInfo.extmetadata.LicenseUrl?.value || "#");
-          } else {
-            setImageUrl(withPrefix("/images/tool-dummy.png"));
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching image data:", error);
-          setImageUrl(withPrefix("/images/tool-dummy.png"));
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setImageUrl(tool.image);
-      setLoading(false);
-    }
-  }, [tool.image]);
 
   return (
     <Layout>
@@ -103,50 +39,51 @@ const ToolTemplate = ({ pageContext }) => {
                     </div>
                   )}
                 </div>
-                {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
-                  use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
                 <div className="col-sm-3 float-sm-end ms-sm-3">
                   {!imageError ? (
-                    <img
-                      className="img-fluid mb-2"
-                      src={imageUrl}
-                      width="100%"
-                      onLoad={() => setLoading(false)}
-                      onError={(e) => {
-                        setLoading(false);
-                        setImageError(true);
-                        console.error(e);
-                      }}
-                      alt={`${tool.toolLabel} Logo` || "No image available"}
-                    />
+                    <figure className="figure">
+                      {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
+                    use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
+                      <img
+                        className="figure-img img-fluid mb-2"
+                        src={url}
+                        width="100%"
+                        onLoad={() => loading}
+                        onError={(e) => {
+                          setImageError(true);
+                          console.error(e);
+                        }}
+                        alt={loading ? "" : `${tool.toolLabel} Logo` || "No image available"}
+                      />
+                      {license !== "Unknown" && tool.image && (
+                        <figcaption className="figure-caption" style={{ borderTop: "1.5px dotted #ccc" }}>
+                          <small>
+                            <strong>CREDIT </strong>
+                            <a href={descUrl} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
+                              {author}
+                            </a>
+                            {" | "}
+                            {licenseUrl !== '#' ? (
+                              <a href={licenseUrl} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
+                                {license}
+                              </a>
+                            ) : (
+                              <span>{license}</span>
+                            )}
+                            {" | via Wikimedia Commons"}
+                          </small>
+                        </figcaption>
+                      )}
+                    </figure>
                   ) : (
                     <div className="alert alert-danger fs-6" role="alert">
                       <div className="d-flex align-items-center">
                         <GoAlertFill className='flex-shrink-0 me-2' />
-                        <p class="alert-heading fw-bold mb-0">Oops!</p>
+                        <p className="alert-heading fw-bold mb-0">Oops!</p>
                       </div>
                       <p className='mb-0'>There seems to be a problem with the image on Wikimedia Commons.</p>
                       <hr />
                       <p className='mb-0'>If you want to fix it: Please check the browser console for more details about the error and fix it directly in Commons if necessary. Follow the first link in the credits.</p>
-                    </div>
-                  )}
-                  {license !== "Unknown" && tool.image && (
-                    <div className="text-start fs-6" style={{ borderTop: "1.5px dotted #ccc" }}>
-                      <small>
-                        <strong>Credit: </strong>
-                        <a href={descURL} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
-                          {author}
-                        </a>
-                        {" | "}
-                        {licenseUrl !== '#' ? (
-                          <a href={licenseUrl} target="_blank" rel="noopener noreferrer" className='icon-link icon-link-hover'>
-                            {license}
-                          </a>
-                        ) : (
-                          <span>{license}</span>
-                        )}
-                        {" | via Wikimedia Commons"}
-                      </small>
                     </div>
                   )}
                 </div>
@@ -162,8 +99,6 @@ const ToolTemplate = ({ pageContext }) => {
                 <div className='mt-2'><GoNote />
                   <label htmlFor="toolDesc" className='col-form-label-sm text-uppercase fw-bold ms-1'>Description</label>
                   <p id="toolDesc">{tool.toolDesc}</p></div>
-
-
 
                 <div><GoHome />
                   <label htmlFor="website" className='col-form-label-sm text-uppercase fw-bold ms-1'>Website</label>
