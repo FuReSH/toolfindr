@@ -65,6 +65,14 @@ npx comunica-sparql https://query.wikidata.org/sparql https://vocabs-downloads.a
 - Images from Commons can be used outside 
 - Need license requirements: https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia
 
+## Gatsby Cli
+
+Explore the project e.g. schema, nodes, pages etc.
+
+`npm run repl`
+
+https://www.gatsbyjs.com/docs/reference/gatsby-cli/#repl
+
 ## Erros in the build-time React SSR process
 
 ### Browser globals (window or document)

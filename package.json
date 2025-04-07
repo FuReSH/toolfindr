@@ -2,7 +2,7 @@
   "name": "@furesh/a-wikidata-based-dh-tool-registry-frontend",
   "private": false,
   "description": "A tool registry frontend template with local Wikidata plugin",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "author": "@sopheck",
   "dependencies": {
     "@comunica/query-sparql": "^3.2.3",
@@ -48,6 +48,9 @@
   "keywords": [
     "gatsby",
     "wikidata",
+    "tadirah",
+    "digital humanities",
+    "tool registry",
     "bootstrap",
     "sass"
   ],
@@ -60,7 +63,9 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "repl": "gatsby repl",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useIsBrowser } from "./use-is-browser";
 import { withPrefix } from "gatsby";
 import { extractText } from "../utils/set-html-wrapper";
 
@@ -26,8 +25,6 @@ export const useCommonsImageInfo = (imageUrl) => {
     loading: true,
   });
 
-  //const isBrowser = useIsBrowser();
-
   useEffect(() => {
 
     if (!imageUrl || !imageUrl.includes("Special:FilePath")) {
@@ -36,7 +33,12 @@ export const useCommonsImageInfo = (imageUrl) => {
     }
 
     const fileName = decodeURIComponent(imageUrl.split("/Special:FilePath/")[1]);
-    const apiUrl = `https://commons.wikimedia.org/w/api.php`;
+    const apiUrl = process.env.GATSBY_COMMONS_API_URL;
+
+    if (!process.env.GATSBY_COMMONS_API_URL) {
+      console.warn("GATSBY_COMMONS_API_URL is not defined. Please set it in your .env file.");
+    }
+    
     const params = {
         action: "query",
         format: "json",
