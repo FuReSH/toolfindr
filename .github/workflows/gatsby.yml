@@ -72,10 +72,12 @@ jobs:
           path: |
             public
             .cache
-          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('public') }}
+            node_modules
+          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('package-lock.json') }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
+        if: github.event_name == 'push'
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Gatsby
         env:

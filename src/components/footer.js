@@ -2,7 +2,7 @@ import React from "react"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 import { GoLinkExternal } from "react-icons/go";
-
+import { withPrefix } from 'gatsby'
 
 import "./footer.scss"
 
@@ -37,9 +37,10 @@ const Footer = () => {
               </a>
             </small>
             <br />
-            {/* Lizenz-Logo */}
+            {/* Lizenz-Logo 
+            use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
             <img
-                src="/images/cc-zero.png"
+                src={withPrefix('/images/cc-zero.png')}
                 alt="License Logo"
                 className="img-fluid m-2"
                 style={{ width: "90px" }}

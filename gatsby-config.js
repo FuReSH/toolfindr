@@ -1,4 +1,8 @@
 module.exports = {
+  flags: {
+    DEV_SSR: true,
+    PRESERVE_FILE_DOWNLOAD_CACHE: true,
+  },
   pathPrefix: `/tool-storage-interface`,
   siteMetadata: {
     title: `KDH | Tool Storage`,
@@ -57,6 +61,9 @@ module.exports = {
             sassOptions: {
               precision: 6,
             },
+            ...(process.env.NODE_ENV === 'production' && {
+              additionalData: `$pathPrefix: "/tool-storage-interface";`, // Spread operator to add additional options dynamically
+            }),
           },
         },
         {

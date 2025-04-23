@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useMemo } from "react";
 import ToolsTableComponent from "../components/toolstable";
 import Layout from "../components/layout";
 import { Seo } from "../components/seo";
@@ -11,27 +11,13 @@ import AlphabetFilter from "../components/alphabetfilter";
 import Pagination from "../components/pagination";
 import { useStaticQuery, graphql } from "gatsby";
 import BackButton from "../components/backbutton";
+import useSessionStorageFilter from "../hooks/use-session-storage-filter";
 
 const ToolsPage = () => {
-  
-  const storedFilters = useMemo(() => {
-    if (typeof window !== "undefined") {
-      const stored = sessionStorage.getItem("searchFilters");
-      return stored ? JSON.parse(stored) : { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
-    }
-    return { search: '', alphabetFilter: '', conceptsFilter: [], currentPage: 1 };
-  }, []);
-  
+  const { filters, updateFilter, resetFilters } = useSessionStorageFilter();
+  const { search, alphabetFilter, conceptsFilter, currentPage } = filters;
 
-  const [search, setSearch] = useState(storedFilters.search);
-  const [alphabetFilter, setAlphabetFilter] = useState(storedFilters.alphabetFilter);
-  const [conceptsFilter, setConceptsFilter] = useState(storedFilters.conceptsFilter);
-  const [currentPage, setCurrentPage] = useState(storedFilters.currentPage);
-  const [selectedOptions, setSelectedOptions] = useState([]); // Zustand für das Select-Feld
-
-  const handleConceptsChange = useCallback((newConcepts) => {
-    setConceptsFilter(newConcepts);
-  }, []);
+  //console.log(filters);
 
   const fetchedData = useStaticQuery(graphql`
     query {
@@ -59,11 +45,11 @@ const ToolsPage = () => {
       const matchesConcepts =
         conceptsFilter.length > 0
           ? conceptsFilter.some(concept => {
-            const tadirahLabels = Array.isArray(item.tadirah)
-              ? item.tadirah.map(t => t.tadirahLabel)
-              : [];
-            return tadirahLabels.some(label => label.toLowerCase().includes(concept.toLowerCase()));
-          })
+              const tadirahLabels = Array.isArray(item.tadirah)
+                ? item.tadirah.map(t => t.tadirahLabel)
+                : [];
+              return tadirahLabels.some(label => label.toLowerCase().includes(concept.toLowerCase()));
+            })
           : true;
       return matchesSearch && matchesAlphabet && matchesConcepts;
     });
@@ -79,27 +65,10 @@ const ToolsPage = () => {
     return filteredData.slice(indexOfFirstItem, indexOfLastItem);
   }, [filteredData, currentPage]);
 
-  // useEffect zum Speichern der Filter in sessionStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const timeout = setTimeout(() => {
-        sessionStorage.setItem("searchFilters", JSON.stringify({ search, alphabetFilter, conceptsFilter, currentPage }));
-      }, 300);
-      return () => clearTimeout(timeout);
-    }
-  }, [search, alphabetFilter, conceptsFilter, currentPage]);
-  
-
   return (
     <Layout>
       <div className="container my-4">
-        {/* Hauptbereich mit drei Spalten */}
         <div className="row">
-          {/* Linke Spalte für tba 
-          <div className="col-sm-1">
-          </div>*/}
-
-          {/* Mittlere Spalte mit dem Hauptinhalt */}
           <div className="col-sm-8">
             <h1>
               <span className="pe-3">
@@ -109,28 +78,23 @@ const ToolsPage = () => {
             </h1>
             <p className="kdh-short-desc">Search for DH tools that are categorised according to the TaDiRAH taxonomy.</p>
 
-            <SearchBar search={search} setSearch={setSearch} />
-            <AlphabetFilter alphabetFilter={alphabetFilter} setAlphabetFilter={setAlphabetFilter} />
+            <SearchBar search={search} setSearch={(val) => updateFilter({ search: val })} />
+            <AlphabetFilter alphabetFilter={alphabetFilter} setAlphabetFilter={(val) => updateFilter({ alphabetFilter: val })} />
+            
             <div className="row align-items-end">
               <div className='col-9'>
                 {totalResults} result{totalResults !== 1 ? 's' : ''} found.
               </div>
               <div className='col-3 text-end'>
-                <ResetFilters
-                  setSearch={setSearch}
-                  setAlphabetFilter={setAlphabetFilter}
-                  setConceptsFilter={setConceptsFilter}
-                  setCurrentPage={setCurrentPage}
-                  setSelectedOptions={setSelectedOptions} 
-                />
+              <ResetFilters resetFilters={resetFilters} />
               </div>
             </div>
             <ToolsTableComponent filteredData={paginatedData} />
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(val) => updateFilter({ currentPage: val })} />
             <BuildTime />
           </div>
           <div className="col-sm-3">
-            <Concepts selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} onConceptsChange={handleConceptsChange} />
+            <Concepts filters={filters} updateFilter={updateFilter} />
           </div>
         </div>
         <BackButton />

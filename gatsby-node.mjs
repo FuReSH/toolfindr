@@ -10,8 +10,7 @@ import { QueryEngine } from '@comunica/query-sparql';
 import { LoggerPretty } from '@comunica/logger-pretty';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import path from 'path';
+import path, { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -78,7 +77,13 @@ export const sourceNodes = async ({ actions, createNodeId, reporter, cache }) =>
       const query = await fs.readFile('./data/sparql-wikidata.rq', 'utf8');
       reporter.info(`📜 Loaded Wikidata SPARQL query:\n${query}`);
 
-      const bindingsStream = await toolsEngine.queryBindings(query, { sources: ['https://query.wikidata.org/sparql'] });
+      const bindingsStream = await toolsEngine.queryBindings(query, { 
+        sources: ['https://query.wikidata.org/sparql'],
+        httpRetryOnServerError: true,
+        httpRetryCount: 3,
+        httpRetryDelay: 100, 
+      });
+
       toolsData = [];
       
       for await (const row of bindingsStream) {
@@ -126,7 +131,13 @@ export const sourceNodes = async ({ actions, createNodeId, reporter, cache }) =>
       `;
       reporter.info('📡 Executing SPARQL query for TADIRAH concepts...');
 
-      const tadirahStream = await toolsEngine.queryBindings(tadirahQuery, { sources: [`https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl`] });
+      const tadirahStream = await toolsEngine.queryBindings(tadirahQuery, { 
+        sources: [`https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl`], 
+        httpRetryOnServerError: true,
+        httpRetryCount: 3,
+        httpRetryDelay: 100,
+      });
+
       tadirahData = [];
 
       for await (const row of tadirahStream) {

@@ -2,7 +2,7 @@
   "name": "@furesh/a-wikidata-based-dh-tool-registry-frontend",
   "private": false,
   "description": "A tool registry frontend template with local Wikidata plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "@sopheck",
   "dependencies": {
     "@comunica/query-sparql": "^3.2.3",
@@ -41,7 +41,9 @@
       "react": "^18.2.0"
     },
     "webpack-dev-middleware": "^5.3.4",
-    "postcss": "^8.4.41"
+    "postcss": "^8.4.41",
+    "cookie": "^0.7.0",
+    "path-to-regexp": "^0.1.12"
   },
   "keywords": [
     "gatsby",
@@ -52,7 +54,7 @@
   "license": "0BSD",
   "scripts": {
     "deploy": "gatsby build --prefix-paths && gatsby serve --prefix-paths",
-    "build": "gatsby build --prefix-paths",
+    "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
