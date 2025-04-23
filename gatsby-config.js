@@ -5,8 +5,6 @@ module.exports = {
   },
   pathPrefix: `/tool-storage-interface`,
   siteMetadata: {
-    title: `KDH | Tool Storage`,
-    description: `Wikidata based tool registry used by the Kompetenzwerkstatt Digital Humanities.`,
     author: `@sopheck`,
     title: `DH Tool Registry`,
     subtitle_short: `KDH`,
