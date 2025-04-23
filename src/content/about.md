@@ -21,9 +21,9 @@ Digital Humanities tool directories are an essential service for researchers and
 
 The Digital Humanities Scholarship Team at the University Library at Humboldt-Universität zu Berlin together with the Methods Innovation Lab in NFDI4Memory, also located at Humboldt-Universität zu Berlin, jointly propose [a modular approach to the Tool Registry format](https://www.wikidata.org/wiki/Wikidata:WikiProject_DH_Tool_Registry), where the data will be stored in Wikidata, and which in short follows three directives:
 
-a) the data is relatively independent from any specific web application and from any specific institutional setup (apart from Wikidata:) 
-b) the basic data model is minimal and modular (can be expanded), so data can be pooled and curated for specific purposes at the same time
-c) the frontend can be re-used to show curated datasets based on specific queries
+1. the data is relatively independent from any specific web application and from any specific institutional setup (apart from Wikidata:) 
+2. the basic data model is minimal and modular (can be expanded), so data can be pooled and curated for specific purposes at the same time
+3. the frontend can be re-used to show curated datasets based on specific queries
 
 We expect that software tools used in Digital Humanities contexts can be categorized using the [TaDiRAH taxonomy](https://vocabs.dariah.eu/tadirah/), so for this proof-of-concept instance we retrieve all items from Wikidata that have a Tadirah-ID. Please see the [Data Model](https://www.wikidata.org/wiki/Wikidata:WikiProject_DH_Tool_Registry/Data_Model) for further detail.
 
@@ -37,9 +37,9 @@ The application you are visiting is part of our proof of concept for the modular
 
 The application provides search and browsing functions for the resulting dataset and a nicer view on single items. In the search view, you can search for items in three ways:
 
-#. search by name or label, using the search slot on the top of the page; e.g. search for Gephi, a network visualization tool
-#. browse the sorted list using the alphabetic shortcuts (or the complete list)
-#. filter by TaDiRAH categories using the drop-down menu on the right, in order to find tools for specific DH activities; e.g. show tools for Bistream Preservation or any other TaDiRAH category
+1. search by name or label, using the search slot on the top of the page; e.g. search for Gephi, a network visualization tool
+2. browse the sorted list using the alphabetic shortcuts (or the complete list)
+3. filter by TaDiRAH categories using the drop-down menu on the right, in order to find tools for specific DH activities; e.g. show tools for Bistream Preservation or any other TaDiRAH category
 
 ### View single entries
 By clicking an entry in the list, you can view detailed information about the tool. As we do not show all information available from Wikidata, you might want to take a look at the wikidata entry. The blue "Edit on Wikidata" on the right side of the page will bring you to the Wikidata entity, where you can browse the data -- and even edit it!
