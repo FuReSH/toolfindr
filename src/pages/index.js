@@ -14,14 +14,14 @@ const IndexPage = () => (
       <div className="container">
       <div className="row g-2 align-items-lg-stretch">
         <div className="col-md-4">
-          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
+          <div className="h-100 p-4 border rounded-3 item-box shadow-sm">
             <h2>About</h2>
             <p>Find information about the DH Tool Registry and how it is used in the Kompetenzwerkstatt Digital Humanities.</p>
             <Link to="/about/" className="btn btn-primary icon-link icon-hover-link shadow-sm"><GoInfo /> About</Link>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
+          <div className="h-100 p-4 border rounded-3 item-box shadow-sm">
             <h2>Search</h2>
             <p>Search for DH tools that are categorised according to the TaDiRAH taxonomy.</p>
             <Link to="/list/" className="btn btn-primary icon-link icon-hover-link shadow-sm"><GoSearch /> Search</Link>
@@ -29,7 +29,7 @@ const IndexPage = () => (
         </div>
        
         <div className="col-md-4">
-          <div className="h-100 p-4 bg-light border rounded-3 shadow-sm">
+          <div className="h-100 p-4 border rounded-3 item-box shadow-sm">
             <h2>Get Involved</h2>
             <p>Learn how you can contribute to continuously improving the data quality of DH tools in Wikidata.</p>
             <Link to="/get-involved/" className="btn btn-primary icon-link icon-hover-link shadow-sm"><GoCommentDiscussion /> Get Involved</Link>

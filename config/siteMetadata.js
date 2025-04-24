@@ -8,7 +8,7 @@ module.exports = {
     organisation_url: `https://blogs.hu-berlin.de/furesh/`,
     images: {
       logo_title: `KDH - Logo Symbol - HU Digital Blau.png`,
-      logo_navbar: `KDH - Logo Symbol - White.png`,
+      logo_navbar: `KDH - Logo Symbol - HU Digital Blau.png`,
       logos_footer: [
         `KDH - Primary Logo - HU Digital Blau.png`,
         `Logo_for_memory_RGB.png`,

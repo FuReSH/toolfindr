@@ -28,7 +28,7 @@ const ToolTemplate = ({ pageContext }) => {
             <h1><span className="pe-3"><GoTools /></span>Tool Info</h1>
             <p className='kdh-short-desc'>Information about the tool retrieved from Wikidata.</p>
 
-            <div className="card bg-light shadow-sm">
+            <div className="card shadow-sm">
               <div className="card-header ps-3">{tool.instanceOfLabels?.join(', ')}</div>
               <div className="clearfix card-body p-3">
                 <div className="position-relative">

@@ -42,13 +42,24 @@ $position-values: (
     url('#{$font-path}/D-DIN-Italic.woff2') format("woff2");
 }
 
-
 body {
   background-image: $background;
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #subtitle {
   color: $primary;
+}
+
+.card {
+  background: #ffffff;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 100%);
+}
+.item-box {
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .react-icons {
