@@ -21,39 +21,37 @@ const ToolsPage = () => {
 
   const fetchedData = useStaticQuery(graphql`
     query {
-      allWikidataTadirahTool {
+      allResearchTool(sort: {_id: ASC}) {
         nodes {
           id
-          toolID
-          toolLabel
-          tadirah {
-            tadirahID
-            tadirahLabel
+          _id
+          concepts {
+            _id
+            label
           }
         }
       }
     }
   `);
 
-  const data = fetchedData.allWikidataTadirahTool.nodes;
-  const sortedData = data.sort((a, b) => a.toolLabel.localeCompare(b.toolLabel));
+  const data = fetchedData.allResearchTool.nodes;
 
   const filteredData = useMemo(() => {
-    return sortedData.filter(item => {
-      const matchesSearch = item.toolLabel.toLowerCase().includes(search.toLowerCase());
-      const matchesAlphabet = alphabetFilter ? item.toolLabel.startsWith(alphabetFilter) : true;
+    return data.filter(item => {
+      const matchesSearch = item.label.toLowerCase().includes(search.toLowerCase());
+      const matchesAlphabet = alphabetFilter ? item.label.startsWith(alphabetFilter) : true;
       const matchesConcepts =
         conceptsFilter.length > 0
           ? conceptsFilter.some(concept => {
-              const tadirahLabels = Array.isArray(item.tadirah)
-                ? item.tadirah.map(t => t.tadirahLabel)
+              const tadirahLabels = Array.isArray(item.concepts)
+                ? item.concepts.map(t => t.label)
                 : [];
               return tadirahLabels.some(label => label.toLowerCase().includes(concept.toLowerCase()));
             })
           : true;
       return matchesSearch && matchesAlphabet && matchesConcepts;
     });
-  }, [search, alphabetFilter, conceptsFilter, sortedData]);
+  }, [search, alphabetFilter, conceptsFilter, data]);
 
   const itemsPerPage = 20;
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
