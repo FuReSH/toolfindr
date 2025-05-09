@@ -81,7 +81,8 @@ export const sourceNodes = async ({ actions, createNodeId, reporter, cache }) =>
         sources: ['https://query.wikidata.org/sparql'],
         httpRetryOnServerError: true,
         httpRetryCount: 3,
-        httpRetryDelay: 100, 
+        httpRetryDelay: 100,
+        noCache: false, 
       });
 
       toolsData = [];
@@ -178,7 +179,7 @@ export const sourceNodes = async ({ actions, createNodeId, reporter, cache }) =>
       },
     });
   
-    reporter.info(`🪢 Node created for tool ${toolData.toolLabel}`);
+    //reporter.info(`🪢 Node created for tool ${toolData.toolLabel}`);
   });
   
 
@@ -193,12 +194,12 @@ export const sourceNodes = async ({ actions, createNodeId, reporter, cache }) =>
       parent: null,
       children: [],
       internal: {
-        type: 'TadirahConcept',
+        type: 'TadirahConcept2',
         contentDigest: nodeContentDigest,
       },
     });
 
-    reporter.info(`🪢 Node created for TADIRAH concept ${concept.tadirahLabel}`);
+    //reporter.info(`🪢 Node created for TADIRAH concept ${concept.tadirahLabel}`);
   });
 
   reporter.info('🙌 SPARQL data processing completed.');

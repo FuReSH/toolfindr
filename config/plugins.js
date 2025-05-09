@@ -9,7 +9,11 @@ module.exports = [
     resolve: `gatsby-source-filesystem`,
     options: opts,
   })),
-
+    // Lokales Plugin für Research Tool Registry
+    {
+      resolve: require.resolve(`../plugins/gatsby-source-research-tools`),
+      options: {},
+    },
   {
     resolve: `gatsby-transformer-remark`,
     options: {

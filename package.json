@@ -4,6 +4,10 @@
   "description": "A tool registry frontend template with local Wikidata plugin",
   "version": "0.2.3",
   "author": "@sopheck",
+  "workspaces": [
+    ".",
+    "plugins/*"
+  ],
   "dependencies": {
     "@comunica/query-sparql": "^3.2.3",
     "@comunica/query-sparql-file": "^3.2.3",
@@ -34,7 +38,10 @@
     "sparql-http-client": "^3.0.0"
   },
   "devDependencies": {
-    "prettier": "2.5.1"
+    "@types/node": "^18.15.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.3",
+    "typescript": "^5.0.0"
   },
   "overrides": {
     "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
@@ -50,22 +57,26 @@
     "wikidata",
     "tadirah",
     "digital humanities",
-    "tool registry",
-    "bootstrap",
-    "sass"
+    "tool registry"
   ],
   "license": "0BSD",
   "scripts": {
-    "deploy": "gatsby build --prefix-paths && gatsby serve --prefix-paths",
-    "build": "gatsby build",
+    "deploy": "npm run build:plugins && gatsby build --prefix-paths && gatsby serve --prefix-paths",
+    "build": "npm run build:plugins && gatsby build",
     "develop": "gatsby develop",
+    "dev": "npm run build:plugins && gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "repl": "gatsby repl",
-    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\""
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    
+    "install:all": "npm install",
+    "build:plugin": "npm run build --workspace=plugins/gatsby-source-research-tools",
+    
+    "watch:plugin": "npm run watch --workspace=plugins/gatsby-source-research-tools"
   },
   "repository": {
     "type": "git",

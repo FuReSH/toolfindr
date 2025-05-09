@@ -1,0 +1,25 @@
+{
+    "name": "gatsby-source-wikidata-tadirah",
+    "version": "0.1.0",
+    "license": "0BSD",
+    "author": "@sopheck",
+    "description": "Local Gatsby plugin for fetching Research Tools data from Wikidata using SPARQL and REST.",
+    "main": "gatsby-node.js",
+    "scripts": {
+      "build": "tsc",
+      "watch": "tsc -w"
+    },
+    "keywords": [
+      "gatsby",
+      "gatsby-plugin",
+      "wikidata",
+      "sparql",
+      "rest"
+    ],
+    "dependencies": {
+      "@comunica/query-sparql": "^2.8.1",
+      "@comunica/logger-pretty": "^2.5.0",
+      "node-polyfill-webpack-plugin": "^2.0.1",
+      "crypto": "^1.0.1"
+    }
+  }
