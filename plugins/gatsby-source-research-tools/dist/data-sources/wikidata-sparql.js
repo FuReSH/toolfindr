@@ -19,11 +19,7 @@ class WikidataSparqlSource extends base_data_source_1.BaseDataSource {
         super(endpoint, options);
         this.engine = new query_sparql_1.QueryEngine();
         this.endpoint = "https://query.wikidata.org/sparql";
-    }
-    fetchData() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const query = `
+        this.query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
             PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
@@ -36,42 +32,46 @@ class WikidataSparqlSource extends base_data_source_1.BaseDataSource {
             ORDER BY ?tool
             LIMIT 1000000
         `;
-                const bindingsStream = yield this.engine.queryBindings(query, {
-                    sources: [this.endpoint],
-                    httpRetryOnServerError: true,
-                    httpRetryCount: 3,
-                    httpRetryDelay: 100,
-                    noCache: false,
-                });
-                return new Promise((resolve, reject) => {
-                    const items = [];
-                    bindingsStream.on('data', (binding) => {
-                        // Verarbeite jedes Binding einzeln
-                        items.push({
-                            id: binding.get('tool').value,
-                            tadirahId: `https://vocabs.dariah.eu/tadirah/${binding.get('tadirahId').value}`,
-                        });
-                    });
-                    bindingsStream.on('end', () => {
-                        resolve(items);
-                    });
-                    bindingsStream.on('error', (error) => {
-                        reject(error);
+    }
+    fetchData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const bindingsStream = yield this.engine.queryBindings(this.query, {
+                sources: [this.endpoint],
+                httpRetryOnServerError: true,
+                httpRetryCount: 3,
+                httpRetryDelay: 100,
+                noCache: false,
+            });
+            return new Promise((resolve, reject) => {
+                const items = [];
+                bindingsStream.on('data', (binding) => {
+                    // Verarbeite jedes Binding einzeln
+                    items.push({
+                        id: binding.get('tool').value,
+                        tadirahId: `https://vocabs.dariah.eu/tadirah/${binding.get('tadirahId').value}`,
                     });
                 });
-            }
-            catch (error) {
-                return error;
-            }
+                bindingsStream.on('end', () => {
+                    resolve(items);
+                });
+                bindingsStream.on('error', (error) => {
+                    reject(error);
+                });
+            });
         });
     }
     // Function to fetch and group research tools
     getGroupedResearchTools() {
         return __awaiter(this, void 0, void 0, function* () {
             // Zuerst die Rohdaten mit der existierenden Funktion holen
-            const rawTools = yield this.fetchData();
-            // Dann die Rohdaten gruppieren und das Ergebnis zurückgeben
-            return this.groupTadirahIds(rawTools);
+            try {
+                const rawTools = yield this.fetchData();
+                // Dann die Rohdaten gruppieren und das Ergebnis zurückgeben
+                return this.groupTadirahIds(rawTools);
+            }
+            catch (error) {
+                return Promise.reject(this.handleError(error, "WikidataSparqlSource"));
+            }
         });
     }
     // Helper function to group research tools by their ID

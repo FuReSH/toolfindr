@@ -11,7 +11,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
   //const { touchNode } = actions
   const { endpoint } = pluginOptions
 
-  const sourcingTimer = reporter.activityTimer(`sourcing from plugin research-tools`)
+  const sourcingTimer = reporter.activityTimer(`Sourcing from plugin research-tools`)
   sourcingTimer.start()
 
   interface IApiResponse{
@@ -21,7 +21,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
     }
     errors?: Array<{
         message: string
-        locations: Array<unknown>
     }>
 }
 
@@ -33,8 +32,9 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
     sourcingTimer.panicOnBuild({
         id: ERROR_CODES.ResearchToolsSourcing,
         context: {
-          sourceMessage: `Sourcing from the API failed`,
-          apiError: errors[0].message,
+          sourceMessage: `Sourcing from the APIs failed`,
+          apiErrorNum: errors.length,
+          apiError: errors.map(error => `- ${error.message}\n`).join("\n"),
         },
     })
   

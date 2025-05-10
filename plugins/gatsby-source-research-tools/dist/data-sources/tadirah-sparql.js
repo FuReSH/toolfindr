@@ -19,11 +19,7 @@ class TadirahSparqlSource extends base_data_source_1.BaseDataSource {
         super(endpoint, options);
         this.engine = new query_sparql_1.QueryEngine();
         this.endpoint = "https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl";
-    }
-    fetchData() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const query = `
+        this.query = `
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
             SELECT ?tadirahID ?tadirahLabel
@@ -32,7 +28,11 @@ class TadirahSparqlSource extends base_data_source_1.BaseDataSource {
             FILTER (lang(?tadirahLabel) = "en")
             }
         `;
-                const bindingsStream = yield this.engine.queryBindings(query, {
+    }
+    fetchData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const bindingsStream = yield this.engine.queryBindings(this.query, {
                     sources: [this.endpoint],
                     httpRetryOnServerError: true,
                     httpRetryCount: 3,
@@ -52,12 +52,12 @@ class TadirahSparqlSource extends base_data_source_1.BaseDataSource {
                         resolve(items);
                     });
                     bindingsStream.on('error', (error) => {
-                        reject(error);
+                        reject(this.handleError(error, "TadirahSparqlSource"));
                     });
                 });
             }
             catch (error) {
-                return error;
+                return Promise.reject(this.handleError(error, "TadirahSparqlSource"));
             }
         });
     }

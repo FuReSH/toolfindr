@@ -17,7 +17,7 @@ const sourceNodes = (gatsbyApi, pluginOptions) => __awaiter(void 0, void 0, void
     const { actions, reporter, cache, getNodes } = gatsbyApi;
     //const { touchNode } = actions
     const { endpoint } = pluginOptions;
-    const sourcingTimer = reporter.activityTimer(`sourcing from plugin research-tools`);
+    const sourcingTimer = reporter.activityTimer(`Sourcing from plugin research-tools`);
     sourcingTimer.start();
     const dataManager = new data_source_manager_1.DataSourceManager(pluginOptions);
     const { data, errors } = yield dataManager.fetchAllData();
@@ -25,8 +25,9 @@ const sourceNodes = (gatsbyApi, pluginOptions) => __awaiter(void 0, void 0, void
         sourcingTimer.panicOnBuild({
             id: constants_1.ERROR_CODES.ResearchToolsSourcing,
             context: {
-                sourceMessage: `Sourcing from the API failed`,
-                apiError: errors[0].message,
+                sourceMessage: `Sourcing from the APIs failed`,
+                apiErrorNum: errors.length,
+                apiError: errors.map(error => `- ${error.message}\n`).join("\n"),
             },
         });
         return;

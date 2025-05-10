@@ -1,6 +1,7 @@
 import { IPluginOptionsInternal, IResearchToolInput, ITadirahConceptInput } from "./types";
 export declare class DataSourceManager {
     private wikidataSparql;
+    private wikidataRest;
     private tadirah;
     constructor(options: IPluginOptionsInternal);
     fetchAllData(): Promise<{
@@ -8,7 +9,9 @@ export declare class DataSourceManager {
             tools: IResearchToolInput[];
             concepts: ITadirahConceptInput[];
         };
-        errors: any;
+        errors?: {
+            message: string;
+        }[];
     }>;
     private getResearchToolFromSources;
 }

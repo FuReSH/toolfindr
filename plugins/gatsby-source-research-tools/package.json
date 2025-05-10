@@ -1,5 +1,5 @@
 {
-    "name": "gatsby-source-wikidata-tadirah",
+    "name": "gatsby-source-research-tools",
     "version": "0.1.0",
     "license": "0BSD",
     "author": "@sopheck",
@@ -14,12 +14,17 @@
       "gatsby-plugin",
       "wikidata",
       "sparql",
-      "rest"
+      "rest",
+      "research tools",
+      "tadirah",
+      "digital humanities",
+      "tool registry"
     ],
     "dependencies": {
       "@comunica/query-sparql": "^2.8.1",
       "@comunica/logger-pretty": "^2.5.0",
       "node-polyfill-webpack-plugin": "^2.0.1",
-      "crypto": "^1.0.1"
+      "crypto": "^1.0.1",
+      "node-fetch": "^2.6.8"
     }
   }

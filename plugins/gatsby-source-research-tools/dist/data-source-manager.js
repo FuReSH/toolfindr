@@ -11,30 +11,55 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSourceManager = void 0;
 const wikidata_sparql_1 = require("./data-sources/wikidata-sparql");
-//import { WikidataRestSource } from "./data-sources/wikidata-rest";
+const wikidata_rest_1 = require("./data-sources/wikidata-rest");
 const tadirah_sparql_1 = require("./data-sources/tadirah-sparql");
 class DataSourceManager {
     constructor(options) {
         this.wikidataSparql = new wikidata_sparql_1.WikidataSparqlSource(options.endpoint);
-        //this.wikidataRest = new WikidataRestSource(options.wikidataRest);
+        this.wikidataRest = new wikidata_rest_1.WikidataRestSource(options.endpoint);
         this.tadirah = new tadirah_sparql_1.TadirahSparqlSource(options.endpoint);
     }
     fetchAllData() {
         return __awaiter(this, void 0, void 0, function* () {
-            // Parallel abrufen für bessere Performance
-            const [wikidataSparqlItems, tadirahSparqlItems] = yield Promise.all([
-                this.wikidataSparql.getGroupedResearchTools(),
-                //this.wikidataRest.fetchData(),
-                this.tadirah.fetchData(),
-            ]);
-            const researchTools = this.getResearchToolFromSources(wikidataSparqlItems, tadirahSparqlItems);
-            console.log("Research Tools:", researchTools);
+            const errors = []; // Array zum Sammeln von Fehlern
+            let wikidataSparqlItems = [];
+            let tadirahSparqlItems = [];
+            let wikidataRestItems = [];
+            try {
+                // Abrufen der Daten aus Tadirah SPARQL
+                tadirahSparqlItems = yield this.tadirah.fetchData();
+            }
+            catch (error) {
+                errors.push({ message: error });
+            }
+            try {
+                // Abrufen der Daten aus Wikidata SPARQL
+                wikidataSparqlItems = yield this.wikidataSparql.getGroupedResearchTools();
+            }
+            catch (error) {
+                errors.push({ message: error });
+            }
+            try {
+                // Abrufen der Daten aus Wikidata REST
+                wikidataRestItems = yield this.wikidataRest.fetchData(wikidataSparqlItems.map(item => item.id));
+            }
+            catch (error) {
+                errors.push({ message: error });
+            }
+            if (errors.length > 0) {
+                return {
+                    data: null,
+                    errors: errors
+                };
+            }
+            // Tools aus den Quellen kombinieren
+            const tools = this.getResearchToolFromSources(wikidataSparqlItems, tadirahSparqlItems);
             return {
                 data: {
-                    tools: researchTools, //this.getResearchToolFromSources(wikidataSparqlItems, tadirahSparqlItems),
+                    tools,
                     concepts: tadirahSparqlItems,
                 },
-                errors: undefined,
+                errors: undefined, // Gib Fehler nur zurück, wenn welche aufgetreten sind
             };
         });
     }

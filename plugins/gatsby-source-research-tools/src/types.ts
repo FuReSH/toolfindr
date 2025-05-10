@@ -26,6 +26,11 @@ export interface IWikidataSparqlGroupedByTool {
   tadirahIds: string[]
 }
 
+export interface IWikidataRest {
+  id: string
+  label: string
+}
+
 interface IPluginOptionsKeys {
   endpoint: string
 }

@@ -3,6 +3,7 @@ import { QueryEngine } from '@comunica/query-sparql';
 import { IWikidataSparql, IWikidataSparqlGroupedByTool } from '../types';
 
 export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
+    
     private engine: QueryEngine;
 
     constructor(endpoint: string, options: any = {}) {
@@ -11,11 +12,8 @@ export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
         super(endpoint, options);
         this.engine = new QueryEngine();
         this.endpoint = "https://query.wikidata.org/sparql";
-    }
-
-    async fetchData(): Promise<IWikidataSparql[]> {
-        try {
-            const query = `
+        
+        this.query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
             PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
@@ -28,8 +26,12 @@ export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
             ORDER BY ?tool
             LIMIT 1000000
         `;
+    }
 
-            const bindingsStream = await this.engine.queryBindings(query, {
+    async fetchData(): Promise<IWikidataSparql[]> {
+        
+        
+            const bindingsStream = await this.engine.queryBindings(this.query, {
                 sources: [this.endpoint],
                 httpRetryOnServerError: true,
                 httpRetryCount: 3,
@@ -55,21 +57,21 @@ export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
                 });
 
                 bindingsStream.on('error', (error) => {
-                    reject(error);
-                });
+                    reject(error);});
             });
-        } catch (error) {
-            return error;
-        }
     }
 
     // Function to fetch and group research tools
     async getGroupedResearchTools(): Promise<IWikidataSparqlGroupedByTool[]> {
         // Zuerst die Rohdaten mit der existierenden Funktion holen
-        const rawTools = await this.fetchData();
+        try {
+            const rawTools = await this.fetchData();
 
-        // Dann die Rohdaten gruppieren und das Ergebnis zurückgeben
-        return this.groupTadirahIds(rawTools);
+            // Dann die Rohdaten gruppieren und das Ergebnis zurückgeben
+            return this.groupTadirahIds(rawTools);
+        } catch (error) {
+            return Promise.reject(this.handleError(error, "WikidataSparqlSource"));
+        }
     }
 
     // Helper function to group research tools by their ID

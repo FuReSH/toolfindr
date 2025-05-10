@@ -3,6 +3,7 @@ import { QueryEngine } from '@comunica/query-sparql';
 import { ITadirahConceptInput } from '../types';
 
 export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
+    
     private engine: QueryEngine;
 
     constructor(endpoint: string, options: any = {}) {
@@ -11,11 +12,8 @@ export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
         super(endpoint, options);
         this.engine = new QueryEngine();
         this.endpoint = "https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl";
-    }
-
-    async fetchData(): Promise<ITadirahConceptInput[]> {
-        try {
-            const query = `
+        
+        this.query = `
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
             SELECT ?tadirahID ?tadirahLabel
@@ -24,8 +22,12 @@ export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
             FILTER (lang(?tadirahLabel) = "en")
             }
         `;
+    }
 
-            const bindingsStream = await this.engine.queryBindings(query, {
+    async fetchData(): Promise<ITadirahConceptInput[]> {
+        
+        try {
+            const bindingsStream = await this.engine.queryBindings(this.query, {
                 sources: [this.endpoint],
                 httpRetryOnServerError: true,
                 httpRetryCount: 3,
@@ -51,11 +53,12 @@ export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
                 });
 
                 bindingsStream.on('error', (error) => {
-                    reject(error);
+                    reject(this.handleError(error, "TadirahSparqlSource"));
                 });
             });
         } catch (error) {
-            return error;
+            return Promise.reject(this.handleError(error, "TadirahSparqlSource"));
         }
+        
     }
 }
