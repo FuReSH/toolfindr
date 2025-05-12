@@ -29,7 +29,7 @@ export class DataSourceManager {
     } catch (error) {
       errors.push({ message: error });
     }
-    wikidataSparqlItems = wikidataSparqlItems.slice(0, 10)
+    //wikidataSparqlItems = wikidataSparqlItems.slice(0, 10)
 
     try {
       // Abrufen der Daten aus Wikidata REST
