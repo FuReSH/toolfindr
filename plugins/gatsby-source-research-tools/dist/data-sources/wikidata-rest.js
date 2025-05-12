@@ -39,18 +39,16 @@ class WikidataRestSource extends base_data_source_1.BaseDataSource {
                     if (lastModified) {
                         headers["If-Modified-Since"] = lastModified;
                     }
-                    const response = yield (0, node_fetch_1.default)(url, {
-                        method: 'GET',
-                        headers: headers,
-                    });
+                    const response = yield this.httpRequest(url, "HEAD", headers);
                     if (response.status === 304) {
                         continue; // No new data, skip to the next ID
                     }
                     if (!response.ok) {
                         let errorDetails = yield response.json();
-                        throw new Error(`[WikidataRestSource] Fehler beim Abrufen von ID ${id}: ${JSON.stringify(errorDetails)}`);
+                        this.handleError(errorDetails, "WikidataRestSource");
                     }
                     if (response.status === 200) {
+                        const response = yield this.httpRequest(url, "GET", headers);
                         const data = yield response.json();
                         const newLastModified = response.headers.get("last-modified");
                         if (newLastModified) {
@@ -69,6 +67,15 @@ class WikidataRestSource extends base_data_source_1.BaseDataSource {
             catch (error) {
                 return Promise.reject(this.handleError(error, "WikidataRestSource"));
             }
+        });
+    }
+    httpRequest(url, method, headers) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield (0, node_fetch_1.default)(url, {
+                method: method,
+                headers: headers,
+            });
+            return response;
         });
     }
 }

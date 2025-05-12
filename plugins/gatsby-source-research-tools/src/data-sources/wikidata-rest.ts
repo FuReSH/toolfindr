@@ -38,10 +38,7 @@ export class WikidataRestSource extends BaseDataSource<IWikidataRest> {
           headers["If-Modified-Since"] = lastModified;
         }
 
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: headers,
-        });
+        const response = await this.httpRequest(url, "HEAD", headers);
 
         if (response.status === 304) {
           continue; // No new data, skip to the next ID
@@ -49,12 +46,12 @@ export class WikidataRestSource extends BaseDataSource<IWikidataRest> {
 
         if (!response.ok) {
           let errorDetails = await response.json();
-          throw new Error(
-            `[WikidataRestSource] Fehler beim Abrufen von ID ${id}: ${JSON.stringify(errorDetails)}`
-          );
+          this.handleError(errorDetails, "WikidataRestSource");
         }
 
         if (response.status === 200) {
+
+          const response = await this.httpRequest(url, "GET", headers);
 
           const data = await response.json();
 
@@ -78,5 +75,13 @@ export class WikidataRestSource extends BaseDataSource<IWikidataRest> {
     } catch (error) {
       return Promise.reject(this.handleError(error, "WikidataRestSource"));
     }
+  }
+
+  private async httpRequest(url: string, method: string, headers: Object): Promise<Response> {
+    const response = await fetch(url, {
+          method: method,
+          headers: headers,
+        });
+    return response;
   }
 }

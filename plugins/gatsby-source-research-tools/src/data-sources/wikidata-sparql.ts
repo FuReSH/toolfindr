@@ -3,7 +3,7 @@ import { QueryEngine } from '@comunica/query-sparql';
 import { IWikidataSparql, IWikidataSparqlGroupedByTool } from '../types';
 
 export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
-    
+
     private engine: QueryEngine;
 
     constructor(endpoint: string, options: any = {}) {
@@ -12,7 +12,7 @@ export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
         super(endpoint, options);
         this.engine = new QueryEngine();
         this.endpoint = "https://query.wikidata.org/sparql";
-        
+
         this.query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
             PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -29,36 +29,36 @@ export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
     }
 
     async fetchData(): Promise<IWikidataSparql[]> {
-        
-        
-            const bindingsStream = await this.engine.queryBindings(this.query, {
-                sources: [this.endpoint],
-                httpRetryOnServerError: true,
-                httpRetryCount: 3,
-                httpRetryDelay: 100,
-                noCache: false,
-            });
+
+        const bindingsStream = await this.engine.queryBindings(this.query, {
+            sources: [this.endpoint],
+            httpRetryOnServerError: true,
+            httpRetryCount: 3,
+            httpRetryDelay: 100,
+            noCache: false,
+        });
 
 
-            return new Promise((resolve, reject) => {
-                const items: IWikidataSparql[] = [];
+        return new Promise((resolve, reject) => {
+            const items: IWikidataSparql[] = [];
 
-                bindingsStream.on('data', (binding) => {
-                    // Verarbeite jedes Binding einzeln
-                    items.push({
-                        id: binding.get('tool').value,
-                        tadirahId: `https://vocabs.dariah.eu/tadirah/${binding.get('tadirahId').value}`,
-                    });
-
+            bindingsStream.on('data', (binding) => {
+                // Verarbeite jedes Binding einzeln
+                items.push({
+                    id: binding.get('tool').value,
+                    tadirahId: `https://vocabs.dariah.eu/tadirah/${binding.get('tadirahId').value}`,
                 });
 
-                bindingsStream.on('end', () => {
-                    resolve(items);
-                });
-
-                bindingsStream.on('error', (error) => {
-                    reject(error);});
             });
+
+            bindingsStream.on('end', () => {
+                resolve(items);
+            });
+
+            bindingsStream.on('error', (error) => {
+                reject(this.handleError(error, "WikidataSparqlSource"));
+            });
+        });
     }
 
     // Function to fetch and group research tools

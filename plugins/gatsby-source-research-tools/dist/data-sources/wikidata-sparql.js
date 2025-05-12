@@ -55,7 +55,7 @@ class WikidataSparqlSource extends base_data_source_1.BaseDataSource {
                     resolve(items);
                 });
                 bindingsStream.on('error', (error) => {
-                    reject(error);
+                    reject(this.handleError(error, "WikidataSparqlSource"));
                 });
             });
         });

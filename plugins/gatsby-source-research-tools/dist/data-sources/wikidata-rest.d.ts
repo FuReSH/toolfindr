@@ -5,4 +5,5 @@ export declare class WikidataRestSource extends BaseDataSource<IWikidataRest> {
     private headers;
     constructor(endpoint: string, options: any, cache: GatsbyCache);
     fetchData(ids: string[]): Promise<IWikidataRest[]>;
+    private httpRequest;
 }
