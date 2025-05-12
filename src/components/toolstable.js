@@ -28,7 +28,7 @@ const ToolsTableComponent = ({ filteredData }) => {
                 </div>
               </td>
               <td>
-                <h5><Link key={item.id} to={item.slug} className='icon-link'>{item.label}</Link></h5>
+                <h5><Link key={item.id} to={`/tool/${item.slug}`} className='icon-link'>{item.label}</Link></h5>
               </td>
               <td className="fs-6">
                 {item.concepts.map(concept => concept.label).join(", ")}

@@ -15,6 +15,8 @@ export interface IResearchToolInput {
     id: string;
     slug: string;
     concepts: string[];
+    label?: string;
+    description?: string;
 }
 export interface IWikidataSparql {
     id: string;
@@ -27,6 +29,7 @@ export interface IWikidataSparqlGroupedByTool {
 export interface IWikidataRest {
     id: string;
     label: string;
+    description: string;
 }
 interface IPluginOptionsKeys {
     endpoint: string;

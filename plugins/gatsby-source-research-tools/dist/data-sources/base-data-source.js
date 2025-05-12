@@ -17,6 +17,7 @@ exports.BaseDataSource = void 0;
  * @property endpoint - The source endpoint URL (e.g., API base or SPARQL endpoint).
  * @property options - Optional configuration passed to the data source.
  * @property query - An optional query string, used in query-based sources like SPARQL.
+ * @property cache - An optional Gatsby Cache object, used in cache-based sources like REST.
  *
  * @method fetchData - Abstract method that must be implemented by subclasses.
  *   Returns a Promise that resolves to an array of type T.
@@ -25,13 +26,15 @@ exports.BaseDataSource = void 0;
  * @method logProgress - Simple logging method for tracking progress or debugging.
  */
 class BaseDataSource {
-    constructor(endpoint, options = {}) {
+    constructor(endpoint, options = {}, cache, query) {
         this.endpoint = endpoint;
         this.options = options;
+        this.cache = cache;
+        this.query = query;
     }
-    handleError(error, source) {
-        const enhancedMessage = `[${source}] ${error.message}`;
-        throw new Error(enhancedMessage);
+    handleError(errorDetails, source) {
+        const error = `[${source}] ${errorDetails}`;
+        throw new Error(error);
     }
     logProgress(message) {
         console.log(`[BaseDataSource] ${message}`);

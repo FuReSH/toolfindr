@@ -16,29 +16,55 @@ exports.WikidataRestSource = void 0;
 const base_data_source_1 = require("./base-data-source");
 const node_fetch_1 = __importDefault(require("node-fetch"));
 class WikidataRestSource extends base_data_source_1.BaseDataSource {
-    constructor(endpoint, options = {}) {
+    constructor(endpoint, options = {}, cache) {
         super(endpoint, options);
         this.endpoint = "https://www.wikidata.org/w/rest.php/wikibase/v1";
+        this.cache = cache;
         this.headers = {
             "Content-Type": "application/json",
+            "Api-User-Agent": "Example/1.0"
         };
     }
     fetchData(ids) {
         return __awaiter(this, void 0, void 0, function* () {
+            const results = [];
+            // Sleep-Funktion für die Pause
+            const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
             try {
-                const results = yield Promise.all(ids.map((id) => __awaiter(this, void 0, void 0, function* () {
-                    const url = `${this.endpoint}/entities/items/${id}/labels/en`;
+                for (const id of ids) {
+                    const url = `${this.endpoint}/entities/items/${id.split("/").pop()}`;
+                    const cacheKey = `wikidata-last-modified-${id}`;
+                    const lastModified = yield this.cache.get(cacheKey);
+                    const headers = Object.assign({}, this.headers);
+                    if (lastModified) {
+                        headers["If-Modified-Since"] = lastModified;
+                    }
                     const response = yield (0, node_fetch_1.default)(url, {
                         method: 'GET',
-                        header: this.headers,
+                        headers: headers,
                     });
-                    if (!response.ok) {
-                        return new Error(`Fehler beim Abrufen von ID ${id}: ${response.statusText}`);
+                    if (response.status === 304) {
+                        continue; // No new data, skip to the next ID
                     }
-                    const data = yield response.json();
-                    return data;
-                })));
-                return results.filter((item) => item !== null);
+                    if (!response.ok) {
+                        let errorDetails = yield response.json();
+                        throw new Error(`[WikidataRestSource] Fehler beim Abrufen von ID ${id}: ${JSON.stringify(errorDetails)}`);
+                    }
+                    if (response.status === 200) {
+                        const data = yield response.json();
+                        const newLastModified = response.headers.get("last-modified");
+                        if (newLastModified) {
+                            yield this.cache.set(cacheKey, newLastModified);
+                        }
+                        results.push({
+                            id: data.id,
+                            label: data.labels.en ? data.labels.en : data.id,
+                            description: data.descriptions.en ? data.descriptions.en : "No description available",
+                        });
+                    }
+                    yield sleep(3000);
+                }
+                return results;
             }
             catch (error) {
                 return Promise.reject(this.handleError(error, "WikidataRestSource"));

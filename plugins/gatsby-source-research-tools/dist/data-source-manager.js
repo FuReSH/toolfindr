@@ -14,9 +14,9 @@ const wikidata_sparql_1 = require("./data-sources/wikidata-sparql");
 const wikidata_rest_1 = require("./data-sources/wikidata-rest");
 const tadirah_sparql_1 = require("./data-sources/tadirah-sparql");
 class DataSourceManager {
-    constructor(options) {
+    constructor(options, cache) {
         this.wikidataSparql = new wikidata_sparql_1.WikidataSparqlSource(options.endpoint);
-        this.wikidataRest = new wikidata_rest_1.WikidataRestSource(options.endpoint);
+        this.wikidataRest = new wikidata_rest_1.WikidataRestSource(options.endpoint, {}, cache);
         this.tadirah = new tadirah_sparql_1.TadirahSparqlSource(options.endpoint);
     }
     fetchAllData() {
@@ -25,13 +25,7 @@ class DataSourceManager {
             let wikidataSparqlItems = [];
             let tadirahSparqlItems = [];
             let wikidataRestItems = [];
-            try {
-                // Abrufen der Daten aus Tadirah SPARQL
-                tadirahSparqlItems = yield this.tadirah.fetchData();
-            }
-            catch (error) {
-                errors.push({ message: error });
-            }
+            let researchTools = [];
             try {
                 // Abrufen der Daten aus Wikidata SPARQL
                 wikidataSparqlItems = yield this.wikidataSparql.getGroupedResearchTools();
@@ -39,6 +33,7 @@ class DataSourceManager {
             catch (error) {
                 errors.push({ message: error });
             }
+            wikidataSparqlItems = wikidataSparqlItems.slice(0, 10);
             try {
                 // Abrufen der Daten aus Wikidata REST
                 wikidataRestItems = yield this.wikidataRest.fetchData(wikidataSparqlItems.map(item => item.id));
@@ -46,35 +41,55 @@ class DataSourceManager {
             catch (error) {
                 errors.push({ message: error });
             }
-            if (errors.length > 0) {
-                return {
-                    data: null,
-                    errors: errors
-                };
+            try {
+                tadirahSparqlItems = yield this.tadirah.fetchData();
             }
-            // Tools aus den Quellen kombinieren
-            const tools = this.getResearchToolFromSources(wikidataSparqlItems, tadirahSparqlItems);
+            catch (error) {
+                errors.push({ message: error });
+            }
+            if (errors.length > 0) {
+                return { data: null, errors };
+            }
+            if (wikidataRestItems.length !== 0) {
+                // Schritt 1: Tools aus Wikidata SPARQL + REST bauen
+                researchTools = this.buildToolsFromSparqlAndRest(wikidataSparqlItems, wikidataRestItems);
+                // Schritt 2: Tadirah-Konzepte abrufen und zuordnen
+                this.attachTadirahConcepts(researchTools, wikidataSparqlItems, tadirahSparqlItems);
+            }
             return {
                 data: {
-                    tools,
+                    tools: researchTools,
                     concepts: tadirahSparqlItems,
                 },
                 errors: undefined, // Gib Fehler nur zurück, wenn welche aufgetreten sind
             };
         });
     }
-    getResearchToolFromSources(tools, concepts) {
-        return tools.map((tool) => {
-            // Finde die zugehörigen Concepts basierend auf den tadirahIds
-            const relatedConcepts = tool.tadirahIds.map((tadirahId) => {
-                return concepts.find((concept) => concept.id === tadirahId);
-            });
-            // Erstelle das IResearchToolInput-Objekt
+    buildToolsFromSparqlAndRest(sparqlItems, restItems) {
+        const restMap = new Map(restItems.map(item => [item.id, item]));
+        return sparqlItems
+            .map(tool => {
+            const idSuffix = tool.id.split("/").pop();
+            const restItem = restMap.get(idSuffix);
             return {
                 id: tool.id,
-                slug: `tool-${tool.id.split('/').pop()}`, // Beispiel für einen Slug
-                concepts: relatedConcepts.map((concept) => concept.id),
+                slug: idSuffix.toLowerCase(),
+                label: restItem.label,
+                description: restItem.description,
+                concepts: [] // wird später gefüllt
             };
+        });
+    }
+    attachTadirahConcepts(tools, sparqlItems, tadirahConcepts) {
+        const conceptMap = new Map(tadirahConcepts.map(c => [c.id, c]));
+        const sparqlMap = new Map(sparqlItems.map(i => [i.id, i]));
+        tools.forEach(tool => {
+            const sparqlTool = sparqlMap.get(tool.id);
+            if (!sparqlTool)
+                return;
+            tool.concepts = sparqlTool.tadirahIds
+                .map(id => conceptMap.get(id))
+                .map(concept => concept.id);
         });
     }
 }

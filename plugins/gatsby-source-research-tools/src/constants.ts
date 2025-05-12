@@ -6,3 +6,7 @@ export const NODE_TYPES = {
 export const ERROR_CODES = {
     ResearchToolsSourcing: `10000`,
 } as const
+
+export const CACHE_KEYS = {
+    LastModifiedWikidata: `wikidata-last-modified`,
+  } as const

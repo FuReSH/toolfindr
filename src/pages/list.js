@@ -25,10 +25,13 @@ const ToolsPage = () => {
         nodes {
           id
           _id
+          slug
           concepts {
             _id
             label
           }
+          label
+          description
         }
       }
     }
