@@ -27,7 +27,7 @@ const sourceNodes = (gatsbyApi, pluginOptions) => __awaiter(void 0, void 0, void
             context: {
                 sourceMessage: `Sourcing from the APIs failed`,
                 apiErrorNum: errors.length,
-                apiError: errors.map(error => `- ${error.message}\n`).join("\n"),
+                apiError: errors.map(error => `- ${error}\n`).join("\n"),
             },
         });
         return;

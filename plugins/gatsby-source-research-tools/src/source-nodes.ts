@@ -33,7 +33,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
       context: {
         sourceMessage: `Sourcing from the APIs failed`,
         apiErrorNum: errors.length,
-        apiError: errors.map(error => `- ${error.message}\n`).join("\n"),
+        apiError: errors.map(error => `- ${error}\n`).join("\n"),
       },
     })
 

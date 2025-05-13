@@ -21,7 +21,7 @@ export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
             WHERE {
             ?concept wdt:P9309 ?tadirahId. #find all TaDiRAH classes
             ?tool wdt:P366 ?concept;       # find all items, which claim to implement this concept
-                (wdt:P31/(wdt:P279*)) wd:Q7397.
+                (wdt:P31/(wdt:P279*)) wd:Q7397. # find all items, which are instances of or subclasses of software
             }
             ORDER BY ?tool
             LIMIT 1000000
