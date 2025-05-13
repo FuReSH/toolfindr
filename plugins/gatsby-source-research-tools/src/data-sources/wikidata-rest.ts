@@ -22,65 +22,65 @@ export class WikidataRestSource extends BaseDataSource<IWikidataRest> {
   }
 
   async fetchData(ids: string[]): Promise<IWikidataRest[]> {
-
     const results: IWikidataRest[] = [];
 
-    // Sleep-Funktion für die Pause
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    // Begrenze die Anzahl paralleler Requests (z. B. 10 gleichzeitig)
+    const limit = pLimit(10);
 
-    for (const id of ids) {
-        const url = `${this.endpoint}/entities/items/${id.split("/").pop()}`;
+    // Funktion zur Verarbeitung einer einzelnen ID
+    const processId = async (id: string) => {
+      const url = `${this.endpoint}/entities/items/${id.split("/").pop()}`;
 
-        const cacheKey = `wikidata-last-modified-${id}`;
-        const lastModified: Date = await this.cache.get(cacheKey);
+      const cacheKey = `wikidata-last-modified-${id}`;
+      const lastModified: Date = await this.cache.get(cacheKey);
 
-        const headers = { ...this.headers };
+      const headers = { ...this.headers };
 
-        if (lastModified) {
-          headers["If-Modified-Since"] = lastModified;
-        }
-
-        const response = await this.httpRequest(url, "HEAD", headers);
-
-        if (response.status === 304) {
-          continue; // No new data, skip to the next ID
-        }
-
-        if (!response.ok) {
-          let errorDetails = await response.json();
-          this.handleError(errorDetails, "WikidataRestSource");
-        }
-
-        if (response.status === 200) {
-
-          const response = await this.httpRequest(url, "GET", headers);
-
-          const data = await response.json();
-
-          const newLastModified = response.headers.get("last-modified");
-          if (newLastModified) {
-            await this.cache.set(cacheKey, newLastModified);
-          }
-
-          results.push({
-            id: data.id,
-            label: data.labels.en ? data.labels.en : data.id,
-            description: data.descriptions.en ? data.descriptions.en : "No description available",
-          });
-
-        }
-
-        await sleep(3000);
+      if (lastModified) {
+        headers["If-Modified-Since"] = lastModified;
       }
 
-      return results;
+      const response = await this.httpRequest(url, "HEAD", headers);
+
+      if (response.status === 304) {
+        return; // No new data, skip to the next ID
+      }
+
+      if (!response.ok) {
+        let errorDetails = await response.json();
+        this.handleError(errorDetails, "WikidataRestSource");
+        return;
+      }
+
+      if (response.status === 200) {
+        const response = await this.httpRequest(url, "GET", headers);
+        const data = await response.json();
+
+        const newLastModified = response.headers.get("last-modified");
+        if (newLastModified) {
+          await this.cache.set(cacheKey, newLastModified);
+        }
+
+        results.push({
+          id: data.id,
+          label: data.labels.en ? data.labels.en : data.id,
+          description: data.descriptions.en ? data.descriptions.en : "No description available",
+        });
+      }
+    };
+
+    // Verarbeite die IDs in parallelen Tasks mit Begrenzung
+    const tasks = ids.map(id => limit(() => processId(id)));
+    await Promise.all(tasks);
+
+    return results;
   }
 
   private async httpRequest(url: string, method: string, headers: Object): Promise<Response> {
     const response = await fetch(url, {
-          method: method,
-          headers: headers,
-        });
+      method: method,
+      headers: headers,
+    });
     return response;
   }
 }

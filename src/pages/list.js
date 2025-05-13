@@ -21,7 +21,7 @@ const ToolsPage = () => {
 
   const fetchedData = useStaticQuery(graphql`
     query {
-      allResearchTool(sort: {_id: ASC}) {
+      allResearchTool(sort: {label: ASC}) {
         nodes {
           id
           _id
