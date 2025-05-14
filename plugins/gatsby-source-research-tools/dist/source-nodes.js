@@ -16,7 +16,6 @@ const constants_1 = require("./constants");
 const sourceNodes = (gatsbyApi, pluginOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { actions, reporter, cache, getNodes } = gatsbyApi;
     const { touchNode } = actions;
-    const { endpoint } = pluginOptions;
     const sourcingTimer = reporter.activityTimer(`Sourcing from plugin research-tools`);
     sourcingTimer.start();
     const dataManager = new data_source_manager_1.DataSourceManager(pluginOptions, cache);

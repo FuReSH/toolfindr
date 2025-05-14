@@ -6,12 +6,10 @@ export class WikidataSparqlSource extends BaseDataSource<IWikidataSparql> {
 
     private engine: QueryEngine;
 
-    constructor(endpoint: string, options: any = {}) {
+    constructor(endpoint:string) {
         // Call the parent constructor with the endpoint and options
-        // Use the default endpoint if none is provided
-        super(endpoint, options);
+        super(endpoint);
         this.engine = new QueryEngine();
-        this.endpoint = "https://query.wikidata.org/sparql";
 
         this.query = `
             PREFIX wd: <http://www.wikidata.org/entity/>

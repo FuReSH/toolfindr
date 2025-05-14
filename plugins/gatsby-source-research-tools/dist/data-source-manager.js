@@ -15,13 +15,13 @@ const wikidata_rest_1 = require("./data-sources/wikidata-rest");
 const tadirah_sparql_1 = require("./data-sources/tadirah-sparql");
 class DataSourceManager {
     constructor(options, cache) {
-        this.wikidataSparql = new wikidata_sparql_1.WikidataSparqlSource(options.endpoint);
-        this.wikidataRest = new wikidata_rest_1.WikidataRestSource(options.endpoint, {}, cache);
-        this.tadirah = new tadirah_sparql_1.TadirahSparqlSource(options.endpoint);
+        this.wikidataSparql = new wikidata_sparql_1.WikidataSparqlSource(options.wikidataSparqlUrl);
+        this.wikidataRest = new wikidata_rest_1.WikidataRestSource(options.wikidataRestUrl, cache);
+        this.tadirah = new tadirah_sparql_1.TadirahSparqlSource(options.tadirahFileUrl);
     }
     fetchAllData() {
         return __awaiter(this, void 0, void 0, function* () {
-            const errors = []; // Array zum Sammeln von Fehlern
+            const errors = [];
             let wikidataSparqlItems = [];
             let tadirahSparqlItems = [];
             let wikidataRestItems = [];

@@ -13,12 +13,9 @@ exports.TadirahSparqlSource = void 0;
 const base_data_source_1 = require("./base-data-source");
 const query_sparql_1 = require("@comunica/query-sparql");
 class TadirahSparqlSource extends base_data_source_1.BaseDataSource {
-    constructor(endpoint, options = {}) {
-        // Call the parent constructor with the endpoint and options
-        // Use the default endpoint if none is provided
-        super(endpoint, options);
+    constructor(endpoint) {
+        super(endpoint);
         this.engine = new query_sparql_1.QueryEngine();
-        this.endpoint = "https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl";
         this.query = `
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 

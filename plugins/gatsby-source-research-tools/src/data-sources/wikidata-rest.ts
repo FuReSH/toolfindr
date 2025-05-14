@@ -9,10 +9,8 @@ export class WikidataRestSource extends BaseDataSource<IWikidataRest> {
 
   private headers: HeadersInit;
 
-  constructor(endpoint: string, options: any = {}, cache: GatsbyCache) {
-    super(endpoint, options);
-    this.endpoint = "https://www.wikidata.org/w/rest.php/wikibase/v1";
-    this.cache = cache;
+  constructor(endpoint: string, cache: GatsbyCache) {
+    super(endpoint, cache);
     this.headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",

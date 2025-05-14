@@ -10,13 +10,13 @@ export class DataSourceManager {
   private tadirah: TadirahSparqlSource;
 
   constructor(options: IPluginOptionsInternal, cache: GatsbyCache) {
-    this.wikidataSparql = new WikidataSparqlSource(options.endpoint);
-    this.wikidataRest = new WikidataRestSource(options.endpoint, {}, cache);
-    this.tadirah = new TadirahSparqlSource(options.endpoint);
+    this.wikidataSparql = new WikidataSparqlSource(options.wikidataSparqlUrl);
+    this.wikidataRest = new WikidataRestSource(options.wikidataRestUrl, cache);
+    this.tadirah = new TadirahSparqlSource(options.tadirahFileUrl);
   }
 
   async fetchAllData(): Promise<{ data: { tools: IResearchToolInput[]; concepts: ITadirahConceptInput[] }; errors?: { message: string }[] }> {
-    const errors: { message: string }[] = []; // Array zum Sammeln von Fehlern
+    const errors: { message: string }[] = [];
 
     let wikidataSparqlItems: IWikidataSparqlGroupedByTool[] = [];
     let tadirahSparqlItems: ITadirahConceptInput[] = [];

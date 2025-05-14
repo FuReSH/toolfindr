@@ -13,12 +13,10 @@ exports.WikidataSparqlSource = void 0;
 const base_data_source_1 = require("./base-data-source");
 const query_sparql_1 = require("@comunica/query-sparql");
 class WikidataSparqlSource extends base_data_source_1.BaseDataSource {
-    constructor(endpoint, options = {}) {
+    constructor(endpoint) {
         // Call the parent constructor with the endpoint and options
-        // Use the default endpoint if none is provided
-        super(endpoint, options);
+        super(endpoint);
         this.engine = new query_sparql_1.QueryEngine();
-        this.endpoint = "https://query.wikidata.org/sparql";
         this.query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
             PREFIX wdt: <http://www.wikidata.org/prop/direct/>

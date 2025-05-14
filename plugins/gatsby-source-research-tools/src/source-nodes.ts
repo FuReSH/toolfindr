@@ -9,7 +9,6 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
 ) => {
   const { actions, reporter, cache, getNodes } = gatsbyApi
   const { touchNode } = actions
-  const { endpoint } = pluginOptions
 
   const sourcingTimer = reporter.activityTimer(`Sourcing from plugin research-tools`)
   sourcingTimer.start()

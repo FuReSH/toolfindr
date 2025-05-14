@@ -13,10 +13,10 @@ import { GatsbyCache } from "gatsby";
  *
  * @template T - The data type returned by the data source.
  *
- * @property endpoint - The source endpoint URL (e.g., API base or SPARQL endpoint).
  * @property options - Optional configuration passed to the data source.
- * @property query - An optional query string, used in query-based sources like SPARQL.
  * @property cache - An optional Gatsby Cache object, used in cache-based sources like REST.
+ * @property token - An optional authentication token, used in token-based sources like REST.
+ * @property query - An optional query string, used in query-based sources like SPARQL.
  *
  * @method fetchData - Abstract method that must be implemented by subclasses. 
  *   Returns a Promise that resolves to an array of type T.
@@ -26,10 +26,10 @@ import { GatsbyCache } from "gatsby";
  */
 export abstract class BaseDataSource<T> {  
 
-    constructor(
-        protected endpoint: string, 
-        protected options: any = {},
+    constructor( 
+        protected endpoint: string,
         protected cache?: GatsbyCache,
+        protected token?: string,
         protected query?: string
       ) {}
     

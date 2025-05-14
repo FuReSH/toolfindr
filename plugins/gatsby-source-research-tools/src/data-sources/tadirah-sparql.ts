@@ -6,12 +6,9 @@ export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
     
     private engine: QueryEngine;
 
-    constructor(endpoint: string, options: any = {}) {
-        // Call the parent constructor with the endpoint and options
-        // Use the default endpoint if none is provided
-        super(endpoint, options);
+    constructor(endpoint: string) {
+        super(endpoint);
         this.engine = new QueryEngine();
-        this.endpoint = "https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl";
         
         this.query = `
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

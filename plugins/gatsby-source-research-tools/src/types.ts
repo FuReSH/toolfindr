@@ -35,7 +35,10 @@ export interface IWikidataRest {
 }
 
 interface IPluginOptionsKeys {
-  endpoint: string
+  wikidataSparqlUrl: string,
+  wikidataRestUrl: string,
+  token: string,
+  tadirahFileUrl: string,
 }
 
 /**

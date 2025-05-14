@@ -15,11 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WikidataRestSource = void 0;
 const base_data_source_1 = require("./base-data-source");
 const node_fetch_1 = __importDefault(require("node-fetch"));
+const p_limit_1 = __importDefault(require("p-limit"));
 class WikidataRestSource extends base_data_source_1.BaseDataSource {
-    constructor(endpoint, options = {}, cache) {
-        super(endpoint, options);
-        this.endpoint = "https://www.wikidata.org/w/rest.php/wikibase/v1";
-        this.cache = cache;
+    constructor(endpoint, cache) {
+        super(endpoint, cache);
         this.headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
@@ -30,9 +29,10 @@ class WikidataRestSource extends base_data_source_1.BaseDataSource {
     fetchData(ids) {
         return __awaiter(this, void 0, void 0, function* () {
             const results = [];
-            // Sleep-Funktion für die Pause
-            const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-            for (const id of ids) {
+            // Begrenze die Anzahl paralleler Requests (z. B. 10 gleichzeitig)
+            const limit = (0, p_limit_1.default)(10);
+            // Funktion zur Verarbeitung einer einzelnen ID
+            const processId = (id) => __awaiter(this, void 0, void 0, function* () {
                 const url = `${this.endpoint}/entities/items/${id.split("/").pop()}`;
                 const cacheKey = `wikidata-last-modified-${id}`;
                 const lastModified = yield this.cache.get(cacheKey);
@@ -42,11 +42,12 @@ class WikidataRestSource extends base_data_source_1.BaseDataSource {
                 }
                 const response = yield this.httpRequest(url, "HEAD", headers);
                 if (response.status === 304) {
-                    continue; // No new data, skip to the next ID
+                    return; // No new data, skip to the next ID
                 }
                 if (!response.ok) {
                     let errorDetails = yield response.json();
                     this.handleError(errorDetails, "WikidataRestSource");
+                    return;
                 }
                 if (response.status === 200) {
                     const response = yield this.httpRequest(url, "GET", headers);
@@ -61,8 +62,10 @@ class WikidataRestSource extends base_data_source_1.BaseDataSource {
                         description: data.descriptions.en ? data.descriptions.en : "No description available",
                     });
                 }
-                yield sleep(3000);
-            }
+            });
+            // Verarbeite die IDs in parallelen Tasks mit Begrenzung
+            const tasks = ids.map(id => limit(() => processId(id)));
+            yield Promise.all(tasks);
             return results;
         });
     }

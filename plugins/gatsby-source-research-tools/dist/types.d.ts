@@ -32,7 +32,10 @@ export interface IWikidataRest {
     description: string;
 }
 interface IPluginOptionsKeys {
-    endpoint: string;
+    wikidataSparqlUrl: string;
+    wikidataRestUrl: string;
+    token: string;
+    tadirahFileUrl: string;
 }
 /**
  * Gatsby expects the plugin options to be of type "PluginOptions" for gatsby-node APIs (e.g. sourceNodes)
