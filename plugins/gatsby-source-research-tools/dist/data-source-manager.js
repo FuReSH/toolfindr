@@ -30,6 +30,7 @@ class DataSourceManager {
                     this.tadirahConceptSource.fetchData(),
                     this.researchToolSource.fetchData()
                 ]);
+                // Slicing for debugging purposes
                 researchToolData = researchToolData.slice(0, 20);
                 researchToolData = yield this.enrichResearchTools(researchToolData);
             }

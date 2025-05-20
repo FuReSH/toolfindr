@@ -28,6 +28,7 @@ export class DataSourceManager {
         this.researchToolSource.fetchData()
       ]);
 
+      // Slicing for debugging purposes
       researchToolData = researchToolData.slice(0, 20);
 
       researchToolData = await this.enrichResearchTools(researchToolData);

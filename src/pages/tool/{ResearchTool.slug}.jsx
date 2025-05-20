@@ -10,7 +10,12 @@ import { useCommonsImageInfo } from '../../hooks/use-commons-image-info';
 export default function ToolPage({ data }) {
   const { researchTool } = data
 
-  const { url, author, license, licenseUrl, descUrl, loading } = useCommonsImageInfo(researchTool.image);
+  // Logo bevorzugen, falls vorhanden, sonst erstes Bild
+  const pic = researchTool.logo && researchTool.logo.length > 0
+    ? researchTool.logo[0]
+    : (researchTool.image && researchTool.image.length > 0 ? researchTool.image[0] : null);
+
+  const { url, author, license, licenseUrl, descUrl, loading } = useCommonsImageInfo(pic);
   const [imageError, setImageError] = useState(false);
 
   return (
@@ -28,7 +33,7 @@ export default function ToolPage({ data }) {
             <p className='kdh-short-desc'>Information about the Tool retrieved from Wikidata.</p>
 
             <div className="card bg-light shadow-sm">
-              <div className="card-header ps-3">{researchTool.instanceOfLabels?.join(', ') || "No instance availabe."}</div>
+              <div className="card-header ps-3">{researchTool.instancesof.join(', ')}</div>
               <div className="clearfix card-body p-3">
                 <div className="position-relative">
                   {/* Spinner for loading status */}
@@ -54,7 +59,7 @@ export default function ToolPage({ data }) {
                         }}
                         alt={loading ? "" : `${researchTool.label} Logo` || "No image available"}
                       />
-                      {license !== "Unknown" && researchTool.image && (
+                      {license !== "Unknown" && researchTool.logo && (
                         <figcaption className="figure-caption" style={{ borderTop: "1.5px dotted #ccc" }}>
                           <small>
                             <strong>CREDIT </strong>
@@ -97,12 +102,12 @@ export default function ToolPage({ data }) {
 
                 <div className='mt-2'><GoNote />
                   <label htmlFor="toolDesc" className='col-form-label-sm text-uppercase fw-bold ms-1'>Description</label>
-                  <p id="toolDesc">{researchTool.description}</p></div>
+                  <p id="toolDesc">{researchTool.description || "No description information availabe."}</p></div>
 
                 <div><GoHome />
                   <label htmlFor="website" className='col-form-label-sm text-uppercase fw-bold ms-1'>Website</label>
                   <p id="website">
-                    {Array.isArray(researchTool.websites) ? researchTool.websites.map((url, index) => (
+                    {Array.isArray(researchTool.website) ? researchTool.website.map((url, index) => (
                       <span key={index} className="d-block">
                         <a href={url.trim()} target='_blank' rel="noopener noreferrer" className='icon-link icon-link-hover'>{url.trim()} <GoLinkExternal /></a>
                       </span>))
@@ -112,9 +117,9 @@ export default function ToolPage({ data }) {
 
                 <div>
                   <GoRepo />
-                  <label htmlFor="sourceRepo" className='col-form-label-sm text-uppercase fw-bold ms-1'>Source Repository</label>
-                  <p id="sourceRepo">
-                    {researchTool.sourceRepos ? researchTool.sourceRepos.map((url, index) => (
+                  <label htmlFor="repository" className='col-form-label-sm text-uppercase fw-bold ms-1'>Source Code Repository</label>
+                  <p id="repository">
+                    {researchTool.repository ? researchTool.repository.map((url, index) => (
                       <span key={index} className="d-block">
                         <a href={url.trim()} target='_blank' rel="noopener noreferrer" className='icon-link icon-link-hover'>{url.trim()} <GoLinkExternal /></a>
                       </span>))
@@ -125,13 +130,15 @@ export default function ToolPage({ data }) {
 
                 <div className='row'>
                   <div className='col-sm-auto'>
-
                     <GoVersions />
-                    <label htmlFor="currentVersion" className='col-form-label-sm text-uppercase fw-bold ms-1'>Current Version</label>
-                    <p id="currentVersion">
-                      <span className="d-block">
-                        {researchTool.currentVersion || "No version information available."}
-                      </span>
+                    <label htmlFor="version" className='col-form-label-sm text-uppercase fw-bold ms-1'>Current Version</label>
+                    <p id="version">
+                      {researchTool.version ? researchTool.version.map((index) => (
+                        <span key={index} className="d-block">
+                          {researchTool.version}
+                        </span>))
+                        : "No version information available."
+                      }
                     </p>
                   </div>
                   <div className='col-sm-auto'>
@@ -144,7 +151,14 @@ export default function ToolPage({ data }) {
                   <div className='col-sm-auto'>
                     <GoLog />
                     <label htmlFor="license" className='col-form-label-sm text-uppercase fw-bold ms-1'>License</label>
-                    <p id="license">{researchTool.license || "No license information available."}</p>
+                    <p id="license">
+                      {researchTool.license ? researchTool.license.map((index) => (
+                        <span key={index} className="d-block">
+                          {researchTool.license}
+                        </span>))
+                        : "No license information available."
+                      }
+                    </p>
                   </div>
 
                 </div>
@@ -214,7 +228,7 @@ export default function ToolPage({ data }) {
 
 export const Head = ({ data }) => (
   <>
-    <title>{data.researchTool.label}</title>
+    <title>{data.researchTool.label} | DH Tool Explorer</title>
   </>
 )
 
@@ -228,6 +242,14 @@ export const query = graphql`
       }
       label
       description
+      image
+      logo
+      repository
+      version
+      copyright
+      instancesof
+      website
+      license
     }
   }
 `
