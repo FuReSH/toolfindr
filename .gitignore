@@ -74,3 +74,6 @@ yarn-error.log
 
 # Gimp
 *.xcf
+
+# Local plugins
+plugins/**/dist/
