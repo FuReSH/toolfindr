@@ -97,7 +97,10 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
                         concepts: binding.get('tadirahIRIs').value.split(', '),
                         instancesof: binding.get('instanceof_labels').value.split(', '),
                         description: binding.get('description')?.value || null,
-                        license: binding.get('license_labels').value.split(', ') || null,
+                        license: (() => {
+                            const licenses = binding.get('license_labels').value.split(', ');
+                            return licenses.length === 1 && licenses[0] === '' ? null : licenses;
+                        })(),
                         copyright: binding.get('copyright_label')?.value || null
                     });
                 });

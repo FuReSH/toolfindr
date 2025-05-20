@@ -102,7 +102,10 @@ class ResearchToolSource extends base_data_source_1.BaseDataSource {
                             concepts: binding.get('tadirahIRIs').value.split(', '),
                             instancesof: binding.get('instanceof_labels').value.split(', '),
                             description: ((_a = binding.get('description')) === null || _a === void 0 ? void 0 : _a.value) || null,
-                            license: binding.get('license_labels').value.split(', ') || null,
+                            license: (() => {
+                                const licenses = binding.get('license_labels').value.split(', ');
+                                return licenses.length === 1 && licenses[0] === '' ? null : licenses;
+                            })(),
                             copyright: ((_b = binding.get('copyright_label')) === null || _b === void 0 ? void 0 : _b.value) || null
                         });
                     });
