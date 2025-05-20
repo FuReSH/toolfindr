@@ -8,5 +8,5 @@ export const ERROR_CODES = {
 } as const
 
 export const CACHE_KEYS = {
-    LastModifiedWikidata: `wikidata-last-modified`,
+    Timestamp: `research-tools-last-fetched-date`,
   } as const

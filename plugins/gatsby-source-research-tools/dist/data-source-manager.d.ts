@@ -1,19 +1,9 @@
-import { IPluginOptionsInternal, IResearchToolInput, ITadirahConceptInput } from "./types";
-import { GatsbyCache } from "gatsby";
+import { IPluginOptionsInternal, IApiResponse } from "./types";
 export declare class DataSourceManager {
-    private wikidataSparql;
-    private wikidataRest;
-    private tadirah;
-    constructor(options: IPluginOptionsInternal, cache: GatsbyCache);
-    fetchAllData(): Promise<{
-        data: {
-            tools: IResearchToolInput[];
-            concepts: ITadirahConceptInput[];
-        };
-        errors?: {
-            message: string;
-        }[];
-    }>;
-    private buildToolsFromSparqlAndRest;
-    private attachTadirahConcepts;
+    private researchToolSource;
+    private tadirahConceptSource;
+    private researchToolEnrichSource;
+    constructor(options: IPluginOptionsInternal, lastFetchedDate: Date);
+    fetchAllData(): Promise<IApiResponse>;
+    private enrichResearchTools;
 }

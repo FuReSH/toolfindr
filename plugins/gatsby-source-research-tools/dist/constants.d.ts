@@ -6,5 +6,5 @@ export declare const ERROR_CODES: {
     readonly ResearchToolsSourcing: "10000";
 };
 export declare const CACHE_KEYS: {
-    readonly LastModifiedWikidata: "wikidata-last-modified";
+    readonly Timestamp: "research-tools-last-fetched-date";
 };

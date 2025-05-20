@@ -22,13 +22,15 @@
 
 - Project structure
 - Data fetching and data handling
-    - SPARQL (Wikidata request)
-    - MediaWiki Action API (images)
-    - GraphQL (schema)
+    - Local `gatsby-source-wikidata-lfd` plugin
+        - SPARQL
+        - Triple Pattern Fragment
+        - GraphQL
+    - MediaWiki Action API (Wikimedia Commons)
 - Installation
     - Locally
     - Docker
-- Customize the template
+- Customize the explorer
     - Configure sites metadata
     - Configures styles
 - Issues and development
@@ -38,7 +40,24 @@
 
 - https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/conceptual/data-fetching.md
 
+### Local `gatsby-source-wikidata-lfd` plugin
+
+Use the concept of Linked Data Fragements
+
+- Not to complex SPARQL Query to not run into RateLimit Error (429)
+- Drawbacks of Wikidata REST API:
+    - Parallel request with e.g. `Promise.all()` is not allowed and will run into 429 error
+    - Sequential requests, on the other hand, take a long time and are therefore not efficient
+
 ### SPARQL
+
+There a various endpoints available for fetching data from Wikidata
+- WDQS
+- QLever (!)
+- Virtuoso
+- see website for more information and benchmark tests: 
+    - https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_backend_update/WDQS_backend_alternatives
+    - https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Alternative_endpoints
 
 See JS-Libraries
 
@@ -52,6 +71,11 @@ See JS-Libraries
 ```bash
 npx comunica-sparql https://query.wikidata.org/sparql https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl -f ./data/federated-sparql.rq --log-level debug
 ```
+
+#### Linked Data Fragments (LDF)
+
+- Wikidata LDF Server: https://query-main.wikidata.org/bigdata/ldf
+- "template" : "https://query-main.wikidata.org/bigdata/ldf{?subject,predicate,object}"
 
 ## Wikimedia Commons
 

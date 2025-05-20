@@ -16,28 +16,27 @@ export interface IResearchToolInput {
   concepts: string[]
   label?: string
   description?: string
+  instancesof?: string[]
+  license?: string[]
+  copyright?: string
+  logo?: string[]
+  image?: string[]
+  website?: string[]
+  repository?: string[]
+  version?: string[]
 }
 
-export interface IWikidataSparql {
-  id: string
-  tadirahId: string
-}
-
-export interface IWikidataSparqlGroupedByTool {
-  id: string
-  tadirahIds: string[]
-}
-
-export interface IWikidataRest {
-  id: string
-  label: string
-  description: string
+export interface IApiResponse {
+  data: {
+    tools: IResearchToolInput[];
+    concepts: ITadirahConceptInput[];
+  };
+  errors?: { message: string }[];
 }
 
 interface IPluginOptionsKeys {
   wikidataSparqlUrl: string,
-  wikidataRestUrl: string,
-  token: string,
+  wikidataLdfUrl: string,
   tadirahFileUrl: string,
 }
 

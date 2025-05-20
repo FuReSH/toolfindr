@@ -14,8 +14,7 @@ module.exports = [
       resolve: require.resolve(`../plugins/gatsby-source-research-tools`),
       options: {
         wikidataSparqlUrl: process.env.GATSBY_WD_SPARQL_URL,
-        wikidataRestUrl: process.env.GATSBY_WD_REST_URL,
-        token: process.env.GATSBY_WD_TOKEN,
+        wikidataLdfUrl: process.env.GATSBY_WD_LDF_URL,
         tadirahFileUrl: process.env.GATSBY_TADIRAH_FILE_URL,
       },
     },

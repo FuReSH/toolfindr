@@ -15,9 +15,9 @@ exports.BaseDataSource = void 0;
  * @template T - The data type returned by the data source.
  *
  * @property options - Optional configuration passed to the data source.
- * @property cache - An optional Gatsby Cache object, used in cache-based sources like REST.
- * @property token - An optional authentication token, used in token-based sources like REST.
- * @property query - An optional query string, used in query-based sources like SPARQL.
+ * @property endpoint - The endpoint URL for the data source.
+ * @property engine - The query engine used for SPARQL queries.
+ * @property query - The SPARQL query string to be executed.
  *
  * @method fetchData - Abstract method that must be implemented by subclasses.
  *   Returns a Promise that resolves to an array of type T.
@@ -26,10 +26,9 @@ exports.BaseDataSource = void 0;
  * @method logProgress - Simple logging method for tracking progress or debugging.
  */
 class BaseDataSource {
-    constructor(endpoint, cache, token, query) {
+    constructor(endpoint, engine, query) {
         this.endpoint = endpoint;
-        this.cache = cache;
-        this.token = token;
+        this.engine = engine;
         this.query = query;
     }
     handleError(errorDetails, source) {

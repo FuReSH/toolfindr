@@ -16,13 +16,15 @@ exports.WikidataRestSource = void 0;
 const base_data_source_1 = require("./base-data-source");
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const p_limit_1 = __importDefault(require("p-limit"));
+const query_sparql_1 = require("@comunica/query-sparql");
 class WikidataRestSource extends base_data_source_1.BaseDataSource {
-    constructor(endpoint, cache) {
-        super(endpoint, cache);
+    constructor(endpoint, cache, token) {
+        super(endpoint, new query_sparql_1.QueryEngine(), undefined);
         this.headers = {
             "Content-Type": "application/json",
+            "Accept-Encoding": "gzip,deflate",
             "Accept": "application/json",
-            "Authorization": `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTlhM2EwZDI1MDZjMTAwMWM1NjA1Njk4ZjEwYTJjYiIsImp0aSI6IjhmZGVjNjk2OTc0YWJhMzkxZTc4MDAyN2UzOWVjMGYxYjE5MDUzNzljZGZlMjE4YTVkOTUxMjk1ZDk1OWVlOTZjZDBkNzM2ZWRmMGNmNDhiIiwiaWF0IjoxNzQ0MjE5MTM4LjczNDY4OCwibmJmIjoxNzQ0MjE5MTM4LjczNDY5LCJleHAiOjMzMzAxMTI3OTM4LjcyNjcwNywic3ViIjoiNTk0NTA3MjIiLCJpc3MiOiJodHRwczovL21ldGEud2lraW1lZGlhLm9yZyIsInJhdGVsaW1pdCI6eyJyZXF1ZXN0c19wZXJfdW5pdCI6NTAwMCwidW5pdCI6IkhPVVIifSwic2NvcGVzIjpbImJhc2ljIl19.ej5wBkFb49wiTPK2wYkmMH0gwUcTqwB7_0ZzKyv-bYu7LsAkna7gH_ZCt7hoag-tCm2X1_10AZirFN8Ux6zHLSrzFmXZQLMm_TdDBH4iaO4ZRvJ7CtubKVa6n2ambkNLxN0B7fBMF7PH8ynjNEEFZMi_UcfrxRSdj2XVtBQWWBSEG7o4nBXqJ9AjjfD6zXd0sZkaVFQ4-DVTeB80YcRzZ2dryAlg0uqsundzsZAVwsgQlcZk4stoV7KwiuBX14Kah8wnRY6p-JH1J1-Jy970IrRrhNNA0wzQmG3tZ905qO5h92Z3YQqH-2uLs1NK1jkptzOm_rVZ0zcpUOaXZTM4uREMLDfY6goVuo7-A8iq7YCzffynKVpacN0ikz0d_fEiFlzYGP__QIKJzRZudXYR7XNKjJBl1HkcSV7o3dBCuptuE6Q_fD2TFzh9D7JDY_zLLJikL_ZFaBmmLLzv_jlSRMy8z0GmmDeGyahuoR8QlWYUbHdBbGAvxiEoIwIyHa6GUx333YTeLUapI8OAzEg4xFVfMkQ-aJTeItxLdnLPX_q56I4zsBV63klfF6dNTriiAU4k62TG0LmGgBnQKy4Wj_wTvt8yXs6swHoITdL0uk468HJq-j5-BoG60jxQmSTPLDvgZ9b7Cxqj0c_JGYr5N3v3Zv0VhbDk-8eyGCAQma0`,
+            "Authorization": `Bearer ${token}`,
             //"Api-User-Agent": "Example/1.0"
         };
     }
@@ -35,27 +37,28 @@ class WikidataRestSource extends base_data_source_1.BaseDataSource {
             const processId = (id) => __awaiter(this, void 0, void 0, function* () {
                 const url = `${this.endpoint}/entities/items/${id.split("/").pop()}`;
                 const cacheKey = `wikidata-last-modified-${id}`;
-                const lastModified = yield this.cache.get(cacheKey);
+                //const lastModified: Date = await this.cache.get(cacheKey);
                 const headers = Object.assign({}, this.headers);
-                if (lastModified) {
-                    headers["If-Modified-Since"] = lastModified;
-                }
+                /*if (lastModified) {
+                  headers["If-Modified-Since"] = lastModified;
+                }*/
                 const response = yield this.httpRequest(url, "HEAD", headers);
                 if (response.status === 304) {
+                    console.log(response.status);
                     return; // No new data, skip to the next ID
-                }
-                if (!response.ok) {
-                    let errorDetails = yield response.json();
-                    this.handleError(errorDetails, "WikidataRestSource");
-                    return;
                 }
                 if (response.status === 200) {
                     const response = yield this.httpRequest(url, "GET", headers);
+                    console.log(response.status);
                     const data = yield response.json();
-                    const newLastModified = response.headers.get("last-modified");
-                    if (newLastModified) {
-                        yield this.cache.set(cacheKey, newLastModified);
+                    if (!response.ok) {
+                        let errorDetails = yield response.json();
+                        throw errorDetails;
                     }
+                    const newLastModified = response.headers.get("last-modified");
+                    /*if (newLastModified) {
+                      await this.cache.set(cacheKey, newLastModified);
+                    }*/
                     results.push({
                         id: data.id,
                         label: data.labels.en ? data.labels.en : data.id,
@@ -63,9 +66,14 @@ class WikidataRestSource extends base_data_source_1.BaseDataSource {
                     });
                 }
             });
-            // Verarbeite die IDs in parallelen Tasks mit Begrenzung
-            const tasks = ids.map(id => limit(() => processId(id)));
-            yield Promise.all(tasks);
+            try {
+                // Verarbeite die IDs in parallelen Tasks mit Begrenzung
+                const tasks = ids.map(id => limit(() => processId(id)));
+                yield Promise.all(tasks);
+            }
+            catch (error) {
+                return Promise.reject(this.handleError(error, "WikidataRestSource"));
+            }
             return results;
         });
     }

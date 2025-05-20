@@ -8,7 +8,6 @@
 # It uses the Wikidata label service to retrieve the labels and descriptions in English
 # NOTICE: Since requests to the Wikidata Query Service are rate-limited to many items in a single query is inefficient
 # This query is for demonstration purposes only and should be optimized for production use
-
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

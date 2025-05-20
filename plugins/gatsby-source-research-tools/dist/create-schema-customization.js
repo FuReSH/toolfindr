@@ -10,6 +10,16 @@ const createSchemaCustomization = ({ actions }) => {
           _id: String!
           slug: String!
           concepts: [${constants_1.NODE_TYPES.Concept}!]! @link(by: "_id")
+          label: String!
+          description: String
+          instancesof: [String]!
+          license: [String]
+          copyright: String
+          website: [String]
+          repository: [String]
+          image: [String]
+          logo: [String]
+          version: [String]
         }
   
         type ${constants_1.NODE_TYPES.Concept} implements Node {

@@ -10,86 +10,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSourceManager = void 0;
-const wikidata_sparql_1 = require("./data-sources/wikidata-sparql");
-const wikidata_rest_1 = require("./data-sources/wikidata-rest");
-const tadirah_sparql_1 = require("./data-sources/tadirah-sparql");
+const tadirah_concept_source_1 = require("./data-sources/tadirah-concept-source");
+const research_tool_source_1 = require("./data-sources/research-tool-source");
+const research_tool_enrich_source_1 = require("./data-sources/research-tool-enrich-source");
 class DataSourceManager {
-    constructor(options, cache) {
-        this.wikidataSparql = new wikidata_sparql_1.WikidataSparqlSource(options.wikidataSparqlUrl);
-        this.wikidataRest = new wikidata_rest_1.WikidataRestSource(options.wikidataRestUrl, cache);
-        this.tadirah = new tadirah_sparql_1.TadirahSparqlSource(options.tadirahFileUrl);
+    constructor(options, lastFetchedDate) {
+        this.researchToolSource = new research_tool_source_1.ResearchToolSource(options.wikidataSparqlUrl, lastFetchedDate);
+        this.tadirahConceptSource = new tadirah_concept_source_1.TadirahConceptSource(options.tadirahFileUrl);
+        this.researchToolEnrichSource = new research_tool_enrich_source_1.ResearchToolEnrichSource(options.wikidataLdfUrl);
     }
     fetchAllData() {
         return __awaiter(this, void 0, void 0, function* () {
             const errors = [];
-            let wikidataSparqlItems = [];
-            let tadirahSparqlItems = [];
-            let wikidataRestItems = [];
-            let researchTools = [];
+            let researchToolData = [];
+            let tadirahConceptData = [];
             try {
-                // Abrufen der Daten aus Wikidata SPARQL
-                wikidataSparqlItems = yield this.wikidataSparql.getGroupedResearchTools();
+                // Fetch data with Promise.all
+                [tadirahConceptData, researchToolData] = yield Promise.all([
+                    this.tadirahConceptSource.fetchData(),
+                    this.researchToolSource.fetchData()
+                ]);
+                researchToolData = researchToolData.slice(0, 20);
+                researchToolData = yield this.enrichResearchTools(researchToolData);
             }
             catch (error) {
                 errors.push({ message: error });
-            }
-            //wikidataSparqlItems = wikidataSparqlItems.slice(0, 10)
-            try {
-                // Abrufen der Daten aus Wikidata REST
-                wikidataRestItems = yield this.wikidataRest.fetchData(wikidataSparqlItems.map(item => item.id));
-            }
-            catch (error) {
-                errors.push({ message: error });
-            }
-            try {
-                tadirahSparqlItems = yield this.tadirah.fetchData();
-            }
-            catch (error) {
-                errors.push({ message: error });
-            }
-            if (errors.length > 0) {
-                return { data: null, errors };
-            }
-            if (wikidataRestItems.length !== 0) {
-                // Schritt 1: Tools aus Wikidata SPARQL + REST bauen
-                researchTools = this.buildToolsFromSparqlAndRest(wikidataSparqlItems, wikidataRestItems);
-                // Schritt 2: Tadirah-Konzepte abrufen und zuordnen
-                this.attachTadirahConcepts(researchTools, wikidataSparqlItems, tadirahSparqlItems);
             }
             return {
                 data: {
-                    tools: researchTools,
-                    concepts: tadirahSparqlItems,
+                    tools: researchToolData,
+                    concepts: tadirahConceptData
                 },
-                errors: undefined, // Gib Fehler nur zurück, wenn welche aufgetreten sind
+                errors: errors.length > 0 ? errors : undefined, // Gib Fehler nur zurück, wenn welche aufgetreten sind
             };
         });
     }
-    buildToolsFromSparqlAndRest(sparqlItems, restItems) {
-        const restMap = new Map(restItems.map(item => [item.id, item]));
-        return sparqlItems
-            .map(tool => {
-            const idSuffix = tool.id.split("/").pop();
-            const restItem = restMap.get(idSuffix);
-            return {
-                id: tool.id,
-                slug: idSuffix.toLowerCase(),
-                label: restItem.label,
-                description: restItem.description,
-                concepts: [] // wird später gefüllt
-            };
-        });
-    }
-    attachTadirahConcepts(tools, sparqlItems, tadirahConcepts) {
-        const conceptMap = new Map(tadirahConcepts.map(c => [c.id, c]));
-        const sparqlMap = new Map(sparqlItems.map(i => [i.id, i]));
-        tools.forEach(tool => {
-            const sparqlTool = sparqlMap.get(tool.id);
-            if (!sparqlTool)
-                return;
-            tool.concepts = sparqlTool.tadirahIds
-                .map(id => conceptMap.get(id))
-                .map(concept => concept.id);
+    enrichResearchTools(tools) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.researchToolEnrichSource.fetchData(tools);
         });
     }
 }

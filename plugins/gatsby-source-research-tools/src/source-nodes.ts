@@ -1,7 +1,9 @@
 import type { GatsbyNode, SourceNodesArgs, NodeInput } from "gatsby"
 import { DataSourceManager } from "./data-source-manager"
-import type { IPluginOptionsInternal, NodeBuilderInput, IResearchToolInput, ITadirahConceptInput } from "./types"
-import { NODE_TYPES, ERROR_CODES } from "./constants"
+import type { IPluginOptionsInternal, NodeBuilderInput, IApiResponse } from "./types"
+import { NODE_TYPES, ERROR_CODES, CACHE_KEYS } from "./constants"
+
+let isFirstSource = true
 
 export const sourceNodes: GatsbyNode["sourceNodes"] = async (
   gatsbyApi,
@@ -13,17 +15,23 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
   const sourcingTimer = reporter.activityTimer(`Sourcing from plugin research-tools`)
   sourcingTimer.start()
 
-  interface IApiResponse {
-    data: {
-      tools: Array<IResearchToolInput>;
-      concepts: Array<ITadirahConceptInput>;
-    }
-    errors?: Array<{
-      message: string
-    }>
+  if (isFirstSource) {
+    getNodes().forEach((node) => {
+      if (node.internal.owner !== `plugin` && node.internal.type !== NODE_TYPES.Tool) {
+        return
+      }
+      touchNode(node)
+    })
+
+    isFirstSource = false
   }
 
-  const dataManager = new DataSourceManager(pluginOptions, cache);
+  const lastFetchedDate: number = await cache.get(CACHE_KEYS.Timestamp)
+  const lastFetchedDateCurrent = Date.now()
+
+  reporter.info(`[plugin] Last fetched date: ${lastFetchedDate ? new Date(lastFetchedDate) : "None. First sourcing 🚀"}`)
+
+  const dataManager = new DataSourceManager(pluginOptions, lastFetchedDate ? new Date(lastFetchedDate) : undefined);
   const { data, errors }: IApiResponse = await dataManager.fetchAllData();
 
   if (errors) {
@@ -32,47 +40,31 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
       context: {
         sourceMessage: `Sourcing from the APIs failed`,
         apiErrorNum: errors.length,
-        apiError: errors.map(error => `- ${error}\n`).join("\n"),
+        apiError: errors.map(error => `- ${error.message}\n`).join("\n"),
       },
     })
 
     return
   }
 
+  await cache.set(CACHE_KEYS.Timestamp, lastFetchedDateCurrent)
+
   const { tools = [], concepts = [] } = data
 
+   
   if ((tools.length === 0)) {
-    reporter.info(`[plugin] No updated data from Wikidata. Touching existing nodes to keep them.`)
-
-    const existingNodes = getNodes()
-
-    for (const node of existingNodes) {
-      if (node.internal.type === NODE_TYPES.Tool || node.internal.type === NODE_TYPES.Concept) {
-        // Touch existing nodes to keep them in the GraphQL schema
-        touchNode(node)
-      }
-    }
-
-    sourcingTimer.end()
-
-    return
+    reporter.info(`[plugin] No updated data from Wikidata for research tools since the last fetch 🏆`)
   }
 
-  const existingToolNodes = new Map<string, NodeInput>(
-    getNodes()
-      .filter(node => node.internal.type === NODE_TYPES.Tool)
-      .map(node => [node._id as string, node as NodeInput])
-  )
-
   for (const tool of tools) {
-    nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Tool, data: tool }, existingNodeMap: existingToolNodes, })
+    nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Tool, data: tool } })
   }
 
   for (const concept of concepts) {
     nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Concept, data: concept } })
   }
 
-  sourcingTimer.setStatus(`[plugin] Successfully sourced ${tools.length} tools and ${concepts.length} tadirah concepts.`);
+  sourcingTimer.setStatus(`[plugin] Successfully sourced ${tools.length} tools and ${concepts.length} tadirah concepts 🙌`);
 
   sourcingTimer.end()
 }
@@ -80,27 +72,15 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
 interface INodeBuilderArgs {
   gatsbyApi: SourceNodesArgs
   input: NodeBuilderInput
-  existingNodeMap?: Map<string, NodeInput>
 }
 
 export function nodeBuilder({
   gatsbyApi,
-  input,
-  existingNodeMap,
+  input
 }: INodeBuilderArgs) {
   const { createNodeId, createContentDigest, actions } = gatsbyApi
   const id = createNodeId(`${input.type}-${input.data.id}`)
   const contentDigest = createContentDigest(input.data)
-
-  if (existingNodeMap) {
-    const existing = existingNodeMap.get(input.data.id)
-    if (existing) {
-      if (existing.internal.contentDigest === contentDigest) {
-        actions.touchNode(existing)
-        return // Keine Änderung → Node bleibt bestehen
-      }
-    }
-  }
 
   const node: NodeInput = {
     ...input.data,

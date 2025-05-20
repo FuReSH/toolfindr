@@ -9,5 +9,5 @@ exports.ERROR_CODES = {
     ResearchToolsSourcing: `10000`,
 };
 exports.CACHE_KEYS = {
-    LastModifiedWikidata: `wikidata-last-modified`,
+    Timestamp: `research-tools-last-fetched-date`,
 };

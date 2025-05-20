@@ -2,15 +2,10 @@ import { BaseDataSource } from './base-data-source';
 import { QueryEngine } from '@comunica/query-sparql';
 import { ITadirahConceptInput } from '../types';
 
-export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
+export class TadirahConceptSource extends BaseDataSource<ITadirahConceptInput> {
     
-    private engine: QueryEngine;
-
-    constructor(endpoint: string) {
-        super(endpoint);
-        this.engine = new QueryEngine();
-        
-        this.query = `
+    constructor(endpoint: string) {        
+        const query = `
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
             SELECT ?tadirahID ?tadirahLabel
@@ -19,6 +14,7 @@ export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
             FILTER (lang(?tadirahLabel) = "en")
             }
         `;
+        super(endpoint, new QueryEngine(), query);
     }
 
     async fetchData(): Promise<ITadirahConceptInput[]> {
@@ -32,29 +28,27 @@ export class TadirahSparqlSource extends BaseDataSource<ITadirahConceptInput> {
                 noCache: false,
             });
 
-
             return new Promise((resolve, reject) => {
-                const items: ITadirahConceptInput[] = [];
+                const tadirahConcepts: ITadirahConceptInput[] = [];
 
                 bindingsStream.on('data', (binding) => {
                     // Verarbeite jedes Binding einzeln
-                    items.push({
+                    tadirahConcepts.push({
                         id: binding.get('tadirahID').value,
                         label: binding.get('tadirahLabel').value,
                     });
-
                 });
 
                 bindingsStream.on('end', () => {
-                    resolve(items);
+                    resolve(tadirahConcepts);
                 });
 
                 bindingsStream.on('error', (error) => {
-                    reject(this.handleError(error, "TadirahSparqlSource"));
+                    reject(this.handleError(error, "TadirahConceptSource"));
                 });
             });
         } catch (error) {
-            return Promise.reject(this.handleError(error, "TadirahSparqlSource"));
+            return Promise.reject(this.handleError(error, "TadirahConceptSource"));
         }
         
     }

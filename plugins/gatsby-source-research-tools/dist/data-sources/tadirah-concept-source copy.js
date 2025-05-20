@@ -9,14 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TadirahSparqlSource = void 0;
+exports.TadirahConceptSource = void 0;
 const base_data_source_1 = require("./base-data-source");
 const query_sparql_1 = require("@comunica/query-sparql");
-class TadirahSparqlSource extends base_data_source_1.BaseDataSource {
+class TadirahConceptSource extends base_data_source_1.BaseDataSource {
     constructor(endpoint) {
-        super(endpoint);
-        this.engine = new query_sparql_1.QueryEngine();
-        this.query = `
+        const query = `
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
             SELECT ?tadirahID ?tadirahLabel
@@ -25,11 +23,12 @@ class TadirahSparqlSource extends base_data_source_1.BaseDataSource {
             FILTER (lang(?tadirahLabel) = "en")
             }
         `;
+        super(endpoint, new query_sparql_1.QueryEngine(), query);
     }
     fetchData() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const bindingsStream = yield this.engine.queryBindings(this.query, {
+                let bindingsStream = yield this.engine.queryBindings(this.query, {
                     sources: [this.endpoint],
                     httpRetryOnServerError: true,
                     httpRetryCount: 3,
@@ -37,27 +36,26 @@ class TadirahSparqlSource extends base_data_source_1.BaseDataSource {
                     noCache: false,
                 });
                 return new Promise((resolve, reject) => {
-                    const items = [];
+                    let tadirahConcepts = [];
                     bindingsStream.on('data', (binding) => {
                         // Verarbeite jedes Binding einzeln
-                        items.push({
+                        tadirahConcepts.push({
                             id: binding.get('tadirahID').value,
                             label: binding.get('tadirahLabel').value,
                         });
-                        console.log(binding.entries);
                     });
                     bindingsStream.on('end', () => {
-                        resolve(items);
+                        resolve(tadirahConcepts);
                     });
                     bindingsStream.on('error', (error) => {
-                        reject(this.handleError(error, "TadirahSparqlSource"));
+                        reject(this.handleError(error, "TadirahConceptSource"));
                     });
                 });
             }
             catch (error) {
-                return Promise.reject(this.handleError(error, "TadirahSparqlSource"));
+                return Promise.reject(this.handleError(error, "TadirahConceptSource"));
             }
         });
     }
 }
-exports.TadirahSparqlSource = TadirahSparqlSource;
+exports.TadirahConceptSource = TadirahConceptSource;

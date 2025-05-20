@@ -1,105 +1,50 @@
-import { WikidataSparqlSource } from "./data-sources/wikidata-sparql";
-import { IPluginOptionsInternal, IResearchToolInput, IWikidataRest, ITadirahConceptInput, IWikidataSparqlGroupedByTool } from "./types";
-import { WikidataRestSource } from "./data-sources/wikidata-rest";
-import { TadirahSparqlSource } from "./data-sources/tadirah-sparql";
-import { GatsbyCache } from "gatsby";
+import { IPluginOptionsInternal, IResearchToolInput, ITadirahConceptInput, IApiResponse } from "./types";
+import { TadirahConceptSource } from "./data-sources/tadirah-concept-source";
+import { ResearchToolSource } from "./data-sources/research-tool-source";
+import { ResearchToolEnrichSource } from "./data-sources/research-tool-enrich-source";
+
 
 export class DataSourceManager {
-  private wikidataSparql: WikidataSparqlSource;
-  private wikidataRest: WikidataRestSource;
-  private tadirah: TadirahSparqlSource;
+  private researchToolSource: ResearchToolSource
+  private tadirahConceptSource: TadirahConceptSource
+  private researchToolEnrichSource: ResearchToolEnrichSource
 
-  constructor(options: IPluginOptionsInternal, cache: GatsbyCache) {
-    this.wikidataSparql = new WikidataSparqlSource(options.wikidataSparqlUrl);
-    this.wikidataRest = new WikidataRestSource(options.wikidataRestUrl, cache);
-    this.tadirah = new TadirahSparqlSource(options.tadirahFileUrl);
+  constructor(options: IPluginOptionsInternal, lastFetchedDate: Date) {
+    this.researchToolSource = new ResearchToolSource(options.wikidataSparqlUrl, lastFetchedDate);
+    this.tadirahConceptSource = new TadirahConceptSource(options.tadirahFileUrl);
+    this.researchToolEnrichSource = new ResearchToolEnrichSource(options.wikidataLdfUrl);
   }
 
-  async fetchAllData(): Promise<{ data: { tools: IResearchToolInput[]; concepts: ITadirahConceptInput[] }; errors?: { message: string }[] }> {
+  async fetchAllData(): Promise<IApiResponse> {
     const errors: { message: string }[] = [];
 
-    let wikidataSparqlItems: IWikidataSparqlGroupedByTool[] = [];
-    let tadirahSparqlItems: ITadirahConceptInput[] = [];
-    let wikidataRestItems: IWikidataRest[] = [];
-    let researchTools: IResearchToolInput[] = [];
+    let researchToolData: IResearchToolInput[] = [];
+    let tadirahConceptData: ITadirahConceptInput[] = [];
 
     try {
-      // Abrufen der Daten aus Wikidata SPARQL
-      wikidataSparqlItems = await this.wikidataSparql.getGroupedResearchTools();
+      // Fetch data with Promise.all
+      [tadirahConceptData, researchToolData] = await Promise.all([
+        this.tadirahConceptSource.fetchData(),
+        this.researchToolSource.fetchData()
+      ]);
+
+      researchToolData = researchToolData.slice(0, 20);
+
+      researchToolData = await this.enrichResearchTools(researchToolData);
     } catch (error) {
       errors.push({ message: error });
-    }
-    //wikidataSparqlItems = wikidataSparqlItems.slice(0, 10)
-
-    try {
-      // Abrufen der Daten aus Wikidata REST
-      wikidataRestItems = await this.wikidataRest.fetchData(wikidataSparqlItems.map(item => item.id));
-    } catch (error) {
-      errors.push({ message: error });
-    }
-
-    try {
-        tadirahSparqlItems = await this.tadirah.fetchData();
-      } catch (error) {
-        errors.push({ message: error });
-      }
-
-    if (errors.length > 0) {
-      return { data: null, errors };
-    }
-
-    if (wikidataRestItems.length !== 0) {
-      // Schritt 1: Tools aus Wikidata SPARQL + REST bauen
-      researchTools = this.buildToolsFromSparqlAndRest(wikidataSparqlItems, wikidataRestItems);
-      // Schritt 2: Tadirah-Konzepte abrufen und zuordnen
-      this.attachTadirahConcepts(researchTools, wikidataSparqlItems, tadirahSparqlItems);
     }
 
     return {
       data: {
-        tools: researchTools,
-        concepts: tadirahSparqlItems,
+        tools: researchToolData,
+        concepts: tadirahConceptData
       },
-      errors: undefined, // Gib Fehler nur zurück, wenn welche aufgetreten sind
+      errors: errors.length > 0 ? errors : undefined, // Gib Fehler nur zurück, wenn welche aufgetreten sind
     };
   }
 
-  private buildToolsFromSparqlAndRest(
-    sparqlItems: IWikidataSparqlGroupedByTool[],
-    restItems: IWikidataRest[]
-  ): IResearchToolInput[] {
-    const restMap = new Map(restItems.map(item => [item.id, item]));
-
-    return sparqlItems
-      .map(tool => {
-        const idSuffix = tool.id.split("/").pop();
-        const restItem = restMap.get(idSuffix);
-
-        return {
-          id: tool.id,
-          slug: idSuffix.toLowerCase(),
-          label: restItem.label,
-          description: restItem.description,
-          concepts: [] // wird später gefüllt
-        };
-      });
-  }
-
-  private attachTadirahConcepts(
-    tools: IResearchToolInput[],
-    sparqlItems: IWikidataSparqlGroupedByTool[],
-    tadirahConcepts: ITadirahConceptInput[]
-  ): void {
-    const conceptMap = new Map(tadirahConcepts.map(c => [c.id, c]));
-    const sparqlMap = new Map(sparqlItems.map(i => [i.id, i]));
-
-    tools.forEach(tool => {
-      const sparqlTool = sparqlMap.get(tool.id);
-      if (!sparqlTool) return;
-
-      tool.concepts = sparqlTool.tadirahIds
-        .map(id => conceptMap.get(id))
-        .map(concept => concept.id);
-    });
+  private async enrichResearchTools(tools: IResearchToolInput[]): Promise<IResearchToolInput[]> {
+    return this.researchToolEnrichSource.fetchData(tools);
   }
 }
