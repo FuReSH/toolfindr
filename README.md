@@ -49,6 +49,10 @@ Use the concept of Linked Data Fragements
     - Parallel request with e.g. `Promise.all()` is not allowed and will run into 429 error
     - Sequential requests, on the other hand, take a long time and are therefore not efficient
 
+- Create TypeDoc Documentation:
+
+`npx typedoc`
+
 ### SPARQL
 
 There a various endpoints available for fetching data from Wikidata

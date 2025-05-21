@@ -28,6 +28,7 @@
         "node-polyfill-webpack-plugin": "^2.0.1"
     },
     "devDependencies": {
-        "typedoc": "^0.28.4"
+        "typedoc": "^0.28.4",
+        "typedoc-material-theme": "^1.4.0"
     }
 }
