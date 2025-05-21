@@ -1,22 +1,25 @@
 <h1 align="center">
   Frontend Template for the Digital Humanities Tool Registry with Wikidata
 <br />
-<img src="./docs/teaser-img.png" width="50%" alt="Demo DH Tool Registry Website" /> 
+<img src="./docs/assets/teaser-img.png" width="50%" alt="Demo DH Tool Registry Website" /> 
 <br />
 </h1>
 
 [![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
 
 
-- powered by Wikidata SPARQL Service, MediaWiki Action API, GatsbyJS with React and GraphQL, Bootstrap
+- powered by 
+    - Wikidata SPARQL Service, 
+    - Wikidata Linked Data Fragmens Service
+    - MediaWiki Action API,
+    - Comunica 
+    - GatsbyJS with React and GraphQL
+    - Bootstrap 5
 <!-- - uses SSR and DFR strategies -->
-- additional libraries: communica for Wikidata retrieval, react-select for multi selection, pm2 for deployment
 
 <!-- Add Abstract here -->
 
-👉 **All data grounded by Wikidata and Commons.**
-
-![](./docs/tr-screenshot.png)
+👉 **All data grounded by Wikidata, Commons and the TaDiRAH Taxonomy.**
 
 ## Overview
 
@@ -44,20 +47,25 @@
 
 Use the concept of Linked Data Fragements
 
+#### Why Wikidata LDF and not REST?
+
 - Not to complex SPARQL Query to not run into RateLimit Error (429)
 - Drawbacks of Wikidata REST API:
     - Parallel request with e.g. `Promise.all()` is not allowed and will run into 429 error
     - Sequential requests, on the other hand, take a long time and are therefore not efficient
+    - you need personal access token for larger requests
 
-- Create TypeDoc Documentation:
+#### Documentation (technical)
+
+- Change into the plugin's directory and create TypeDoc Documentation:
 
 `npx typedoc`
 
 ### SPARQL
 
 There a various endpoints available for fetching data from Wikidata
-- WDQS
-- QLever (!)
+- WDQS - Wikimedia Foundation
+- QLever (!) - Uni Freiburg
 - Virtuoso
 - see website for more information and benchmark tests: 
     - https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_backend_update/WDQS_backend_alternatives
@@ -67,6 +75,10 @@ See JS-Libraries
 
 - https://comunica.dev/ (allows federated queries)
 - https://zazuko.com/get-started/developers/#further-documentation-support-questions (no federated queries)
+
+### Why QLever and not the WDQS?
+
+#### Drawbacks and Differences
 
 ### Execute SPARQL queries with `@comunica/query-sparql`
 
