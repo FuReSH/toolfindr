@@ -11,6 +11,7 @@ import type { ObjectSchema } from "gatsby-plugin-utils"
  * @returns The Joi object schema for plugin options.
  * 
  * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#pluginOptionsSchema
+ * @see https://joi.dev/
  */
 export const pluginOptionsSchema: GatsbyNode["pluginOptionsSchema"] = ({
   Joi,
