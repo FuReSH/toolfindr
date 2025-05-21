@@ -20,18 +20,18 @@ const ToolsTableComponent = ({ filteredData }) => {
         </thead>
         <tbody className="table-group-divider">
           {filteredData.map(item => (
-            <tr key={item.toolID}>
+            <tr key={item.id}>
               <td className='p-2'>
                 <div className='badge bg-light text-dark font-monospace'>
                 <img width="25" src='https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg' alt='Wikidata Logo' />
-                {item.toolID.match(regex)[1]}
+                {item._id.match(regex)[1]}
                 </div>
               </td>
               <td>
-                <h5><Link to={`/tool/${item.id}`} className='icon-link'>{item.toolLabel}</Link></h5>
+                <h5><Link key={item.id} to={`/tool/${item.slug}`} className='icon-link'>{item.label}</Link></h5>
               </td>
               <td className="fs-6">
-                {item.tadirah.map(concept => concept.tadirahLabel).join(", ")}
+                {item.concepts.map(concept => concept.label).join(", ")}
               </td>
             </tr>
           ))}

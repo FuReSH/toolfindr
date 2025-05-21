@@ -1,0 +1,30 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?tool ?date_modified 
+      (GROUP_CONCAT(DISTINCT ?tadirahIRI; SEPARATOR=", ") AS ?tadirahIRIs)
+      (GROUP_CONCAT(DISTINCT ?tadirahLabel; separator = ", ") AS ?tadirahLabels)
+WHERE {
+  # Query Wikidata for tools and their Tadirah IDs
+  SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+    ?concept wdt:P9309 ?tadirahId .
+    # select all items which are linked to these concepts through has use
+    ?tool wdt:P366 ?concept;
+      # limit tools to software in the broadest sense
+      wdt:P31/wdt:P279* wd:Q7397 ;
+      ^schema:about/schema:dateModified ?date_modified .
+
+    FILTER (?date_modified >= "2024-07-14"^^xsd:date)
+    
+    BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)
+  }
+  
+  # Query Tadirah ontology for prefLabel using the Tadirah ID
+  ?tadirahIRI skos:prefLabel ?tadirahLabel.
+  FILTER (lang(?tadirahLabel) = "en")
+}
+GROUP BY ?tool ?label ?description ?date_modified
+LIMIT 10000

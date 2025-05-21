@@ -12,15 +12,15 @@ const Concepts = ({ filters, updateFilter }) => {
     query {
       allTadirahConcept {
         nodes {
-          tadirahLabel
+          label
         }
       }
     }
   `);
 
   const options = data.allTadirahConcept.nodes.map((concept) => ({
-    value: concept.tadirahLabel,
-    label: concept.tadirahLabel,
+    value: concept.label,
+    label: concept.label,
   }));
 
   // Initialisiere die ausgewählten Optionen

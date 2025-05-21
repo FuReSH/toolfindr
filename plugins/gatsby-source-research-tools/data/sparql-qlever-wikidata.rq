@@ -1,0 +1,77 @@
+# This SPARQL query retrieves information about digital research tools associated with TaDiRAH concepts.
+# It uses Wikidata as a source and applies several filters and formatting steps to produce a clean output.
+# 
+# Key steps and purpose:
+# - The query starts by identifying TaDiRAH-related concepts using property P9309.
+# - It selects tools (?tool) that are used for those concepts (via P366) and are classified as software tools (wd:Q7397 and its subclasses).
+# - Modification dates are retrieved through schema.org's `dateModified` property.
+# - Instance types (P31) and their English labels are collected.
+# - Optional information includes: English label, English description, copyright status (P6216), and license (P275).
+# - If an English label is unavailable, the tool's Wikidata Q-ID is used as a fallback.
+# - A TaDiRAH URI is constructed for each concept, based on its identifier.
+# - GROUP_CONCAT is used to combine multiple values per tool (e.g., multiple licenses or types).
+# - The result set is grouped appropriately and sorted alphabetically by label.
+# - Up to 10,000 results are returned.
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT 
+  ?tool 
+  (SAMPLE(?label_final) AS ?label) 
+  ?description 
+  ?date_modified 
+  (GROUP_CONCAT(DISTINCT ?tadirahIRI; SEPARATOR=", ") AS ?tadirahIRIs)
+  (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=", ") AS ?instanceof_labels)
+  (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=", ") AS ?license_labels)
+  ?copyright_label
+WHERE {
+  # Associate the tool with a TaDiRAH concept
+  ?concept wdt:P9309 ?tadirahId .
+  ?tool wdt:P366 ?concept ;
+        wdt:P31/wdt:P279* wd:Q7397 ;
+        ^schema:about/schema:dateModified ?date_modified .
+
+  # Retrieve instance types
+  ?tool wdt:P31 ?instanceof .
+  ?instanceof rdfs:label ?instanceof_label .
+  FILTER (LANG(?instanceof_label) = "en") .
+
+  # Optionally retrieve labels, descriptions, copyright, and license
+  OPTIONAL {
+    ?tool rdfs:label ?label_en .
+    FILTER (LANG(?label_en) = "en") 
+  }
+  OPTIONAL {
+    ?tool schema:description ?description .
+    FILTER (LANG(?description) = "en")
+  }
+  OPTIONAL {
+    ?tool wdt:P6216 ?copyright .
+    ?copyright rdfs:label ?copyright_label .
+    FILTER (LANG(?copyright_label) = "en")
+  }
+  OPTIONAL {
+    ?tool wdt:P275 ?license .
+    ?license rdfs:label ?license_label .
+    FILTER (LANG(?license_label) = "en")
+  }
+
+  # Fallback for label: extract Q-ID if no English label is available
+  BIND(STRAFTER(STR(?tool), "http://www.wikidata.org/entity/") AS ?qid)
+  BIND(COALESCE(?label_en, ?qid) AS ?label_final)
+
+  # Generate TaDiRAH IRI
+  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)
+}
+GROUP BY 
+  ?tool 
+  ?description 
+  ?date_modified 
+  ?copyright_label
+ORDER BY ASC(?label)
+LIMIT 10000

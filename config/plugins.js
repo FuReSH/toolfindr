@@ -9,7 +9,15 @@ module.exports = [
     resolve: `gatsby-source-filesystem`,
     options: opts,
   })),
-
+    // Local plugin for the Wikidata Tool Registry
+    {
+      resolve: require.resolve(`../plugins/gatsby-source-research-tools`),
+      options: {
+        wikidataSparqlUrl: process.env.GATSBY_WD_SPARQL_URL,
+        wikidataLdfUrl: process.env.GATSBY_WD_LDF_URL,
+        tadirahFileUrl: process.env.GATSBY_TADIRAH_FILE_URL,
+      },
+    },
   {
     resolve: `gatsby-transformer-remark`,
     options: {

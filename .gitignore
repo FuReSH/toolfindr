@@ -1,6 +1,3 @@
-# plugin in development
-plugins/
-
 # Logs
 logs
 *.log
@@ -77,3 +74,6 @@ yarn-error.log
 
 # Gimp
 *.xcf
+
+# Local plugins
+plugins/**/dist/
