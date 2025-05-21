@@ -1,45 +1,56 @@
 import { QueryEngine } from '@comunica/query-sparql';
 
 /**
- * Abstract base class for all data sources.
- *
- * This class defines a consistent interface and shared functionality 
- * for fetching data from different source types (e.g., REST, SPARQL).
- *
- * It is designed to be extended by concrete implementations, 
- * which must define their own `fetchData` method.
- *
- * Generic typing allows flexibility in the shape of returned data.
- *
- * @template T - The data type returned by the data source.
- *
- * @property options - Optional configuration passed to the data source.
- * @property endpoint - The endpoint URL for the data source.
- * @property engine - The query engine used for SPARQL queries.
- * @property query - The SPARQL query string to be executed.
- *
- * @method fetchData - Abstract method that must be implemented by subclasses. 
- *   Returns a Promise that resolves to an array of type T.
- *
- * @method handleError - Centralized error handler with logging and rethrowing.
- * @method logProgress - Simple logging method for tracking progress or debugging.
+ * Abstract base class for data sources fetching data from a SPARQL endpoint.
+ * 
+ * This class provides core functionality for specialized data sources,
+ * such as error handling and progress logging. Subclasses are expected
+ * to implement the {@link fetchData} method.
+ * 
+ * @typeParam T - The type of data objects returned by the data source.
  */
 export abstract class BaseDataSource<T> {  
 
+    /**
+     * Constructs a new BaseDataSource instance.
+     * 
+     * @param endpoint - The SPARQL endpoint URL.
+     * @param engine - Optional: An instance of Comunica QueryEngine.
+     * @param query - Optional: A SPARQL query string.
+     */
     constructor( 
         protected endpoint: string,
-        protected engine: QueryEngine,
+        protected engine?: QueryEngine,
         protected query?: string
       ) {}
     
+    /**
+     * Abstract method for fetching data from the data source.
+     * Must be implemented by subclasses.
+     * 
+     * @param args - Optional arguments for the implementation.
+     * @returns A promise resolving to an array of objects of type T.
+     */
     abstract fetchData(...args: any[]): Promise<T[]>;
     
+    /**
+     * Handles errors by throwing a formatted error message.
+     * 
+     * @param errorDetails - Details about the error.
+     * @param source - The name of the error source (e.g., class name).
+     * @throws Always throws a new Error instance with formatted message.
+     */
     protected handleError(errorDetails: any, source: string): void {
       const error = `[${source}] ${errorDetails}`;
       throw new Error(error);
     }
 
+    /**
+     * Logs a progress message to the console.
+     * 
+     * @param message - The message to log.
+     */
     protected logProgress(message: string): void {
-      console.log(`[BaseDataSource] ${message}`);
+      console.log(`[plugin] ${message}`);
   }
-  }
+}

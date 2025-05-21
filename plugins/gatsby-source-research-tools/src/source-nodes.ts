@@ -5,6 +5,22 @@ import { NODE_TYPES, ERROR_CODES, CACHE_KEYS } from "./constants"
 
 let isFirstSource = true
 
+/**
+ * Gatsby Node API: sourceNodes
+ * 
+ * Orchestrates the sourcing of research tool and Tadirah concept data into Gatsby's data layer.
+ * This function manages incremental sourcing, error handling, and node creation for the plugin.
+ * 
+ * - Touches existing nodes on the first run to prevent garbage collection.
+ * - Fetches data using the DataSourceManager, handling incremental updates based on the last fetch timestamp.
+ * - Handles and reports errors using Gatsby's reporter.
+ * - Creates Gatsby nodes for each research tool and Tadirah concept.
+ * 
+ * @param gatsbyApi - Gatsby Node API context, including actions, reporter, cache, and node helpers.
+ * @param pluginOptions - Internal plugin options for data source configuration.
+ * 
+ * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#sourceNodes
+ */
 export const sourceNodes: GatsbyNode["sourceNodes"] = async (
   gatsbyApi,
   pluginOptions: IPluginOptionsInternal
@@ -74,6 +90,12 @@ interface INodeBuilderArgs {
   input: NodeBuilderInput
 }
 
+/**
+ * Builds and creates a Gatsby node from the provided input.
+ * 
+ * @param gatsbyApi - Gatsby SourceNodesArgs context, providing node helpers.
+ * @param input - NodeBuilderInput containing the node type and data.
+ */
 export function nodeBuilder({
   gatsbyApi,
   input

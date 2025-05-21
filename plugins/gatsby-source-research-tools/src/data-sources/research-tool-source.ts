@@ -2,9 +2,28 @@ import { BaseDataSource } from './base-data-source';
 import { QueryEngine } from '@comunica/query-sparql';
 import { IResearchToolInput } from '../types';
 
-
+/**
+ * Data source for fetching research tool data from a SPARQL endpoint.
+ * 
+ * This class constructs a SPARQL query to retrieve research tool information,
+ * including labels, descriptions, modification dates, Tadirah concepts, licenses,
+ * and copyright. This is necessary because the Wikidata LDF server does not yet 
+ * support language filtering for property values (as of 05/2025).
+ * 
+ * @extends BaseDataSource<IResearchToolInput>
+ * 
+ * @see https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service
+ * @see https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Alternative_endpoints
+ * @see https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_backend_update/WDQS_backend_alternatives
+ */
 export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
 
+    /**
+     * Constructs a new ResearchToolSource.
+     * 
+     * @param endpoint - The SPARQL endpoint URL.
+     * @param lastFetchedDate - Only fetch tools modified since this date. If not provided, fetches all.
+     */
     constructor(endpoint: string, lastFetchedDate: Date) {
         const query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
@@ -70,6 +89,17 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
         super(endpoint, new QueryEngine(), query);
     }
 
+    /**
+     * Fetches research tool data from the SPARQL endpoint.
+     * 
+     * @remarks
+     * This method executes the SPARQL query defined in the constructor and processes the results
+     * into an array of {@link IResearchToolInput} objects.
+     * 
+     * @param none This method does not take any parameters.
+     * @returns A promise that resolves to an array of research tool inputs.
+     * @throws If the query fails or the stream emits an error.
+     */
     public async fetchData(): Promise<IResearchToolInput[]> {
 
         try {

@@ -1,15 +1,25 @@
 import type { PluginOptions as GatsbyDefaultPluginOptions, IPluginRefOptions } from "gatsby"
 import { NODE_TYPES } from "./constants"
 
+/**
+ * Input type for the nodeBuilder function.
+ * Represents either a Tadirah concept or a research tool node.
+ */
 export type NodeBuilderInput =
   | { type: typeof NODE_TYPES.Concept; data: ITadirahConceptInput }
   | { type: typeof NODE_TYPES.Tool; data: IResearchToolInput }
 
+/**
+ * Represents a Tadirah concept input object.
+ */
 export interface ITadirahConceptInput {
   id: string
   label: string
 }
 
+/**
+ * Represents a research tool input object.
+ */
 export interface IResearchToolInput {
   id: string
   slug: string
@@ -26,6 +36,9 @@ export interface IResearchToolInput {
   version?: string[]
 }
 
+/**
+ * API response structure returned by the DataSourceManager.
+ */
 export interface IApiResponse {
   data: {
     tools: IResearchToolInput[];

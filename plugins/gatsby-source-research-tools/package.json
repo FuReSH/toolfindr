@@ -6,25 +6,28 @@
     "description": "Local Gatsby plugin for fetching Research Tools data from Wikidata using SPARQL and REST.",
     "main": "gatsby-node.js",
     "scripts": {
-      "build": "tsc",
-      "watch": "tsc -w"
+        "build": "tsc",
+        "watch": "tsc -w"
     },
     "keywords": [
-      "gatsby",
-      "gatsby-plugin",
-      "wikidata",
-      "sparql",
-      "rest",
-      "research tools",
-      "tadirah",
-      "digital humanities",
-      "tool registry"
+        "gatsby",
+        "gatsby-plugin",
+        "wikidata",
+        "sparql",
+        "rest",
+        "research tools",
+        "tadirah",
+        "digital humanities",
+        "tool registry"
     ],
     "dependencies": {
-      "@comunica/query-sparql": "^2.8.1",
-      "@comunica/logger-pretty": "^2.5.0",
-      "node-polyfill-webpack-plugin": "^2.0.1",
-      "crypto": "^1.0.1",
-      "node-fetch": "^2.6.8"
+        "@comunica/logger-pretty": "^2.5.0",
+        "@comunica/query-sparql": "^2.8.1",
+        "crypto": "^1.0.1",
+        "node-fetch": "^2.6.8",
+        "node-polyfill-webpack-plugin": "^2.0.1"
+    },
+    "devDependencies": {
+        "typedoc": "^0.28.4"
     }
-  }
+}
