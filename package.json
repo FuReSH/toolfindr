@@ -3,7 +3,10 @@
   "private": false,
   "description": "A tool registry frontend template with local Wikidata plugin",
   "version": "0.2.3",
-  "author": "@sopheck",
+  "author": {"name": "@sopheck", "url": "https://github.com/sopheck"},
+  "contributors": [
+    { "name": "@esthet1cs"}
+  ],
   "workspaces": [
     ".",
     "plugins/*"
