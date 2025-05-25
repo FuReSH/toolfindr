@@ -9,7 +9,6 @@ module.exports = [
     resolve: `gatsby-source-filesystem`,
     options: opts,
   })),
-    // Local plugin for the Wikidata Tool Registry
     {
       resolve: require.resolve(`../plugins/gatsby-source-research-tools`),
       options: {

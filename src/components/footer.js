@@ -49,15 +49,15 @@ const Footer = () => {
         </div>
 
         {/* Logos */}
-        <div className="row justify-content-center">
+        <div className="row g-0 justify-content-evenly">
           {images.logos_footer.map((logo) =>
             logo.image ? (
-              <div key={logo.name} className="col-sm-3 align-self-center mb-3">
+              <div key={logo.name} className="col-sm-4 align-self-center mb-2">
                 <GatsbyImage
                   image={logo.image}
                   alt={`Footer Logo ${logo.name}`}
                   className="img-fluid"
-                  style={{ width: "80%" }}
+                  style={{ width: "50%" }}
                 />
               </div>
             ) : (

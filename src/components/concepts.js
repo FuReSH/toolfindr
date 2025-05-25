@@ -46,6 +46,8 @@ const Concepts = ({ filters, updateFilter }) => {
   const secondaryColor =
     isBrowser ? getComputedStyle(document.documentElement).getPropertyValue("--bs-gray-300").trim() : "";
 
+  const [menuIsOpen, setMenuIsOpen] = useState(true);
+
   const customStyles = {
     control: (styles) => ({
       ...styles,
@@ -56,6 +58,11 @@ const Concepts = ({ filters, updateFilter }) => {
       height: "initial",
       minHeight: "initial",
       width: "100%",
+    }),
+    menuList: (styles) => ({
+      ...styles,
+      minHeight: "150px",
+      maxHeight: "500px",
     }),
     option: (styles, { isSelected, isFocused }) => ({
       ...styles,
@@ -106,6 +113,9 @@ const Concepts = ({ filters, updateFilter }) => {
           onChange={handleChange}
           placeholder="Select categories..."
           styles={customStyles}
+          menuIsOpen={menuIsOpen}
+          onMenuOpen={() => setMenuIsOpen(true)}
+          onMenuClose={() => setMenuIsOpen(false)}
         />
       </div>
     </div>

@@ -50,13 +50,13 @@ body {
   background-attachment: fixed;
 }
 
-#subtitle {
+#title {
   color: $primary;
 }
 
 .card {
   background: #ffffff;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 100%) !important;
 }
 .item-box {
   background-color: rgba(255, 255, 255, 0.6);
@@ -64,6 +64,7 @@ body {
 
 .react-icons {
   vertical-align: middle;
+  color: $primary
 }
 
 a:hover {
@@ -99,12 +100,15 @@ a {
 }
 
 .start-page-container {
-  -webkit-filter: drop-shadow(1px 1px 5px #717171);
-  filter: drop-shadow(1px 1px 5px #717171);
-}
+  h1, h2 {
+    -webkit-filter: drop-shadow(1px 1px 8px #717171);
+    filter: drop-shadow(1px 1px 8px #717171);
+  }
 
-.kdh-short-desc {
-  font-size: calc(1.275rem + .2vw);
+  img {
+    -webkit-filter: drop-shadow(1px 1px 5px #002FEA);
+    filter: drop-shadow(1px 1px 5px #002FEA);
+  }
 }
 
 hr {

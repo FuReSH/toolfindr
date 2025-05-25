@@ -1,9 +1,9 @@
 // SCSS-Variablen
 $primary: #0A05F9; // Primärfarbe
 $background: 
-  //url('./static/images/ooorganize-bg.svg'),
+  url('./static/images/ffflux-bg.svg'),
   linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
-$text: #0a0a19; // Textfarbe
+$text: #1F2937; // Textfarbe
 
 $pathPrefix: "" !default; // Falls $pathPrefix nicht von Gatsby gesetzt wurde, verwende "/fonts" als Standardwert
 $font-path: "#{$pathPrefix}/fonts"; // Pfad zu den Schriftarten
