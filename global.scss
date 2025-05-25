@@ -99,6 +99,11 @@ a {
   background-color: $primary;
 }
 
+.kdh-short-desc {
+  font-size: calc(1.275rem + .2vw);
+  color: var(--text-secondary)
+}
+
 .start-page-container {
   h1, h2 {
     -webkit-filter: drop-shadow(1px 1px 8px #717171);
@@ -121,4 +126,8 @@ a.anchor {
 
 .custom-anchor {
   fill: $primary;
+}
+
+.icon-color-secondary {
+  color: $secondary;
 }

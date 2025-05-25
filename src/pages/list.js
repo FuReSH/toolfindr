@@ -73,7 +73,7 @@ const ToolsPage = () => {
           <div className="col-sm-8">
             <h1>
               <span className="pe-3">
-                <GoSearch />
+                <GoSearch className="icon-color-secondary" />
               </span>
               Tools
             </h1>

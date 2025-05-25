@@ -1,5 +1,6 @@
 // SCSS-Variablen
 $primary: #0A05F9; // Primärfarbe
+$secondary: #616970;
 $background: 
   url('./static/images/ffflux-bg.svg'),
   linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
@@ -12,4 +13,5 @@ $font-path: "#{$pathPrefix}/fonts"; // Pfad zu den Schriftarten
 :root {
   --primary: #{$primary};
   --text-primary: #{$primary};
+  --text-secondary: #{$secondary};
 }

@@ -63,6 +63,7 @@ const Concepts = ({ filters, updateFilter }) => {
       ...styles,
       minHeight: "150px",
       maxHeight: "500px",
+      backgroundColor: "rgba(255,255,255,0.7)"
     }),
     option: (styles, { isSelected, isFocused }) => ({
       ...styles,
@@ -90,7 +91,7 @@ const Concepts = ({ filters, updateFilter }) => {
   return (
     <div className="sticky-top top-10">
       <h5>
-        <GoMultiSelect /> Filter by Tool Categories
+        <GoMultiSelect className='icon-color-secondary' /> Filter by Tool Categories
       </h5>
       <hr />
       <p className="fs-6 my-2">Select one or more categories from the list below.</p>

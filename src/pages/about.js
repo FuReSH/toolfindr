@@ -24,7 +24,7 @@ export default function AboutPageTemplate({ data }) {
           {/* Mittlere Spalte mit dem Hauptinhalt */}
           <div className="col-sm-7">
             <h1>
-              <span className="pe-3"><GoInfo /></span>{frontmatter.title}
+              <span className="pe-3"><GoInfo className="icon-color-secondary" /></span>{frontmatter.title}
             </h1>
             <p className="kdh-short-desc">{frontmatter.subtitle}</p>
             <div dangerouslySetInnerHTML={{ __html: html }} />
@@ -34,7 +34,7 @@ export default function AboutPageTemplate({ data }) {
           <div className="col-sm-3">
             {links && links.length > 0 ? (
               <div>
-                <h5><GoLinkExternal /> Further information</h5>
+                <h5><GoLinkExternal className='icon-color-secondary' /> Further information</h5>
                 <hr />
                 {links.map((link, index) => (
 

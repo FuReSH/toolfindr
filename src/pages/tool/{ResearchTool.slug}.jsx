@@ -29,7 +29,7 @@ export default function ToolPage({ data }) {
 
           {/* Mittlere Spalte mit dem Hauptinhalt */}
           <div className="col-sm-9">
-            <h1><span className="pe-3"><GoTools /></span>Tool Info</h1>
+            <h1><span className="pe-3"><GoTools className="icon-color-secondary" /></span>Tool Info</h1>
             <p className='kdh-short-desc'>Information about the Tool retrieved from Wikidata.</p>
 
             <div className="card bg-light shadow-sm">
@@ -82,7 +82,7 @@ export default function ToolPage({ data }) {
                   ) : (
                     <div className="alert alert-danger fs-6" role="alert">
                       <div className="d-flex align-items-center">
-                        <GoAlertFill className='flex-shrink-0 me-2' />
+                        <GoAlertFill className='flex-shrink-0 me-2 icon-color-secondary' />
                         <p className="alert-heading fw-bold mb-0">Oops!</p>
                       </div>
                       <p className='mb-0'>There seems to be a problem with the image on Wikimedia Commons.</p>
@@ -100,11 +100,11 @@ export default function ToolPage({ data }) {
                 </div>
                 <hr />
 
-                <div className='mt-2'><GoNote />
+                <div className='mt-2'><GoNote className='icon-color-secondary'/>
                   <label htmlFor="toolDesc" className='col-form-label-sm text-uppercase fw-bold ms-1'>Description</label>
                   <p id="toolDesc">{researchTool.description || "No description information availabe."}</p></div>
 
-                <div><GoHome />
+                <div><GoHome className='icon-color-secondary' />
                   <label htmlFor="website" className='col-form-label-sm text-uppercase fw-bold ms-1'>Website</label>
                   <p id="website">
                     {Array.isArray(researchTool.website) ? researchTool.website.map((url, index) => (
@@ -116,7 +116,7 @@ export default function ToolPage({ data }) {
                   </p></div>
 
                 <div>
-                  <GoRepo />
+                  <GoRepo className='icon-color-secondary' />
                   <label htmlFor="repository" className='col-form-label-sm text-uppercase fw-bold ms-1'>Source Code Repository</label>
                   <p id="repository">
                     {researchTool.repository ? researchTool.repository.map((url, index) => (
@@ -130,7 +130,7 @@ export default function ToolPage({ data }) {
 
                 <div className='row'>
                   <div className='col-sm-auto'>
-                    <GoVersions />
+                    <GoVersions className='icon-color-secondary' />
                     <label htmlFor="version" className='col-form-label-sm text-uppercase fw-bold ms-1'>Current Version</label>
                     <p id="version">
                       {researchTool.version ? researchTool.version.map((index) => (
@@ -143,13 +143,13 @@ export default function ToolPage({ data }) {
                   </div>
                   <div className='col-sm-auto'>
 
-                    <LiaCopyrightSolid />
+                    <LiaCopyrightSolid className='icon-color-secondary' />
                     <label htmlFor="copyright" className='col-form-label-sm text-uppercase fw-bold ms-1'>Copyright</label>
                     <p id="copyright">{researchTool.copyright || "No copyright information available."}</p>
                   </div>
 
                   <div className='col-sm-auto'>
-                    <GoLog />
+                    <GoLog className='icon-color-secondary' />
                     <label htmlFor="license" className='col-form-label-sm text-uppercase fw-bold ms-1'>License</label>
                     <p id="license">
                       {researchTool.license ? researchTool.license.map((index) => (
@@ -165,7 +165,7 @@ export default function ToolPage({ data }) {
 
                 <div className="row">
                   <div className="col-sm-auto">
-                    <GoTag />
+                    <GoTag className='icon-color-secondary' />
                     <label htmlFor="tadirah" className='col-form-label-sm text-uppercase fw-bold ms-1'>Category</label>
                     <p id="tadirah">
                       {researchTool.concepts.map((concept, index) => (
@@ -192,7 +192,7 @@ export default function ToolPage({ data }) {
           {/* Rechte Spalte */}
           <div className="col-sm-3">
             <div>
-              <h5><GoPencil /> Enhance the Tool Data</h5>
+              <h5><GoPencil className='icon-color-secondary' /> Enhance the Tool Data</h5>
               <hr />
               <p className='fs-6'>Help us to improve the information about this researchTool.by editing the Wikidata item.</p>
               <p className='fs-6'>Need help getting started with editing data in Wikidata? Then start <Link to='/get-involved' className='icon-link'>here</Link>.</p>
@@ -205,11 +205,11 @@ export default function ToolPage({ data }) {
                 rel="noopener noreferrer"
                 className="btn btn-primary shadow-sm icon-link icon-link-hover"
               >
-                Edit on Wikidata <GoLinkExternal />
+                Edit on Wikidata <GoLinkExternal className='icon-color-secondary' />
               </a>
             </div>
             <div className="mt-5">
-              <h5><GoInfo /> About the Tool Data</h5>
+              <h5><GoInfo className='icon-color-secondary' /> About the Tool Data</h5>
               <hr />
               <p className="fs-6">All metadata for the researchTool.in the box comes from Wikidata as the data source. The image including credits are obtained directly from Commons.</p>
               <p className="fs-6">

@@ -14,8 +14,8 @@ const ToolsTableComponent = ({ filteredData }) => {
         <thead>
           <tr>
             <th width="20%" className="pb-2 text-align-middle"></th>
-            <th width="30%" className="pb-2 text-align-middle"><GoTools /> Tool</th>
-            <th width="50%" className="pb-2 text-align-middle"><GoTag /> Category <span className='text-muted'>(TaDiRAH)</span></th>
+            <th width="30%" className="pb-2 text-align-middle"><GoTools className="icon-color-secondary" /> Tool</th>
+            <th width="50%" className="pb-2 text-align-middle"><GoTag className="icon-color-secondary" /> Category <span className='text-muted'>(TaDiRAH)</span></th>
           </tr>
         </thead>
         <tbody className="table-group-divider">
