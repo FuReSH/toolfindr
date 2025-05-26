@@ -1,9 +1,11 @@
+<div align="center"><img src="./docs/assets/toolfindr-logo.png" width="50%" alt="Logo of the ToolFindr Website" /> 
+</div>
 <h1 align="center">
-  Frontend Template for the Digital Humanities Tool Registry with Wikidata
-<br />
-<img src="./docs/assets/teaser-img.png" width="50%" alt="Demo DH Tool Registry Website" /> 
-<br />
+  A Lightweight Explorer for Discovering Research Tools in the Digital Humanities
+  <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="20%" alt="Logo of the ToolFindr Website" /> 
+</div>
 </h1>
+<br>
 
 [![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
 
@@ -19,7 +21,7 @@
 
 <!-- Add Abstract here -->
 
-👉 **All data grounded by Wikidata, Commons and the TaDiRAH Taxonomy.**
+👉 **All data grounded in Wikidata, Commons and the TaDiRAH Taxonomy.**
 
 ## Overview
 
