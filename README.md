@@ -12,7 +12,7 @@
 
 - powered by 
     - Wikidata SPARQL Service, 
-    - Wikidata Linked Data Fragmens Service
+    - Wikidata Linked Data Fragments Service
     - MediaWiki Action API,
     - Comunica 
     - GatsbyJS with React and GraphQL
