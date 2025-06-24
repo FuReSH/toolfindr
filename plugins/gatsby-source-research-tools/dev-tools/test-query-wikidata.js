@@ -12,7 +12,7 @@ async function queryWikidata() {
     PREFIX schema: <http://schema.org/>
 SELECT ?tool ?date_modified WHERE {
   ?tool ^schema:about/schema:dateModified ?date_modified .
-} LIMIT 10
+} LIMIT 100
   `;
 
   try {
@@ -36,6 +36,7 @@ SELECT ?tool ?date_modified WHERE {
       const tool = binding.get('tool').value;
       const label = binding.get('label')?.value || 'Kein Label';
       const concepts = binding.get('concept')?.value;
+      const license = binding.get('license')?.value || 'Keine Lizenz';
       const dateModified = binding.get('date_modified')?.value || 'Kein Datum';
       console.log(`${label} (${tool}): ${concepts} - ${dateModified}`);
     });

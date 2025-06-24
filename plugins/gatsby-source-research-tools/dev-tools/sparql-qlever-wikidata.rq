@@ -25,7 +25,9 @@ SELECT
   (SAMPLE(?label_final) AS ?label) 
   ?description 
   ?date_modified 
-  (GROUP_CONCAT(DISTINCT ?tadirahIRI; SEPARATOR=", ") AS ?tadirahIRIs)
+  # Note: STR() conversion required for GROUP_CONCAT with IRI values
+  # Without explicit string conversion, GROUP_CONCAT may return empty results
+  (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=", ") AS ?tadirahIRIs)
   (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=", ") AS ?instanceof_labels)
   (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=", ") AS ?license_labels)
   ?copyright_label

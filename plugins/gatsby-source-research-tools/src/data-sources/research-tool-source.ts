@@ -20,6 +20,10 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
 
     /**
      * Constructs a new ResearchToolSource.
+     * @remarks 
+     * When using QLever as Triple Store STR() conversion required for GROUP_CONCAT with IRI values
+     * Without explicit string conversion, GROUP_CONCAT may return empty results
+     * @see https://github.com/FuReSH/tool-storage-interface/issues/24
      * 
      * @param endpoint - The SPARQL endpoint URL.
      * @param lastFetchedDate - Only fetch tools modified since this date. If not provided, fetches all.
@@ -38,7 +42,7 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
             (SAMPLE(?label_final) AS ?label) 
             ?description 
             ?date_modified 
-            (GROUP_CONCAT(DISTINCT ?tadirahIRI; SEPARATOR=", ") AS ?tadirahIRIs)
+            (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=", ") AS ?tadirahIRIs)
             (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=", ") AS ?instanceof_labels)
             (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=", ") AS ?license_labels)
             ?copyright_label
@@ -73,18 +77,16 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
                 ?license rdfs:label ?license_label .
                 FILTER (LANG(?license_label) = "en")
             }
-
             BIND(STRAFTER(STR(?tool), "http://www.wikidata.org/entity/") AS ?qid)
             BIND(COALESCE(?label_en, ?qid) AS ?label_final)
-
-            BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)
+            BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)            
             }
             GROUP BY 
             ?tool 
             ?description 
             ?date_modified 
             ?copyright_label
-            LIMIT 10000
+            LIMIT 10
             `;
         super(endpoint, new QueryEngine(), query);
     }
@@ -119,20 +121,25 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
                 const researchTools: IResearchToolInput[] = [];
 
                 bindingsStream.on('data', (binding) => {
-                    // Verarbeite jedes Binding einzeln
-                    researchTools.push({
-                        id: binding.get('tool').value,
-                        label: binding.get('label').value,
-                        slug: binding.get('tool').value.split('/').pop().toLowerCase(),
-                        concepts: binding.get('tadirahIRIs').value.split(', '),
-                        instancesof: binding.get('instanceof_labels').value.split(', '),
-                        description: binding.get('description')?.value || null,
-                        license: (() => {
-                            const licenses = binding.get('license_labels').value.split(', ');
-                            return licenses.length === 1 && licenses[0] === '' ? null : licenses;
-                        })(),
-                        copyright: binding.get('copyright_label')?.value || null
-                    });
+                    try {
+                        const getBindingArray = (binding: any, key: string): string[] => {
+                            const value = binding.get(key);
+                            return value ? value.value.split(', ') : null;
+                        };
+
+                        researchTools.push({
+                            id: binding.get('tool').value,
+                            label: binding.get('label').value,
+                            slug: binding.get('tool').value.split('/').pop().toLowerCase(),
+                            concepts: getBindingArray(binding, 'tadirahIRIs'),
+                            instancesof: getBindingArray(binding, 'instanceof_labels'),
+                            description: binding.get('description')?.value || null,
+                            license: getBindingArray(binding, 'license_labels'),
+                            copyright: binding.get('copyright_label')?.value || null
+                        });
+                    } catch (error) {
+                        return reject(this.handleError(error, "ResearchToolsSource"));
+                    }
                 });
 
                 bindingsStream.on('end', () => {

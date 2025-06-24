@@ -5,7 +5,7 @@ PREFIX schema: <http://schema.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT ?tool ?date_modified 
-      (GROUP_CONCAT(DISTINCT ?tadirahIRI; SEPARATOR=", ") AS ?tadirahIRIs)
+      (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=", ") AS ?tadirahIRIs)
       (GROUP_CONCAT(DISTINCT ?tadirahLabel; separator = ", ") AS ?tadirahLabels)
 WHERE {
   # Query Wikidata for tools and their Tadirah IDs
