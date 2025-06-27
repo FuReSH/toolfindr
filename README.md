@@ -1,13 +1,14 @@
 
 <h1 align="center">
   ToolFindr<br>
-  <span style="font-size:0.9rem;">A Lightweight Explorer for Discovering Research Tools in the Digital Humanities</span>
-  <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="80" alt="Logo of the ToolFindr Website" /> 
+  <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="90" alt="Logo of the ToolFindr Website" /> 
 </div>
 </h1>
 <br>
 
 [![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
+
+## A Lightweight Explorer for Discovering Research Tools in the Digital Humanities
 
 
 - powered by 
