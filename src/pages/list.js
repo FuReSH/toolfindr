@@ -94,7 +94,7 @@ const ToolsPage = () => {
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(val) => updateFilter({ currentPage: val })} />
             <BuildTime />
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-4">
             <Concepts filters={filters} updateFilter={updateFilter} />
           </div>
         </div>

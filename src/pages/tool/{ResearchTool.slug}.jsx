@@ -133,9 +133,9 @@ export default function ToolPage({ data }) {
                     <GoVersions className='icon-color-secondary' />
                     <label htmlFor="version" className='col-form-label-sm text-uppercase fw-bold ms-1'>Current Version</label>
                     <p id="version">
-                      {researchTool.version ? researchTool.version.map((index) => (
+                      {researchTool.version ? researchTool.version.map((version, index) => (
                         <span key={index} className="d-block">
-                          {researchTool.version}
+                          {version}
                         </span>))
                         : "No version information available."
                       }
@@ -152,9 +152,9 @@ export default function ToolPage({ data }) {
                     <GoLog className='icon-color-secondary' />
                     <label htmlFor="license" className='col-form-label-sm text-uppercase fw-bold ms-1'>License</label>
                     <p id="license">
-                      {researchTool.license ? researchTool.license.map((index) => (
+                      {researchTool.license ? researchTool.license.map((license, index) => (
                         <span key={index} className="d-block">
-                          {researchTool.license}
+                          {license}
                         </span>))
                         : "No license information available."
                       }
@@ -228,7 +228,7 @@ export default function ToolPage({ data }) {
 
 export const Head = ({ data }) => (
   <>
-    <title>{data.researchTool.label} | DH Tool Explorer</title>
+    <title>{data.researchTool.label} | ToolFindr</title>
   </>
 )
 

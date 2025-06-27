@@ -1,8 +1,8 @@
-<div align="center"><img src="./docs/assets/toolfindr-logo.png" width="30%" alt="Logo of the ToolFindr Website" /> 
-</div>
+
 <h1 align="center">
-  A Lightweight Explorer for Discovering Research Tools in the Digital Humanities
-  <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="15%" alt="Logo of the ToolFindr Website" /> 
+  ToolFindr<br>
+  <span style="font-size:0.9rem;">A Lightweight Explorer for Discovering Research Tools in the Digital Humanities</span>
+  <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="80" alt="Logo of the ToolFindr Website" /> 
 </div>
 </h1>
 <br>

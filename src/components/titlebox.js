@@ -27,7 +27,7 @@ export const TitleBox = ({ title, subtitle, description, logo_title }) => {
         </div>
         <div className="col-sm-8">
           <h1 id="title" className="display-5 fw-bold mb-4"><code>&lt;</code> {actualTitle} <code>&#47;&gt;</code></h1>
-          <h2 id="subtitle" className="display-5 fw-bold text-dark mb-2">{actualSubtitle}</h2>
+          <h2 id="subtitle" className="display-5 fw-bold text-dark mb-3">{actualSubtitle}</h2>
           <h3 id="description" className="text-secondary">{actualDescription}</h3>
         </div>
       </div>

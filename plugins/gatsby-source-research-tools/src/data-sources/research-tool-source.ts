@@ -42,9 +42,9 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
             (SAMPLE(?label_final) AS ?label) 
             ?description 
             ?date_modified 
-            (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=", ") AS ?tadirahIRIs)
-            (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=", ") AS ?instanceof_labels)
-            (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=", ") AS ?license_labels)
+            (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=" | ") AS ?tadirahIRIs)
+            (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=" | ") AS ?instanceof_labels)
+            (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=" | ") AS ?license_labels)
             ?copyright_label
             WHERE {
             ?concept wdt:P9309 ?tadirahId .
@@ -86,7 +86,7 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
             ?description 
             ?date_modified 
             ?copyright_label
-            LIMIT 10
+            LIMIT 10000
             `;
         super(endpoint, new QueryEngine(), query);
     }
@@ -124,7 +124,7 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
                     try {
                         const getBindingArray = (binding: any, key: string): string[] => {
                             const value = binding.get(key);
-                            return value ? value.value.split(', ') : null;
+                            return value ? value.value.split(' | ') : null;
                         };
 
                         researchTools.push({

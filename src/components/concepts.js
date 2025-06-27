@@ -59,11 +59,15 @@ const Concepts = ({ filters, updateFilter }) => {
       minHeight: "initial",
       width: "100%",
     }),
+    menu: (styles) => ({
+      ...styles,
+      backgroundColor: "rgba(255, 255, 255, 0)",
+      boxShadow: "none",
+    }),
     menuList: (styles) => ({
       ...styles,
       minHeight: "150px",
-      maxHeight: "500px",
-      backgroundColor: "rgba(255,255,255,0.7)"
+      maxHeight: "600px",
     }),
     option: (styles, { isSelected, isFocused }) => ({
       ...styles,
@@ -71,6 +75,7 @@ const Concepts = ({ filters, updateFilter }) => {
       color: isSelected ? "white" : "black",
       cursor: "pointer",
       fontSize: "initial",
+      fontWeight: "bold",
       padding: "0.2rem 0.8rem",
     }),
     multiValue: (styles) => ({
@@ -95,13 +100,13 @@ const Concepts = ({ filters, updateFilter }) => {
       </h5>
       <hr />
       <p className="fs-6 my-2">Select one or more categories from the list below.</p>
-      <p className="fs-6 my-3">
-        We use the TaDiRAH taxonomy established in the DH to group tools. Further information on the TaDiRAH concepts
-        can be found on the
-        <a href="https://de.dariah.eu/tadirah" target="_blank" rel="noopener noreferrer" className="icon-link icon-hover-link">
-          official taxonomy website <GoLinkExternal />
-        </a>
-        .
+      <p className="fs-6 my-2">
+        We use the TaDiRAH taxonomy established in the DH to group tools. 
+      </p>
+      <p className="fs-6">Further information on the TaDiRAH concepts
+        can be found on the <a href="https://de.dariah.eu/tadirah" target="_blank" rel="noopener noreferrer" className="icon-link icon-hover-link">
+        official taxonomy website <GoLinkExternal />
+        </a>.
       </p>
       <div className="shadow-sm">
         <Select

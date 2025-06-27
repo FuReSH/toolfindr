@@ -52,16 +52,16 @@ const Footer = () => {
         <div className="row g-0 justify-content-evenly">
           {images.logos_footer.map((logo) =>
             logo.image ? (
-              <div key={logo.name} className="col-sm-4 align-self-center mb-2">
+              <div key={logo.name} className="col-sm-2 align-self-center mb-2">
                 <GatsbyImage
                   image={logo.image}
                   alt={`Footer Logo ${logo.name}`}
                   className="img-fluid"
-                  style={{ width: "50%" }}
+                  style={{ width: "80%" }}
                 />
               </div>
             ) : (
-              <div key={logo.name} className="col-sm-3 align-self-center">
+              <div key={logo.name} className="col-sm-2 align-self-center">
                 Image not found: {logo.name}
               </div>
             )
