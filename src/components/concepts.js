@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { graphql, useStaticQuery } from "gatsby";
-import { GoMultiSelect, GoLinkExternal } from "react-icons/go";
+import { GoTag, GoLinkExternal } from "react-icons/go";
 import Select from "react-select";
 import useIsBrowser from "../hooks/use-is-browser";
 
@@ -74,8 +74,8 @@ const Concepts = ({ filters, updateFilter }) => {
       backgroundColor: isSelected ? primaryColor : isFocused ? secondaryColor : undefined,
       color: isSelected ? "white" : "black",
       cursor: "pointer",
-      fontSize: "initial",
-      fontWeight: "bold",
+      fontSize: "large",
+      fontFamily: "DDIN-Bold",
       padding: "0.2rem 0.8rem",
     }),
     multiValue: (styles) => ({
@@ -96,7 +96,7 @@ const Concepts = ({ filters, updateFilter }) => {
   return (
     <div className="sticky-top top-10">
       <h5>
-        <GoMultiSelect className='icon-color-secondary' /> Filter by Tool Categories
+        <GoTag className="icon-color-secondary" /> Tool Categories
       </h5>
       <hr />
       <p className="fs-6 my-2">Select one or more categories from the list below.</p>
@@ -117,7 +117,7 @@ const Concepts = ({ filters, updateFilter }) => {
           isMulti
           value={selectedOptions}
           onChange={handleChange}
-          placeholder="Select categories..."
+          placeholder="Search..."
           styles={customStyles}
           menuIsOpen={menuIsOpen}
           onMenuOpen={() => setMenuIsOpen(true)}

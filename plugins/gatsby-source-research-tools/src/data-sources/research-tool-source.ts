@@ -29,6 +29,7 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
      * @param lastFetchedDate - Only fetch tools modified since this date. If not provided, fetches all.
      */
     constructor(endpoint: string, lastFetchedDate: Date) {
+        //lastFetchedDate = new Date("2025-01-19T00:00:00")
         const query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
             PREFIX wdt: <http://www.wikidata.org/prop/direct/>

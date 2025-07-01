@@ -1,3 +1,7 @@
+// run the script with `node test-query-wikidata.js`
+// Make sure you have installed the required packages:
+// npm install @comunica/query-sparql
+
 const { QueryEngine } = require('@comunica/query-sparql');
 
 async function queryWikidata() {
@@ -6,14 +10,25 @@ async function queryWikidata() {
 
   // QLever SPARQL-Endpoint für Wikidata
   const endpoint = 'https://qlever.cs.uni-freiburg.de/api/wikidata';
+  const lastFetchedDate = new Date("2025-06-23T00:00:00"); // Example date for filtering, adjust as needed
 
   // Eine einfache SPARQL-Abfrage
   const sparqlQuery = `
     PREFIX schema: <http://schema.org/>
-SELECT ?tool ?date_modified WHERE {
-  ?tool ^schema:about/schema:dateModified ?date_modified .
-} LIMIT 100
-  `;
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX wd: <http://www.wikidata.org/entity/>
+    PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+    SELECT (COUNT(DISTINCT ?tool) AS ?toolsCount) WHERE {
+      ?concept wdt:P9309 ?tadirahId .
+      ?tool wdt:P366 ?concept ;
+            wdt:P31/wdt:P279* wd:Q7397 .
+      ${lastFetchedDate ? `
+        ?tool ^schema:about/schema:dateModified ?date_modified .
+        FILTER (?date_modified >= "${lastFetchedDate.toISOString().split('T')[0]}"^^xsd:date)
+      ` : ''}
+    } 
+    LIMIT 5000
+    `;
 
   try {
     // Abfrage ausführen
@@ -29,20 +44,20 @@ SELECT ?tool ?date_modified WHERE {
     const bindings = await result.toArray();
 
     // Ausgabe der Ergebnisse
-    console.log('Ergebnisse der Abfrage:');
+    console.log('Query results:');
     console.log('----------------------');
 
     bindings.forEach(binding => {
-      const tool = binding.get('tool').value;
-      const label = binding.get('label')?.value || 'Kein Label';
+      /*const tool = binding.get('tool').value;
       const concepts = binding.get('concept')?.value;
-      const license = binding.get('license')?.value || 'Keine Lizenz';
       const dateModified = binding.get('date_modified')?.value || 'Kein Datum';
-      console.log(`${label} (${tool}): ${concepts} - ${dateModified}`);
+      console.log(`(${tool}): ${dateModified}`);*/
+      const toolsCount = binding.get('toolsCount').value;
+      console.log(`Total of tools: ${toolsCount}`);
     });
 
   } catch (error) {
-    console.error('Fehler bei der Abfrage:', error);
+    console.error('Error during query:', error);
   }
 }
 

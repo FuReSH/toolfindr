@@ -8,7 +8,7 @@ const ResetFilters = ({ resetFilters }) => {
 
   return (
     <button onClick={handleReset} className="btn btn-primary btn-sm icon-link shadow-sm">
-      Reset Filters
+      Clear
     </button>
   );
 };

@@ -42,7 +42,7 @@ const Navbar = ({ siteTitle }) => {
 
         {/* Navbar Links */}
         <div className="collapse navbar-collapse" id="main-navbar">
-          <ul className="navbar-nav ms-auto mb-2 mb-md-0">
+          <ul className="navbar-nav ms-auto mb-md-2">
             <li className="nav-item">
               <ExactNavLink to="/about">About</ExactNavLink>
             </li>

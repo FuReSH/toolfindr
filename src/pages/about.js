@@ -16,22 +16,28 @@ export default function AboutPageTemplate({ data }) {
       <div className="container my-4">
         {/* Hauptbereich mit drei Spalten */}
         <div className="row">
-          {/* Linke Spalte für TOC oder Navigation */}
-          <div className="col-sm-2 text-body-secondary fs-6 bd-toc">
+          {/* Linke Spalte für TOC (nur auf großen Bildschirmen) */}
+          <div className="d-none d-lg-block col-lg-2">
             <Toc headings={headings} />
           </div>
 
           {/* Mittlere Spalte mit dem Hauptinhalt */}
-          <div className="col-sm-7">
+          <div className="col-12 col-md-8 col-lg-7">
             <h1>
               <span className="pe-3"><GoInfo className="icon-color-secondary" /></span>{frontmatter.title}
             </h1>
             <p className="kdh-short-desc">{frontmatter.subtitle}</p>
+            
+            {/* TOC für kleinere Bildschirme - direkt nach subtitle */}
+            <div className="d-lg-none mb-4">
+              <Toc headings={headings} />
+            </div>
+            
             <div dangerouslySetInnerHTML={{ __html: html }} />
           </div>
 
           {/* Rechte Spalte für externe Links */}
-          <div className="col-sm-3">
+          <div className="col-12 col-md-4 col-lg-3">
             {links && links.length > 0 ? (
               <div>
                 <h5><GoLinkExternal className='icon-color-secondary' /> Further information</h5>

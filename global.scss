@@ -131,3 +131,33 @@ a.anchor {
 .icon-color-secondary {
   color: $secondary;
 }
+
+.item-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+  }
+}
+
+.hero-section {
+  // 1. Die Sektion so hoch wie der Bildschirm machen
+  //height: 100vh; // vh = viewport height (100% der Bildschirmhöhe)
+
+  // 2. Den Inhalt (die TitleBox) perfekt zentrieren
+  //display: flex;
+  //align-items: center;      // Vertikal zentrieren
+  //justify-content: center;  // Horizontal zentrieren
+
+  // 3. (Optional) Einen dezenten Hintergrund für den Kontrast
+  //background-color: #f8f9fa; 
+}
+
+/* * Dies sorgt für den "Slide"-Effekt, wenn man z.B. einen 
+ * Anker-Link zum Scrollen nutzt (siehe Schritt 3)
+ */
+html {
+  scroll-behavior: smooth;
+}

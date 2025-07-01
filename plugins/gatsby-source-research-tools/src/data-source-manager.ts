@@ -58,7 +58,7 @@ export class DataSourceManager {
       ]);
 
       // Uncomment slicing for debugging purposes
-      //researchToolData = researchToolData.slice(0, 20);
+      researchToolData = researchToolData.slice(0, 50);
 
       researchToolData = await this.enrichResearchTools(researchToolData);
     } catch (error) {

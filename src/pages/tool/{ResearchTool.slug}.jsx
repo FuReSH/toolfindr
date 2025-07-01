@@ -28,7 +28,7 @@ export default function ToolPage({ data }) {
               </div>*/}
 
           {/* Mittlere Spalte mit dem Hauptinhalt */}
-          <div className="col-sm-9">
+          <div className="col-12 col-sm-12 col-md-8 col-lg-9">
             <h1><span className="pe-3"><GoTools className="icon-color-secondary" /></span>Tool Info</h1>
             <p className='kdh-short-desc'>Information about the Tool retrieved from Wikidata.</p>
 
@@ -43,15 +43,14 @@ export default function ToolPage({ data }) {
                     </div>
                   )}
                 </div>
-                <div className="col-sm-3 float-sm-end ms-sm-3">
+                <div className="col-7 col-sm-6 col-md-4 col-lg-3 float-md-end float-lg-end mx-auto ms-md-3 my-3">
                   {!imageError ? (
                     <figure className="figure">
                       {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 
                         use "withPrefix" as recommended in gatsby issue on GitHub https://github.com/gatsbyjs/gatsby/issues/21975#issuecomment-650573201 */}
                       <img
-                        className="figure-img img-fluid mb-2"
+                        className="figure-img img-fluid"
                         src={url}
-                        width="100%"
                         onLoad={() => loading}
                         onError={(e) => {
                           setImageError(true);
@@ -190,7 +189,7 @@ export default function ToolPage({ data }) {
             <BuildTime />
           </div>
           {/* Rechte Spalte */}
-          <div className="col-sm-3">
+          <div className="col-12 col-sm-12 col-md-4 col-lg-3 mt-4 mt-md-0">
             <div>
               <h5><GoPencil className='icon-color-secondary' /> Enhance the Tool Data</h5>
               <hr />
@@ -205,7 +204,7 @@ export default function ToolPage({ data }) {
                 rel="noopener noreferrer"
                 className="btn btn-primary shadow-sm icon-link icon-link-hover"
               >
-                Edit on Wikidata <GoLinkExternal className='icon-color-secondary' />
+                Edit on Wikidata <GoLinkExternal />
               </a>
             </div>
             <div className="mt-5">

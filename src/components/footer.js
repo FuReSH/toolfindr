@@ -13,7 +13,7 @@ const Footer = () => {
     <footer className="pt-3 mt-4 text-muted border-top">
       <div className="container text-center">
         {/* Organisation & Lizenz */}
-        <div className="row mb-4">
+        <div className="row my-4">
           <div className="col-sm-12">
             <small>
               Created by{" "}
@@ -52,7 +52,7 @@ const Footer = () => {
         <div className="row g-0 justify-content-evenly">
           {images.logos_footer.map((logo) =>
             logo.image ? (
-              <div key={logo.name} className="col-sm-2 align-self-center mb-2">
+              <div key={logo.name} className="col-5 col-sm-4 col-md-2 col-lg-2 align-self-center mb-2">
                 <GatsbyImage
                   image={logo.image}
                   alt={`Footer Logo ${logo.name}`}
@@ -61,7 +61,7 @@ const Footer = () => {
                 />
               </div>
             ) : (
-              <div key={logo.name} className="col-sm-2 align-self-center">
+              <div key={logo.name} className="col-5 col-sm-4 col-md-2 col-lg-2 align-self-center">
                 Image not found: {logo.name}
               </div>
             )

@@ -3,9 +3,14 @@
   "private": false,
   "description": "A tool registry frontend template with local Wikidata plugin",
   "version": "0.2.3",
-  "author": {"name": "@sopheck", "url": "https://github.com/sopheck"},
+  "author": {
+    "name": "@sopheck",
+    "url": "https://github.com/sopheck"
+  },
   "contributors": [
-    { "name": "@esthet1cs"}
+    {
+      "name": "@esthet1cs"
+    }
   ],
   "workspaces": [
     ".",
@@ -24,6 +29,7 @@
     "gatsby": "^5.14.1",
     "gatsby-plugin-gatsby-cloud": "^5.14.0",
     "gatsby-plugin-image": "^3.14.0",
+    "gatsby-plugin-local-search": "^2.0.1",
     "gatsby-plugin-manifest": "^5.14.0",
     "gatsby-plugin-sass": "^6.14.0",
     "gatsby-plugin-sharp": "^5.14.0",
@@ -37,6 +43,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.3.0",
     "react-select": "^5.10.1",
+    "react-use-flexsearch": "^0.1.1",
     "sass": "1.77.6",
     "sparql-http-client": "^3.0.0"
   },
@@ -75,10 +82,8 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "repl": "gatsby repl",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    
     "install:all": "npm install",
     "build:plugin": "npm run build --workspace=plugins/gatsby-source-research-tools",
-    
     "watch:plugin": "npm run watch --workspace=plugins/gatsby-source-research-tools"
   },
   "repository": {
