@@ -20,7 +20,8 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
 
     /**
      * Constructs a new ResearchToolSource.
-     * @remarks 
+     * @remarks
+     * This class uses Wikidata's SPARQL endpoint to fetch research tool data by default. You can also use QLever as an alternative endpoint. 
      * When using QLever as Triple Store STR() conversion required for GROUP_CONCAT with IRI values
      * Without explicit string conversion, GROUP_CONCAT may return empty results
      * @see https://github.com/FuReSH/tool-storage-interface/issues/24
@@ -33,63 +34,54 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
         const query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
             PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+            PREFIX p: <http://www.wikidata.org/prop/>
+            PREFIX ps: <http://www.wikidata.org/prop/statement/>
+            PREFIX bd: <http://www.bigdata.com/rdf#>
+            PREFIX wikibase: <http://wikiba.se/ontology#>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
             PREFIX schema: <http://schema.org/>
-            PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT 
             ?tool 
-            (SAMPLE(?label_final) AS ?label) 
+            ?label 
             ?description 
-            ?date_modified 
-            (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=" | ") AS ?tadirahIRIs)
-            (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=" | ") AS ?instanceof_labels)
+            ?copyright_label 
+            ?date_modified
             (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=" | ") AS ?license_labels)
-            ?copyright_label
+            (GROUP_CONCAT(DISTINCT ?instanceof_label; separator = " | ") AS ?instanceof_labels) 
+            (GROUP_CONCAT(DISTINCT ?tadirahIRI; separator = " | ") AS ?tadirahIRIs)
             WHERE {
-            ?concept wdt:P9309 ?tadirahId .
+            ?concept wdt:P9309 ?tadirahId.            
             ?tool wdt:P366 ?concept ;
-                    wdt:P31/wdt:P279* wd:Q7397 .
+                (wdt:P31/(wdt:P279*)) wd:Q7397 ;
+                schema:dateModified ?date_modified .
              ${lastFetchedDate ? `
                     ?tool ^schema:about/schema:dateModified ?date_modified .
-                    FILTER (?date_modified >= "${lastFetchedDate.toISOString().split('T')[0]}"^^xsd:date)
+                    FILTER (?date_modified >= "${lastFetchedDate.toISOString()}"^^xsd:dateTime)
                 ` : ''}
 
             ?tool wdt:P31 ?instanceof .
-            ?instanceof rdfs:label ?instanceof_label .
-            FILTER (LANG(?instanceof_label) = "en") .
 
-            OPTIONAL {
-                ?tool rdfs:label ?label_en .
-                FILTER (LANG(?label_en) = "en") 
-            }
-            OPTIONAL {
-                ?tool schema:description ?description .
-                FILTER (LANG(?description) = "en")
-            }
-            OPTIONAL {
-                ?tool wdt:P6216 ?copyright .
+            OPTIONAL { ?tool wdt:P6216 ?copyright . }
+            OPTIONAL { ?tool wdt:P275 ?license . }
+
+            BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)
+
+            SERVICE wikibase:label {
+                bd:serviceParam wikibase:language "en" .
+                ?tool rdfs:label ?label ;
+                    schema:description ?description .
+                ?instanceof rdfs:label ?instanceof_label .
                 ?copyright rdfs:label ?copyright_label .
-                FILTER (LANG(?copyright_label) = "en")
-            }
-            OPTIONAL {
-                ?tool wdt:P275 ?license .
                 ?license rdfs:label ?license_label .
-                FILTER (LANG(?license_label) = "en")
             }
-            BIND(STRAFTER(STR(?tool), "http://www.wikidata.org/entity/") AS ?qid)
-            BIND(COALESCE(?label_en, ?qid) AS ?label_final)
-            BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)            
             }
-            GROUP BY 
-            ?tool 
-            ?description 
-            ?date_modified 
-            ?copyright_label
-            LIMIT 10000
-            `;
+            GROUP BY ?tool ?label ?description ?copyright_label ?date_modified
+            LIMIT 100
+        `;           
         super(endpoint, new QueryEngine(), query);
+        // Overwrites the Wikidata query with the Qlever query for better performance e.g. for debugging purposes
+        //this.query = this.getQleverQuery(lastFetchedDate);
     }
 
     /**
@@ -155,6 +147,68 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
         } catch (error) {
             return Promise.reject(this.handleError(error, "ResearchToolsSource"));
         }
+    }
+
+    protected getQleverQuery(date: Date): string {
+        return ` 
+            PREFIX wd: <http://www.wikidata.org/entity/>
+            PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX schema: <http://schema.org/>
+            PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT 
+            ?tool 
+            (SAMPLE(?label_final) AS ?label) 
+            ?description 
+            ?date_modified 
+            (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=" | ") AS ?tadirahIRIs)
+            (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=" | ") AS ?instanceof_labels)
+            (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=" | ") AS ?license_labels)
+            ?copyright_label
+            WHERE {
+            ?concept wdt:P9309 ?tadirahId .
+            ?tool wdt:P366 ?concept ;
+                    wdt:P31/wdt:P279* wd:Q7397 .
+             ${date ? `
+                    ?tool ^schema:about/schema:dateModified ?date_modified .
+                    FILTER (?date_modified >= "${date.toISOString()}"^^xsd:dateTime)
+                ` : ''}
+
+            ?tool wdt:P31 ?instanceof .
+            ?instanceof rdfs:label ?instanceof_label .
+            FILTER (LANG(?instanceof_label) = "en") .
+
+            OPTIONAL {
+                ?tool rdfs:label ?label_en .
+                FILTER (LANG(?label_en) = "en") 
+            }
+            OPTIONAL {
+                ?tool schema:description ?description .
+                FILTER (LANG(?description) = "en")
+            }
+            OPTIONAL {
+                ?tool wdt:P6216 ?copyright .
+                ?copyright rdfs:label ?copyright_label .
+                FILTER (LANG(?copyright_label) = "en")
+            }
+            OPTIONAL {
+                ?tool wdt:P275 ?license .
+                ?license rdfs:label ?license_label .
+                FILTER (LANG(?license_label) = "en")
+            }
+            BIND(STRAFTER(STR(?tool), "http://www.wikidata.org/entity/") AS ?qid)
+            BIND(COALESCE(?label_en, ?qid) AS ?label_final)
+            BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)            
+            }
+            GROUP BY 
+            ?tool 
+            ?description 
+            ?date_modified 
+            ?copyright_label
+            LIMIT 10000
+            `;
     }
 
 }

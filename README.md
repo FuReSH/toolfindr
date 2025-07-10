@@ -1,15 +1,15 @@
 
 <h1 align="center">
-  ToolFindr<br>
+  < ToolFindr /><br>
   <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="90" alt="Logo of the ToolFindr Website" /> 
 </div>
 </h1>
-<br>
 
 [![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
 
 ## A Lightweight Explorer for Discovering Research Tools in the Digital Humanities
 
+**Open, community-curated, and built on the Tool Registry Framework, integrating Wikidata and TaDiRAH**
 
 - powered by 
     - Wikidata SPARQL Service, 
@@ -28,7 +28,7 @@
 
 - Project structure
 - Data fetching and data handling
-    - Local `gatsby-source-wikidata-lfd` plugin
+    - Local `gatsby-source-research-tools` plugin
         - SPARQL
         - Triple Pattern Fragment
         - GraphQL
@@ -46,7 +46,7 @@
 
 - https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/conceptual/data-fetching.md
 
-### Local `gatsby-source-wikidata-lfd` plugin
+### Local `gatsby-source-research-tools` plugin
 
 Use the concept of Linked Data Fragements
 
@@ -79,9 +79,7 @@ See JS-Libraries
 - https://comunica.dev/ (allows federated queries)
 - https://zazuko.com/get-started/developers/#further-documentation-support-questions (no federated queries)
 
-### Why QLever and not the WDQS?
-
-#### Drawbacks and Differences
+### When to use which endpoint?
 
 ### Execute SPARQL queries with `@comunica/query-sparql`
 

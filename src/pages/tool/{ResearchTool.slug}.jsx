@@ -43,7 +43,7 @@ export default function ToolPage({ data }) {
                     </div>
                   )}
                 </div>
-                <div className="col-7 col-sm-6 col-md-4 col-lg-3 float-md-end float-lg-end mx-auto ms-md-3 my-3">
+                <div className="col-7 col-sm-6 col-md-4 col-lg-3 float-md-end float-lg-end mx-auto ms-md-3 mb-md-3">
                   {!imageError ? (
                     <figure className="figure">
                       {/* 🛑 Don't replace with GatsbyImage as the plugin does not support svg formats 

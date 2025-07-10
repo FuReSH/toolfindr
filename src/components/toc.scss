@@ -37,3 +37,19 @@
   .bd-toc nav ul ul ul {
     padding-left: 1rem;
   }
+
+  .toc-mobile {
+  display: block;
+  
+  @media (min-width: 992px) {
+    display: none;
+  }
+}
+
+.toc-desktop {
+  display: none;
+  
+  @media (min-width: 992px) {
+    display: block;
+  }
+}

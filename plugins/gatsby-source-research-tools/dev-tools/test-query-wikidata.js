@@ -9,8 +9,9 @@ async function queryWikidata() {
   const engine = new QueryEngine();
 
   // QLever SPARQL-Endpoint für Wikidata
-  const endpoint = 'https://qlever.cs.uni-freiburg.de/api/wikidata';
-  const lastFetchedDate = new Date("2025-06-23T00:00:00"); // Example date for filtering, adjust as needed
+  const endpoint = 'https://query.wikidata.org/sparql' //'https://qlever.cs.uni-freiburg.de/api/wikidata';
+  const lastFetchedDate = new Date("2025-06-28T00:00:00"); // Example date for filtering, adjust as needed
+  console.log(lastFetchedDate);
 
   // Eine einfache SPARQL-Abfrage
   const sparqlQuery = `
@@ -23,8 +24,9 @@ async function queryWikidata() {
       ?tool wdt:P366 ?concept ;
             wdt:P31/wdt:P279* wd:Q7397 .
       ${lastFetchedDate ? `
-        ?tool ^schema:about/schema:dateModified ?date_modified .
-        FILTER (?date_modified >= "${lastFetchedDate.toISOString().split('T')[0]}"^^xsd:date)
+        #?tool ^schema:about/schema:dateModified ?date_modified .
+        ?tool schema:dateModified ?date_modified .
+        FILTER (?date_modified >= "${lastFetchedDate.toISOString()}"^^xsd:dateTime)
       ` : ''}
     } 
     LIMIT 5000
