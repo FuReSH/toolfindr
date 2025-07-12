@@ -69,7 +69,13 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
 
    
   if ((tools.length === 0)) {
-    reporter.info(`[plugin] No updated data from Wikidata for research tools since the last fetch 🏆`)
+    reporter.info(`[plugin] You are up to date! 🏆`)
+  }
+
+  if (tools.length > 0 && lastFetchedDate) {
+    reporter.info(`[plugin] There is new data on Wikidata! 👀`);
+    reporter.info(`[plugin] Incremental sourcing...`);
+    reporter.info(`[plugin] Updated and new tools:\n${tools.map(tool => `🔸 ${tool.label} (${tool.id})\n`).join("")}`); 
   }
 
   for (const tool of tools) {
@@ -80,7 +86,7 @@ export const sourceNodes: GatsbyNode["sourceNodes"] = async (
     nodeBuilder({ gatsbyApi, input: { type: NODE_TYPES.Concept, data: concept } })
   }
 
-  sourcingTimer.setStatus(`[plugin] Successfully sourced ${tools.length} tools and ${concepts.length} tadirah concepts 🙌`);
+  sourcingTimer.setStatus(`[plugin] Successfully sourced ${tools.length} tools and ${concepts.length} tadirah concepts. 🙌`);
 
   sourcingTimer.end()
 }

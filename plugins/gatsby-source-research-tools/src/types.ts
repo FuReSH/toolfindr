@@ -24,6 +24,7 @@ export interface IResearchToolInput {
   id: string
   slug: string
   concepts: string[]
+  dateModified: Date
   label?: string
   description?: string
   instancesof?: string[]

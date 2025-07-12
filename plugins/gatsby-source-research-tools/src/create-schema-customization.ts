@@ -31,6 +31,7 @@ export const createSchemaCustomization: GatsbyNode[`createSchemaCustomization`] 
           _id: String!
           slug: String!
           concepts: [${NODE_TYPES.Concept}!]! @link(by: "_id")
+          dateModified: Date
           label: String!
           description: String
           instancesof: [String]!

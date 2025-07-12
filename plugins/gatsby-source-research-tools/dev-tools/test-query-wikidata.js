@@ -10,8 +10,14 @@ async function queryWikidata() {
 
   // QLever SPARQL-Endpoint für Wikidata
   const endpoint = 'https://query.wikidata.org/sparql' //'https://qlever.cs.uni-freiburg.de/api/wikidata';
-  const lastFetchedDate = new Date("2025-06-28T00:00:00"); // Example date for filtering, adjust as needed
-  console.log(lastFetchedDate);
+  const lastFetchedDate = new Date("2025-07-12T16:00:00Z"); // Example date for filtering, adjust as needed
+  let d = new Date(new Date().toLocaleString("en-GB", {timeZone: "Europe/London"})); // timezone ex: Asia/Jerusalem
+  console.log(d.toISOString());
+  //console.log(lastFetchedDate.getTimezoneOffset());
+  //console.log(lastFetchedDate.toUTCString());
+  //console.log(lastFetchedDate);
+  //console.log(lastFetchedDate + lastFetchedDate.getTimezoneOffset); // Adjusting for timezone offset
+  //console.log(Date(Date.now().toString()));
 
   // Eine einfache SPARQL-Abfrage
   const sparqlQuery = `
@@ -31,6 +37,8 @@ async function queryWikidata() {
     } 
     LIMIT 5000
     `;
+
+  console.log(sparqlQuery);
 
   try {
     // Abfrage ausführen

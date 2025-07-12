@@ -27,10 +27,9 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
      * @see https://github.com/FuReSH/tool-storage-interface/issues/24
      * 
      * @param endpoint - The SPARQL endpoint URL.
-     * @param lastFetchedDate - Only fetch tools modified since this date. If not provided, fetches all.
+     * @param lastFetchedDate - Only fetch tools modified since this date. If not provided, fetches all. The date is displayed as Universal Time (as in Wikidata) and is converted to ISO format.
      */
     constructor(endpoint: string, lastFetchedDate: Date) {
-        //lastFetchedDate = new Date("2025-01-19T00:00:00")
         const query = `
             PREFIX wd: <http://www.wikidata.org/entity/>
             PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -56,9 +55,8 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
                 (wdt:P31/(wdt:P279*)) wd:Q7397 ;
                 schema:dateModified ?date_modified .
              ${lastFetchedDate ? `
-                    ?tool ^schema:about/schema:dateModified ?date_modified .
-                    FILTER (?date_modified >= "${lastFetchedDate.toISOString()}"^^xsd:dateTime)
-                ` : ''}
+            FILTER (?date_modified >= "${lastFetchedDate.toISOString()}"^^xsd:dateTime)
+            ` : ''}
 
             ?tool wdt:P31 ?instanceof .
 
@@ -77,8 +75,8 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
             }
             }
             GROUP BY ?tool ?label ?description ?copyright_label ?date_modified
-            LIMIT 100
-        `;           
+            LIMIT 10000
+        `;
         super(endpoint, new QueryEngine(), query);
         // Overwrites the Wikidata query with the Qlever query for better performance e.g. for debugging purposes
         //this.query = this.getQleverQuery(lastFetchedDate);
@@ -119,13 +117,14 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
                             const value = binding.get(key);
                             return value ? value.value.split(' | ') : null;
                         };
-
+                        
                         researchTools.push({
                             id: binding.get('tool').value,
                             label: binding.get('label').value,
                             slug: binding.get('tool').value.split('/').pop().toLowerCase(),
                             concepts: getBindingArray(binding, 'tadirahIRIs'),
                             instancesof: getBindingArray(binding, 'instanceof_labels'),
+                            dateModified: new Date(binding.get('date_modified').value),
                             description: binding.get('description')?.value || null,
                             license: getBindingArray(binding, 'license_labels'),
                             copyright: binding.get('copyright_label')?.value || null
@@ -170,11 +169,11 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
             WHERE {
             ?concept wdt:P9309 ?tadirahId .
             ?tool wdt:P366 ?concept ;
-                    wdt:P31/wdt:P279* wd:Q7397 .
+                    wdt:P31/wdt:P279* wd:Q7397 ;
+                    ^schema:about/schema:dateModified ?date_modified .
              ${date ? `
-                    ?tool ^schema:about/schema:dateModified ?date_modified .
-                    FILTER (?date_modified >= "${date.toISOString()}"^^xsd:dateTime)
-                ` : ''}
+            FILTER (?date_modified >= "${date.toISOString()}"^^xsd:dateTime)
+            ` : ''}
 
             ?tool wdt:P31 ?instanceof .
             ?instanceof rdfs:label ?instanceof_label .
