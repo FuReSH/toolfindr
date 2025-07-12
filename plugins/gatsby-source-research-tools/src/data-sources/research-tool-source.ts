@@ -126,7 +126,10 @@ export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
                             instancesof: getBindingArray(binding, 'instanceof_labels'),
                             dateModified: new Date(binding.get('date_modified').value),
                             description: binding.get('description')?.value || null,
-                            license: getBindingArray(binding, 'license_labels'),
+                            license: (() => {
+                                const l = getBindingArray(binding, 'license_labels');
+                                return l[0]==="" ? null : l;
+                            })(),
                             copyright: binding.get('copyright_label')?.value || null
                         });
                     } catch (error) {
