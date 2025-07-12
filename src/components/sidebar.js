@@ -62,6 +62,10 @@ const Sidebar = ({
         <div
           className="sidebar-overlay"
           onClick={toggleSidebar}
+          tabIndex={0}
+          role="button"
+          aria-label="Close filter sidebar"
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') toggleSidebar(); }}
         ></div>
       )}
     </>

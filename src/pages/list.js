@@ -3,7 +3,6 @@ import ToolsCardComponent from "../components/toolscard";
 import Layout from "../components/layout";
 import { Seo } from "../components/seo";
 import { GoSearch, GoTag } from "react-icons/go";
-import Concepts from "../components/concepts";
 import BuildTime from "../components/buildtime";
 import ResetFilters from "../components/resetfilters";
 import SearchBar from "../components/searchbar";

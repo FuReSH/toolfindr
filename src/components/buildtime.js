@@ -11,7 +11,7 @@ const BuildTime = () => {
     }
   `)
 
-  return <p className="fs-6 mt-2 text-muted">Data were requested from Wikidata on: {data.site.buildTime}</p>
+  return <p className="fs-6 mt-2 text-muted">Data were requested from Wikidata on: {data.site.buildTime} (UTC).</p>
 }
 
 export default BuildTime
