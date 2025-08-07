@@ -1,6 +1,6 @@
 require("dotenv").config({
-    path: `.env.${process.env.NODE_ENV}`,
-  });
+  path: `.env.${process.env.NODE_ENV}`,
+});
 const filesystemSources = require("./filesystemSources");
 const pathPrefix = process.env.GATSBY_PATH_PREFIX || "";
 
@@ -9,14 +9,14 @@ module.exports = [
     resolve: `gatsby-source-filesystem`,
     options: opts,
   })),
-    {
-      resolve: require.resolve(`../plugins/gatsby-source-research-tools`),
-      options: {
-        wikidataSparqlUrl: process.env.GATSBY_WD_SPARQL_URL,
-        wikidataLdfUrl: process.env.GATSBY_WD_LDF_URL,
-        tadirahFileUrl: process.env.GATSBY_TADIRAH_FILE_URL,
-      },
+  {
+    resolve: require.resolve(`../plugins/gatsby-source-research-tools`),
+    options: {
+      wikidataSparqlUrl: process.env.GATSBY_WD_SPARQL_URL,
+      wikidataLdfUrl: process.env.GATSBY_WD_LDF_URL,
+      tadirahFileUrl: process.env.GATSBY_TADIRAH_FILE_URL,
     },
+  },
   {
     resolve: `gatsby-transformer-remark`,
     options: {
@@ -31,6 +31,13 @@ module.exports = [
             removeAccents: true,
             isIconAfterHeader: true,
             elements: [`h2`, `h3`, `h4`],
+          },
+        },
+        {
+          resolve: `gatsby-remark-images`,
+          options: {
+            maxWidth: 400,
+            showCaptions: true,
           },
         },
       ],
@@ -64,25 +71,25 @@ module.exports = [
     },
   },
   {
-      resolve: 'gatsby-plugin-local-search',
-      options: {
-        // A unique name for the search index. This should be descriptive of
-        // what the index contains. This is required.
-        name: 'research-tools',
+    resolve: 'gatsby-plugin-local-search',
+    options: {
+      // A unique name for the search index. This should be descriptive of
+      // what the index contains. This is required.
+      name: 'research-tools',
 
-        // Set the search engine to create the index. This is required.
-        // The following engines are supported: flexsearch, lunr
-        engine: 'flexsearch',
+      // Set the search engine to create the index. This is required.
+      // The following engines are supported: flexsearch, lunr
+      engine: 'flexsearch',
 
-        // Provide options to the engine. This is optional and only recommended
-        // for advanced users.
-        //
-        // Note: Only the flexsearch engine supports options.
-        engineOptions: 'speed',
+      // Provide options to the engine. This is optional and only recommended
+      // for advanced users.
+      //
+      // Note: Only the flexsearch engine supports options.
+      engineOptions: 'speed',
 
-        // GraphQL query used to fetch all data for the search index. This is
-        // required.
-        query: `
+      // GraphQL query used to fetch all data for the search index. This is
+      // required.
+      query: `
           {
             allResearchTool {
               nodes {
@@ -96,30 +103,30 @@ module.exports = [
           }
         `,
 
-        // Field used as the reference value for each document.
-        // Default: 'id'.
-        ref: 'id',
+      // Field used as the reference value for each document.
+      // Default: 'id'.
+      ref: 'id',
 
-        // List of keys to index. The values of the keys are taken from the
-        // normalizer function below.
-        // Default: all fields
-        index: ['label', 'description'],
+      // List of keys to index. The values of the keys are taken from the
+      // normalizer function below.
+      // Default: all fields
+      index: ['label', 'description'],
 
-        // List of keys to store and make available in your UI. The values of
-        // the keys are taken from the normalizer function below.
-        // Default: all fields
-        store: ['_id', 'label', 'description'],
+      // List of keys to store and make available in your UI. The values of
+      // the keys are taken from the normalizer function below.
+      // Default: all fields
+      store: ['_id', 'label', 'description'],
 
-        // Function used to map the result from the GraphQL query. This should
-        // return an array of items to index in the form of flat objects
-        // containing properties to index. The objects must contain the `ref`
-        // field above (default: 'id'). This is required.
-        normalizer: ({ data }) =>
-          data.allResearchTool.nodes.map((node) => ({
-            _id: node._id,
-            label: node.label,
-            description: node.description,
-          })),
-      },
+      // Function used to map the result from the GraphQL query. This should
+      // return an array of items to index in the form of flat objects
+      // containing properties to index. The objects must contain the `ref`
+      // field above (default: 'id'). This is required.
+      normalizer: ({ data }) =>
+        data.allResearchTool.nodes.map((node) => ({
+          _id: node._id,
+          label: node.label,
+          description: node.description,
+        })),
     },
+  },
 ];

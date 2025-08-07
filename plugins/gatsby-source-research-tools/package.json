@@ -21,14 +21,14 @@
         "tool registry"
     ],
     "dependencies": {
-        "@comunica/logger-pretty": "^2.5.0",
+        "@comunica/logger-pretty": "^2.10.0",
         "@comunica/query-sparql": "^2.8.1",
         "crypto": "^1.0.1",
-        "node-fetch": "^2.6.8",
+        "node-fetch": "^2.7.0",
         "node-polyfill-webpack-plugin": "^2.0.1"
     },
     "devDependencies": {
-        "typedoc": "^0.28.4",
+        "typedoc": "^0.28.9",
         "typedoc-material-theme": "^1.4.0"
     }
 }
