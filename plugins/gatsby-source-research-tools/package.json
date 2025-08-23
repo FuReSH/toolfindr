@@ -1,7 +1,7 @@
 {
     "name": "gatsby-source-research-tools",
-    "version": "0.1.0",
-    "license": "0BSD",
+    "version": "1.0.0",
+    "license": "AGPL V3",
     "author": "@sopheck",
     "description": "Local Gatsby plugin for fetching Research Tools data from Wikidata using SPARQL and REST.",
     "main": "gatsby-node.js",

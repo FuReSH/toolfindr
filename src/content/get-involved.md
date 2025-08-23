@@ -7,52 +7,122 @@ links:
     title: "Wikidata Registration"
     icon: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg"
 
-  - url: "https://github.com/FuReSH"
+  - url: "https://auth.wikimedia.org/wikidatawiki/wiki/Special:UserLogin?useformat=desktop&usesul3=1&returnto=Wikidata%3AMain+Page&centralauthLoginToken=298a417c858fc5d4deee7af43741e31a"
     title: "Wikidata Login-in"
-    icon: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+    icon: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg"
 ---
 
 ## Working with Wikidata
 
-To edit or to add new items on Wikidata first 
-### Register and Log In
+To edit or add new items in Wikidata, you first need an account.  
 
-First of all, you'll need to create an user account on Wikidata respectively Wikimedia if you haven't done already. Though you can edit in Wikidata without having an account it is not recommended as your IP address will be exposed. In this case Wikidata will warn you before any data is being published (see Fig.1)
+### 1. Register and Log In
 
-![Fig.1: Wikidata warning on IP address exposing](/images/wd-screenshot-ip-address.png)
+First, create a user account on Wikidata (and therefore on Wikimedia) if you have not already done so. Although it is technically possible to edit Wikidata without an account, it is not recommended because your IP address will be visible. In such cases, Wikidata will display a warning before any data is published.  
 
-So create an account here: 
+<!--![Fig. 1: Wikidata warning about IP address visibility](/images/wd-screenshot-ip-address.png)  -->
 
-And then simply log in with you credentials.
+> **Note:** If you only want to search or query tools within Wikidata, you can do so without an account.
 
-If you only want to search or query for tools within Wikidata you can do it without an user account.
+👉 **Action:** Create your first Wikimedia account by clicking the registration link in the right-hand sidebar. Once registered, simply log in with your credentials.
 
-### Use the LD Interface
+### 2. Use the Linked Data (LD) Interface
 
-In this tutorial we will show how to edit or add tools with the so called Linked Data (LD) Interface by Wikidata. This interface guarantees the access to the Wikidata data und you can directly update items here. This is useful if you want to edit only a few Wikidata items. However if you would like to perform a bulk update on Wikidata there are other tools that a more sufficient for this usecase. Within the context of the *ToolFindr* we assume that only single tools will be updated in Wikidata and therefore we will concentrate on the LD Interface.
+In this tutorial, we will show how to edit or add tools using Wikidata’s so-called *Linked Data (LD) Interface*. This interface provides direct access to Wikidata’s data and allows you to update items immediately. It is well-suited for editing only a few items.  
 
-As soon as you clicked in on the button "Edit on Wikidata" in the *ToolFindr* detailed view of a tool you will be redirected to the item on Wikidata (Fig.2) in the Linked Data Interface.
+If you want to make large-scale changes, there are other tools that are more suitable for bulk updates. Within the *ToolFindr* context, we assume that only single tools will be updated, so we will focus on the LD Interface.  
 
-![Fig.2: Item view in Linked Data Interface of Wikidata ](/images/wd-screenshot-ld-interface.png)
+When you click the **Edit on Wikidata** button in the detailed *ToolFindr* view of a tool, you are redirected to that item’s page in the LD Interface on Wikidata.  
 
-The LD Interface is kept very simple meaning you can quickly capture the relevant data. In a nutshell each item consists of:
+<!-- ![Fig. 2: Item view in Wikidata’s Linked Data Interface](/images/wd-screenshot-ld-interface.png)  -->
 
-- name
-- abbreviation(s)
-- description
-- statements
-- identifiers
+The LD Interface is intentionally simple, so you can quickly capture and edit the most relevant data. Each item consists of:
 
-From here we now can edit the data on the tool we want to update.
+- **Name**  
+- **Abbreviation(s)**  
+- **Description**  
+- **Statements**  
+- **Identifiers**  
 
-If you want to learn more about Wikidata's under the hood data model and software *Wikibase* you can read more about it on the official documentation:
+From here, you can edit the data for the tool you want to update.  
 
-- Data Model: https://www.wikidata.org/wiki/Wikidata:Data_model
-- Wikibase: https://www.wikidata.org/wiki/Wikidata:Wikibase/de
+**Learn more:**
+- **Data Model**: [Wikidata:Data model](https://www.wikidata.org/wiki/Wikidata:Data_model)  
+- **Wikibase**: [Wikidata:Wikibase](https://www.wikidata.org/wiki/Wikidata:Wikibase/de)  
+- **LD Interface Documentation**: [Linked Data Interface](https://www.wikidata.org/wiki/Wikidata:Data_access#Linked_Data_Interface_(URI))
 
-Please also refer to the official LD Interface documentation by Wikimedia: https://www.wikidata.org/wiki/Wikidata:Data_access#Linked_Data_Interface_(URI)
+---
 
-## Edit a Tool
+## Editing a Tool
+
+As outlined above, you can edit a tool’s name, description, and statements. Identifiers are less relevant for our use case, so we will skip them here.  
+
+Editing within the LD Interface is straightforward. For each piece of data, you will see an **🖊️ edit** link (or *bearbeiten* in German) in the upper right corner.  
+
+You can perform two main actions:  
+1. **Update existing data**  
+2. **Add new statements**
+
+### Updating Existing Data
+
+Click the **edit** link next to the value you want to change — whether it is the tool’s name, description, or a statement. After making your changes, click **save** to apply them, or **cancel** to discard them.  
+
+> **See also:** [Wikidata:Tools/Edit items](https://www.wikidata.org/wiki/Wikidata:Tools/Edit_items) for a list of external tools.
+
+### Adding New Statements
+
+Sometimes, you may need to add new information about a tool that is not already listed in Wikidata. In Wikidata, any factual piece of information is expressed as a **statement**. A statement consists of:
+
+- **Property** – the type of information (e.g., *developer*, *programming language*, *official website*)  
+- **Value** – the specific detail for that property (e.g., *University of Exampleland*, *Python*, *https://example.org*)  
+
+**Example:**
+> **developer** → *University of Exampleland*  
+
+#### Step-by-Step: Adding a Statement
+
+1. **Locate the Statements Section**  
+   Scroll down the item page until you find the section titled **Statements**.
+
+2. **Click “Add statement”**  
+   This button is usually below the existing statements.
+
+3. **Choose a Property**  
+   - Start typing the name of the property (e.g., *developer*).  
+   - Wikidata will suggest matching properties as you type — select the correct one.
+
+4. **Enter the Value**  
+   - If the value is another Wikidata item (e.g., an institution), start typing its name and choose it from the dropdown list.  
+   - If it is text or a number (e.g., a URL, a publication year), enter it directly.
+
+5. **Add References (Recommended)**  
+   - Click **add reference** to link to a reliable source for your information.  
+   - This could be a project website, a publication, or another verifiable source.
+
+6. **Save Your Statement**  
+   - Click **publish** (or *veröffentlichen*) to confirm.
+
+#### Example: Adding a Programming Language
+
+Imagine you are updating the Wikidata entry for a DH tool named *TextParserPro*.  
+You discover from the official website that it is written in **Python**.
+
+1. Scroll to **Statements** → click **Add statement**.  
+2. In the **property** field, type *programming language* and select it.  
+3. In the **value** field, type *Python* and choose the correct Wikidata item.  
+4. Add a **reference**: official website link.  
+5. Click **publish**.  
+
+The new statement will now appear in the tool’s Wikidata entry.
+
+---
+
+✨ **Tips for Good Data Entry**
+- Always double-check that you are choosing the correct **property** and **value** — many terms can look similar.  
+- Use references whenever possible. This increases trust in the data and helps others verify your work.  
+- Be consistent: if you add the *developer* for one tool, consider doing the same for other tools you know.
+
+
 
 <!-- ## Add a new Tool
 
@@ -62,6 +132,9 @@ Besides the Linked Data interface there exist other so called Wikidata tool with
 
 https://cradle.toolforge.org/?#/subject/dh_research_tools
 
-## Query a Data Subset -->
+## Query a Data Subset 
+
+## Cite a Tool
+-->
 
 
