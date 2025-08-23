@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add screenshots to the Wikidata tutorial (Get involved)
 - Add documentation for the QLever SPARQL endpoint
 
+## [1.0.1] - 2025-08-23
+
+### Fixed
+- Snyc error with the package-lock.json and `npm cli`
+
 ## [1.0.0] - 2025-08-23
 
 Initial release of the ToolFindr. See also the project [First Release of ToolFindr](https://github.com/orgs/FuReSH/projects/1) on GitHub for further details.
