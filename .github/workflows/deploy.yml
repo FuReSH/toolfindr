@@ -64,6 +64,16 @@ jobs:
       - name: Install dependencies
         if: github.event_name == 'push'
         run: npm ci
+      - name: Load environment variables
+        run: |
+          if [ -f .env ]; then
+            echo "Loading environment variables from .env file"
+            cat .env | grep -v '^#' | grep -v '^$' | while read line; do
+              echo "$line" >> $GITHUB_ENV
+            done
+          else
+            echo "No .env file found"
+          fi
       - name: Build TypeScript Plugin
         run: npm run build:plugin
       - name: Build with Gatsby
