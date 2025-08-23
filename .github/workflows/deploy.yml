@@ -31,27 +31,10 @@ defaults:
   run:
     shell: bash
 
-jobs:
-  # Test job - check if required files exist
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Check for .env.production file
-        run: |
-          if [ ! -f .env.production ]; then
-            echo "❌ Error: .env.production file not found!"
-            echo "The build requires a .env.production file to set environment variables."
-            exit 1
-          else
-            echo "✅ .env.production file found"
-          fi
-          
+jobs:          
   # Build job
   build:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -70,6 +53,7 @@ jobs:
           static_site_generator: gatsby
       - name: Restore cache
         uses: actions/cache@v3
+        if: github.event_name == 'schedule'
         with:
           path: |
             public
@@ -79,19 +63,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
-        if: github.event_name == 'push'
+        if: github.event_name != 'schedule'
         run: npm ci
-      - name: Load environment variables
-        run: |
-          if [ -f .env.production ]; then
-            echo "Loading environment variables from .env.production file"
-            export $(cat .env.production | grep -v '^#' | grep -v '^$' | xargs)
-          fi
       - name: Build TypeScript Plugin
         run: npm run build:plugin
       - name: Build with Gatsby
         env:
+          NODE_ENV: production
           PREFIX_PATHS: 'true'
+          # Path prefix for GitHub Pages deployment
+          GATSBY_PATH_PREFIX: '/tool-storage-interface'
+          # Wikidata SPARQL data source
+          GATSBY_WD_SPARQL_URL: 'https://query.wikidata.org/sparql'
+          # Wikidata Linked Data Fragments server
+          GATSBY_WD_LDF_URL: 'https://query.wikidata.org/bigdata/ldf'
+          # TaDiRAH SPARQL data source
+          GATSBY_TADIRAH_FILE_URL: 'https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl'
+          # MediaWiki Commons API Endpoint
+          GATSBY_COMMONS_API_URL: 'https://commons.wikimedia.org/w/api.php'
         run: npm run build --prefix-paths
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
