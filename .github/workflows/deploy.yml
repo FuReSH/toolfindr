@@ -65,6 +65,25 @@ jobs:
       - name: Install dependencies
         if: github.event_name != 'schedule'
         run: npm ci
+      - name: Debug configuration files
+        run: |
+          echo "=== Debugging configuration files ==="
+          echo "gatsby-config.js content:"
+          cat gatsby-config.js
+          echo -e "\n=== config/siteMetadata.js content ==="
+          if [ -f config/siteMetadata.js ]; then
+            cat config/siteMetadata.js
+          else
+            echo "siteMetadata.js not found"
+          fi
+          echo -e "\n=== config/plugins.js content ==="
+          if [ -f config/plugins.js ]; then
+            cat config/plugins.js | head -50  # Erste 50 Zeilen
+          else
+            echo "plugins.js not found"
+          fi
+          echo -e "\n=== Environment Variables ==="
+          env | grep GATSBY || echo "No GATSBY variables found"
       - name: Build TypeScript Plugin
         run: npm run build:plugin
       - name: Build with Gatsby
