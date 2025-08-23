@@ -32,9 +32,26 @@ defaults:
     shell: bash
 
 jobs:
+  # Test job - check if required files exist
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check for .env.production file
+        run: |
+          if [ ! -f .env.production ]; then
+            echo "❌ Error: .env.production file not found!"
+            echo "The build requires a .env.production file to set environment variables."
+            exit 1
+          else
+            echo "✅ .env.production file found"
+          fi
+          
   # Build job
   build:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -66,13 +83,9 @@ jobs:
         run: npm ci
       - name: Load environment variables
         run: |
-          if [ -f .env ]; then
-            echo "Loading environment variables from .env file"
-            cat .env | grep -v '^#' | grep -v '^$' | while read line; do
-              echo "$line" >> $GITHUB_ENV
-            done
-          else
-            echo "No .env file found"
+          if [ -f .env.production ]; then
+            echo "Loading environment variables from .env.production file"
+            export $(cat .env.production | grep -v '^#' | grep -v '^$' | xargs)
           fi
       - name: Build TypeScript Plugin
         run: npm run build:plugin
