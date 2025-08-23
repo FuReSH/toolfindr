@@ -1,0 +1,17 @@
+# Query for retrieving tools from Wikidata that are linked to Tadirah concept
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX schema: <http://schema.org/>
+
+SELECT DISTINCT ?tool ?tadirahId
+WHERE {
+  ?concept wdt:P9309 ?tadirahId. #find all TaDiRAH classes
+  ?tool wdt:P366 ?concept;       # find all items, which claim to implement this method
+    (wdt:P31/(wdt:P279*)) wd:Q7397 ;
+    schema:dateModified ?date_modified .
+  # Tadirah-ID als IRI for further processing
+  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahID))) AS ?tadirahID)
+
+}
+ORDER BY DESC(?date_modified)
+LIMIT 1000000

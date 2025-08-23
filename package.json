@@ -1,40 +1,58 @@
 {
-  "name": "@furesh/a-wikidata-based-dh-tool-registry-frontend",
+  "name": "@furesh/toolfindr",
   "private": false,
-  "description": "A tool registry frontend template with local Wikidata plugin",
-  "version": "0.2.1",
-  "author": "@sopheck",
+  "description": "A Lightweight DH Tool Explorer – based on Wikidata and TaDiRAH",
+  "version": "1.0.0",
+  "author": {
+    "name": "@sopheck",
+    "url": "https://github.com/sopheck"
+  },
+  "contributors": [
+    {
+      "name": "@esthet1cs"
+    }
+  ],
+  "workspaces": [
+    ".",
+    "plugins/*"
+  ],
   "dependencies": {
-    "@comunica/query-sparql": "^3.2.3",
-    "@comunica/query-sparql-file": "^3.2.3",
-    "@popperjs/core": "^2.11.6",
-    "@rjsf/bootstrap-4": "^5.4.0",
-    "@rjsf/core": "^5.4.0",
-    "@rjsf/mui": "^5.4.0",
-    "@rjsf/utils": "^5.4.0",
-    "@rjsf/validator-ajv8": "^5.4.0",
-    "bootstrap": "^5.3.3",
-    "gatsby": "^5.14.1",
+    "@comunica/query-sparql": "^3.3.0",
+    "@comunica/query-sparql-file": "^3.3.0",
+    "@popperjs/core": "^2.11.8",
+    "@rjsf/bootstrap-4": "^5.24.12",
+    "@rjsf/core": "^5.24.12",
+    "@rjsf/mui": "^5.24.12",
+    "@rjsf/utils": "^5.24.12",
+    "@rjsf/validator-ajv8": "^5.24.12",
+    "bootstrap": "^5.3.7",
+    "gatsby": "^5.14.6",
     "gatsby-plugin-gatsby-cloud": "^5.14.0",
     "gatsby-plugin-image": "^3.14.0",
+    "gatsby-plugin-local-search": "^2.0.1",
     "gatsby-plugin-manifest": "^5.14.0",
     "gatsby-plugin-sass": "^6.14.0",
     "gatsby-plugin-sharp": "^5.14.0",
     "gatsby-remark-autolink-headers": "^6.14.0",
+    "gatsby-remark-images": "^7.14.0",
     "gatsby-source-filesystem": "^5.14.0",
     "gatsby-transformer-remark": "^6.14.0",
     "gatsby-transformer-sharp": "^5.14.0",
-    "node-polyfill-webpack-plugin": "^4.0.0",
+    "node-polyfill-webpack-plugin": "^4.1.0",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^5.3.0",
-    "react-select": "^5.10.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.5.0",
+    "react-select": "^5.10.2",
+    "react-use-flexsearch": "^0.1.1",
     "sass": "1.77.6",
-    "sparql-http-client": "^3.0.0"
+    "sparql-http-client": "^3.0.1"
   },
   "devDependencies": {
-    "prettier": "2.5.1"
+    "@types/node": "^18.19.121",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.8",
+    "typescript": "^5.9.2"
   },
   "overrides": {
     "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
@@ -48,27 +66,33 @@
   "keywords": [
     "gatsby",
     "wikidata",
-    "bootstrap",
-    "sass"
+    "tadirah",
+    "digital humanities",
+    "tool registry"
   ],
-  "license": "0BSD",
+  "license": "AGPL V3",
   "scripts": {
-    "deploy": "gatsby build --prefix-paths && gatsby serve --prefix-paths",
-    "build": "gatsby build",
+    "deploy": "npm run build:plugin && gatsby build --prefix-paths && gatsby serve --prefix-paths",
+    "build": "npm run build:plugin && gatsby build --prefix-paths",
     "develop": "gatsby develop",
+    "dev": "npm run build:plugin && gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
-    "serve": "gatsby serve",
+    "serve": "gatsby serve --prefix-paths",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "repl": "gatsby repl",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "install:all": "npm install",
+    "build:plugin": "npm run build --workspace=plugins/gatsby-source-research-tools",
+    "watch:plugin": "npm run watch --workspace=plugins/gatsby-source-research-tools"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/r-ichard/gatsby-starter-bootstrap-5.git"
+    "url": "git@github.com:FuReSH/tool-storage-interface.git"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/FuReSH/tool-storage-interface/issues"
   },
-  "homepage": "https://github.com/r-ichard/gatsby-starter-bootstrap-5#readme",
   "main": "gatsby-browser.js"
 }

@@ -1,7 +1,7 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import { Seo } from "../components/seo"
-import { GoInfo, GoLinkExternal } from "react-icons/go";
+import { GoCommentDiscussion, GoLinkExternal } from "react-icons/go";
 import { graphql } from "gatsby";
 import BackButton from "../components/backbutton";
 import Toc from "../components/toc";
@@ -17,22 +17,28 @@ export default function ExplorePage({ data }) {
       <div className="container my-4">
         {/* Hauptbereich mit drei Spalten */}
         <div className="row">
-          {/* Linke Spalte für TOC oder Navigation */}
-          <div className="col-sm-2 text-body-secondary fs-6 bd-toc">
+          {/* Linke Spalte für TOC (nur auf großen Bildschirmen) */}
+          <div className="d-none d-lg-block col-lg-2">
             <Toc headings={headings} />
           </div>
 
           {/* Mittlere Spalte mit dem Hauptinhalt */}
-          <div className="col-sm-7">
+          <div className="col-12 col-md-8 col-lg-7">
             <h1>
-              <span className="pe-3"><GoInfo /></span>{frontmatter.title}
+              <span className="pe-3"><GoCommentDiscussion className="icon-color-secondary" /></span>{frontmatter.title}
             </h1>
             <p className="kdh-short-desc">{frontmatter.subtitle}</p>
+            
+            {/* TOC für kleinere Bildschirme - direkt nach subtitle */}
+            <div className="d-lg-none mb-4">
+              <Toc headings={headings} />
+            </div>
+            
             <div dangerouslySetInnerHTML={{ __html: html }} />
           </div>
 
           {/* Rechte Spalte für externe Links */}
-          <div className="col-sm-3">
+          <div className="col-12 col-md-4 col-lg-3">
             {links && links.length > 0 ? (
               <div>
                 <h5><GoLinkExternal /> Further information</h5>

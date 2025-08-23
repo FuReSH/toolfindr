@@ -1,0 +1,61 @@
+# Query for retrieving tools from Wikidata that are linked to Tadirah methods
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?toolID 
+       ?toolLabel 
+       ?toolDesc 
+       ?copyrightLabel 
+       ?licenseLabel
+       ?currentVersion
+       ?image
+       (GROUP_CONCAT(DISTINCT ?sourceRepo; separator = ", ") AS ?sourceRepos) 
+       (GROUP_CONCAT(DISTINCT ?website; separator = ", ") AS ?websites)
+       (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) 
+       (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs)
+WHERE {
+  ?concept wdt:P9309 ?tadirahIDString.
+  
+  # Auswahl aller Tools, die mit diesen Konzepten durch "has use" verknüpft sind
+  ?tool wdt:P366 ?concept;
+        (wdt:P31/(wdt:P279*)) wd:Q7397.  # Software oder Subklasse von Software
+
+  # Instanztypen abrufen
+  ?tool wdt:P31 ?instanceOf.
+
+  # Optionale Eigenschaften getrennt abrufen
+  OPTIONAL { ?tool wdt:P6216 ?copyright. }
+  OPTIONAL { ?tool wdt:P275 ?license. }
+  OPTIONAL { ?tool wdt:P1324 ?sourceRepo. }
+  OPTIONAL { ?tool wdt:P856 ?website. }
+  OPTIONAL {?tool wdt:P348 ?currentVersion. }
+
+  # Bilder abrufen (Logo bevorzugt, ansonsten reguläres Bild)
+  OPTIONAL { ?tool wdt:P154 ?logo. }
+  OPTIONAL { ?tool wdt:P18 ?pic. }
+  BIND(COALESCE(?logo, ?pic) AS ?image)
+
+  # Tool-ID als String
+  BIND(STR(?tool) AS ?toolID)
+  # Tadirah-ID als IRI for further processing
+  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahIDString))) AS ?tadirahID)
+
+  # Labels effizient abrufen
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en".
+    ?tool rdfs:label ?toolLabel;
+          schema:description ?toolDesc.
+    ?instanceOf rdfs:label ?instanceOfLabel.
+    ?copyright rdfs:label ?copyrightLabel.
+    ?license rdfs:label ?licenseLabel.
+  }
+}
+GROUP BY ?toolID ?toolLabel ?toolDesc ?image ?currentVersion ?copyrightLabel ?licenseLabel
+ORDER BY ?toolLabel
+LIMIT 5000

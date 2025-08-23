@@ -1,0 +1,190 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>gatsby-source-research-tools</title><meta name="description" content="Documentation for gatsby-source-research-tools"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script><script async src="assets/hierarchy.js" id="tsd-hierarchy-script"></script><style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-sys-color-primary: #bbc3ff;
+    --md-sys-color-on-primary: #001b96;
+    --md-sys-color-primary-container: #0029d2;
+    --md-sys-color-on-primary-container: #dfe0ff;
+    --md-sys-color-secondary: #c4c5dd;
+    --md-sys-color-on-secondary: #2d2f42;
+    --md-sys-color-secondary-container: #434559;
+    --md-sys-color-on-secondary-container: #e0e1f9;
+    --md-sys-color-tertiary: #e6bad7;
+    --md-sys-color-on-tertiary: #45263d;
+    --md-sys-color-tertiary-container: #5d3c54;
+    --md-sys-color-on-tertiary-container: #ffd7f0;
+    --md-sys-color-error: #ffb4ab;
+    --md-sys-color-on-error: #690005;
+    --md-sys-color-error-container: #93000a;
+    --md-sys-color-on-error-container: #ffb4ab;
+    --md-sys-color-background: #1b1b1f;
+    --md-sys-color-on-background: #e4e1e6;
+    --md-sys-color-surface: #1b1b1f;
+    --md-sys-color-on-surface: #e4e1e6;
+    --md-sys-color-surface-variant: #46464f;
+    --md-sys-color-on-surface-variant: #c7c5d0;
+    --md-sys-color-outline: #90909a;
+    --md-sys-color-outline-variant: #46464f;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-inverse-surface: #e4e1e6;
+    --md-sys-color-inverse-on-surface: #303034;
+    --md-sys-color-inverse-primary: #2544f8;
+    --md-sys-color-surface-dim: #131316;
+    --md-sys-color-surface-bright: #39393c;
+    --md-sys-color-surface-container-lowest: #0e0e11;
+    --md-sys-color-surface-container-low: #1b1b1f;
+    --md-sys-color-surface-container: #1f1f23;
+    --md-sys-color-surface-container-high: #2a2a2d;
+    --md-sys-color-surface-container-highest: #353438
+  }
+}
+:root[data-theme="dark"] {
+  --md-sys-color-primary: #bbc3ff;
+  --md-sys-color-on-primary: #001b96;
+  --md-sys-color-primary-container: #0029d2;
+  --md-sys-color-on-primary-container: #dfe0ff;
+  --md-sys-color-secondary: #c4c5dd;
+  --md-sys-color-on-secondary: #2d2f42;
+  --md-sys-color-secondary-container: #434559;
+  --md-sys-color-on-secondary-container: #e0e1f9;
+  --md-sys-color-tertiary: #e6bad7;
+  --md-sys-color-on-tertiary: #45263d;
+  --md-sys-color-tertiary-container: #5d3c54;
+  --md-sys-color-on-tertiary-container: #ffd7f0;
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffb4ab;
+  --md-sys-color-background: #1b1b1f;
+  --md-sys-color-on-background: #e4e1e6;
+  --md-sys-color-surface: #1b1b1f;
+  --md-sys-color-on-surface: #e4e1e6;
+  --md-sys-color-surface-variant: #46464f;
+  --md-sys-color-on-surface-variant: #c7c5d0;
+  --md-sys-color-outline: #90909a;
+  --md-sys-color-outline-variant: #46464f;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #e4e1e6;
+  --md-sys-color-inverse-on-surface: #303034;
+  --md-sys-color-inverse-primary: #2544f8;
+  --md-sys-color-surface-dim: #131316;
+  --md-sys-color-surface-bright: #39393c;
+  --md-sys-color-surface-container-lowest: #0e0e11;
+  --md-sys-color-surface-container-low: #1b1b1f;
+  --md-sys-color-surface-container: #1f1f23;
+  --md-sys-color-surface-container-high: #2a2a2d;
+  --md-sys-color-surface-container-highest: #353438
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --md-sys-color-primary: #2544f8;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-primary-container: #dfe0ff;
+    --md-sys-color-on-primary-container: #000d5f;
+    --md-sys-color-secondary: #5b5d72;
+    --md-sys-color-on-secondary: #ffffff;
+    --md-sys-color-secondary-container: #e0e1f9;
+    --md-sys-color-on-secondary-container: #181a2c;
+    --md-sys-color-tertiary: #77536c;
+    --md-sys-color-on-tertiary: #ffffff;
+    --md-sys-color-tertiary-container: #ffd7f0;
+    --md-sys-color-on-tertiary-container: #2d1227;
+    --md-sys-color-error: #ba1a1a;
+    --md-sys-color-on-error: #ffffff;
+    --md-sys-color-error-container: #ffdad6;
+    --md-sys-color-on-error-container: #410002;
+    --md-sys-color-background: #fffbff;
+    --md-sys-color-on-background: #1b1b1f;
+    --md-sys-color-surface: #fffbff;
+    --md-sys-color-on-surface: #1b1b1f;
+    --md-sys-color-surface-variant: #e3e1ec;
+    --md-sys-color-on-surface-variant: #46464f;
+    --md-sys-color-outline: #777680;
+    --md-sys-color-outline-variant: #c7c5d0;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-inverse-surface: #303034;
+    --md-sys-color-inverse-on-surface: #f3f0f4;
+    --md-sys-color-inverse-primary: #bbc3ff;
+    --md-sys-color-surface-dim: #dcd9de;
+    --md-sys-color-surface-bright: #fbf8fd;
+    --md-sys-color-surface-container-lowest: #ffffff;
+    --md-sys-color-surface-container-low: #f6f2f7;
+    --md-sys-color-surface-container: #f0edf1;
+    --md-sys-color-surface-container-high: #eae7ec;
+    --md-sys-color-surface-container-highest: #e4e1e6
+  }
+}
+:root[data-theme="light"] {
+  --md-sys-color-primary: #2544f8;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #dfe0ff;
+  --md-sys-color-on-primary-container: #000d5f;
+  --md-sys-color-secondary: #5b5d72;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #e0e1f9;
+  --md-sys-color-on-secondary-container: #181a2c;
+  --md-sys-color-tertiary: #77536c;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #ffd7f0;
+  --md-sys-color-on-tertiary-container: #2d1227;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+  --md-sys-color-background: #fffbff;
+  --md-sys-color-on-background: #1b1b1f;
+  --md-sys-color-surface: #fffbff;
+  --md-sys-color-on-surface: #1b1b1f;
+  --md-sys-color-surface-variant: #e3e1ec;
+  --md-sys-color-on-surface-variant: #46464f;
+  --md-sys-color-outline: #777680;
+  --md-sys-color-outline-variant: #c7c5d0;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #303034;
+  --md-sys-color-inverse-on-surface: #f3f0f4;
+  --md-sys-color-inverse-primary: #bbc3ff;
+  --md-sys-color-surface-dim: #dcd9de;
+  --md-sys-color-surface-bright: #fbf8fd;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f6f2f7;
+  --md-sys-color-surface-container: #f0edf1;
+  --md-sys-color-surface-container-high: #eae7ec;
+  --md-sys-color-surface-container-highest: #e4e1e6
+}
+</style><link rel="stylesheet" href="assets/material-style.css"/></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">gatsby-source-research-tools</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>gatsby-source-research-tools</h1></div><div class="tsd-panel tsd-typography"><h2 id="description" class="tsd-anchor-link">Description<a href="#description" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Include a summary of what this plugin accomplishes. Is there a demo site that shows how this plugin operates? If so, include a link to the deployed demo site and/or its source code here.</p>
+<p>Themes are considered plugins in the Gatsby ecosystem and should follow this README as well. Note that themes include multiple READMEs. One inside the theme directory with configuration instructions, one inside the example project directory, and one in the root of the repository which will follow this guide.</p>
+<h3 id="dependencies-optional" class="tsd-anchor-link">Dependencies (optional)<a href="#dependencies-optional" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Are there any plugins that must be installed in order to make this plugin work? If so, please include a list of those plugins and links to their pages here.</p>
+<h3 id="learning-resources-optional" class="tsd-anchor-link">Learning Resources (optional)<a href="#learning-resources-optional" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>If there are other tutorials, docs, and learning resources that are necessary or helpful to someone using this plugin, please link to those here.</p>
+<h2 id="how-to-install" class="tsd-anchor-link">How to install<a href="#how-to-install" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Please include installation instructions here.</p>
+<p>Gatsby documentation uses <code>npm</code> for installation. This is the recommended approach for plugins as well.</p>
+<p>If the plugin is a theme that needs to use <code>yarn</code>, please point to <a href="/docs/reference/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project">the documentation for switching package managers</a> in addition to the <code>yarn</code>-based instructions.</p>
+<h2 id="available-options-if-any" class="tsd-anchor-link">Available options (if any)<a href="#available-options-if-any" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h2 id="when-do-i-use-this-plugin" class="tsd-anchor-link">When do I use this plugin?<a href="#when-do-i-use-this-plugin" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Include stories about when this plugin is helpful and/or necessary.</p>
+<h2 id="examples-of-usage" class="tsd-anchor-link">Examples of usage<a href="#examples-of-usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>This usually shows a code example showing how to include this plugin in a site's <code>config.js</code> file.</p>
+<pre><code>code example
+</code></pre>
+<p>See this <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code">Markdown Cheatsheet</a> on how to format code examples.</p>
+<p>This section could also include before-and-after examples of data when the plugin is enabled, if applicable.</p>
+<h2 id="how-to-query-for-data-source-plugins-only" class="tsd-anchor-link">How to query for data (source plugins only)<a href="#how-to-query-for-data-source-plugins-only" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>If this is a source plugin README, source plugins ought to allow people to query for data within their Gatsby site. Please include code examples to show how to query for data using your source plugin.</p>
+<p>If this is a theme that requires data in a specific format in order to match an existing query, include those examples here.</p>
+<h2 id="how-to-run-tests" class="tsd-anchor-link">How to run tests<a href="#how-to-run-tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h2 id="how-to-develop-locally" class="tsd-anchor-link">How to develop locally<a href="#how-to-develop-locally" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h2 id="how-to-contribute" class="tsd-anchor-link">How to contribute<a href="#how-to-contribute" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>If you have unanswered questions, would like help with enhancing or debugging the plugin, it is nice to include instructions for people who want to contribute to your plugin.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#description"><span>Description</span></a><ul><li><a href="#dependencies-optional"><span>Dependencies (optional)</span></a></li><li><a href="#learning-resources-optional"><span>Learning <wbr/>Resources (optional)</span></a></li></ul><a href="#how-to-install"><span>How to install</span></a><a href="#available-options-if-any"><span>Available options (if any)</span></a><a href="#when-do-i-use-this-plugin"><span>When do <wbr/>I use this plugin?</span></a><a href="#examples-of-usage"><span>Examples of usage</span></a><a href="#how-to-query-for-data-source-plugins-only"><span>How to query for data (source plugins only)</span></a><a href="#how-to-run-tests"><span>How to run tests</span></a><a href="#how-to-develop-locally"><span>How to develop locally</span></a><a href="#how-to-contribute"><span>How to contribute</span></a></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html">gatsby-source-research-tools</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div><script>
+          try {
+            const generateLinkElement = document.querySelector(".tsd-generator a");
+            const link = document.createElement("a");
+            Object.assign(link, {
+              href: "https://github.com/dmnsgn/typedoc-material-theme",
+              target: "_blank",
+              rel: "noreferrer",
+              innerText: "typedoc-material-theme."
+            });
+            generateLinkElement.insertAdjacentElement("afterend", link);
+            generateLinkElement.insertAdjacentText("afterend", " with ");
+          } catch (error) {
+
+          }
+        </script></body></html>

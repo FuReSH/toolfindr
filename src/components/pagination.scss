@@ -9,4 +9,25 @@
     --bs-pagination-hover-color: #{$primary};
     --bs-pagination-active-bg: #{$primary};
     --bs-pagination-active-border-color: #{$primary};
+
+    .page-link {
+    transition: all 0.2s ease-in-out;
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    &[disabled] {
+      cursor: not-allowed;
+    }
+  }
+  
+  @media (max-width: 575.98px) {
+    gap: 0.25rem;
+    
+    .page-link {
+      min-width: 35px;
+      font-size: 0.875rem;
+    }
+  }
 }

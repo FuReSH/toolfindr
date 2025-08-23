@@ -1,7 +1,10 @@
 // SCSS-Variablen
 $primary: #0A05F9; // Primärfarbe
-$background: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%); // Hintergrundfarbe
-$text: #0a0a19; // Textfarbe
+$secondary: #616970;
+$background: 
+  url('./static/images/ffflux-bg.svg'),
+  linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+$text: #1F2937; // Textfarbe
 
 $pathPrefix: "" !default; // Falls $pathPrefix nicht von Gatsby gesetzt wurde, verwende "/fonts" als Standardwert
 $font-path: "#{$pathPrefix}/fonts"; // Pfad zu den Schriftarten
@@ -10,4 +13,5 @@ $font-path: "#{$pathPrefix}/fonts"; // Pfad zu den Schriftarten
 :root {
   --primary: #{$primary};
   --text-primary: #{$primary};
+  --text-secondary: #{$secondary};
 }

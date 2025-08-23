@@ -7,20 +7,42 @@ body {
   padding-top: 70px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "DDIN-Bold", "Helvetica", sans-serif;
 }
 
 #nav-top {
-  background-color: $primary !important;
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15),inset 0 -1px 0 rgba(255,255,255,0.15);
   font-family: "DDIN-Bold", "Helvetica", sans-serif;
+
   img {
     width: 40px;
+  }
+
+  animation: stickyNav linear forwards;
+  animation-timeline: view();
+  animation-range: cover 100vh 120vh; // Alternativ zu range-start/range-end
+}
+
+@keyframes stickyNav {
+  0% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  100% {
+    background: rgba(255, 255, 255, 1);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.6) 10%, rgba(255, 255, 255, 0.7) 20%, rgba(255, 255, 255, 0.0) 60%, rgba(255, 255, 255, 0.5) 80%, rgba(255, 255, 255, 0.7) 90%, rgba(255, 255, 255, 0.0) 100%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0.5rem 1rem rgba(140, 140, 140, 0.15),inset 0 -1px 0 rgba(255,255,255,0.15);
   }
 }
 
 .start-page-container {
-  text-transform: uppercase;
-  letter-spacing: 0.3ch;
+  /*margin-top: 10vh;
+  margin-bottom: 10vh;*/
 }

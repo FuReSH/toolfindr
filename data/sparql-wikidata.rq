@@ -20,10 +20,10 @@ SELECT ?toolID
        (GROUP_CONCAT(DISTINCT ?instanceOfLabel; separator = ", ") AS ?instanceOfLabels) 
        (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs)
 WHERE {
-  ?method wdt:P9309 ?tadirahIDString.
+  ?concept wdt:P9309 ?tadirahIDString.
   
-  # Auswahl aller Tools, die mit diesen Methoden durch "has use" verknüpft sind
-  ?tool wdt:P366 ?method;
+  # Auswahl aller Tools, die mit diesen Konzepten durch "has use" verknüpft sind
+  ?tool wdt:P366 ?concept;
         (wdt:P31/(wdt:P279*)) wd:Q7397.  # Software oder Subklasse von Software
 
   # Instanztypen abrufen

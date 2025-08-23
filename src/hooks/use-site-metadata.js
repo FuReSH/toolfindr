@@ -7,12 +7,11 @@ export const useSiteMetadata = () => {
       site {
         siteMetadata {
           title
+          subtitle
           description
-          author
           organisation
           organisation_url
-          subtitle_short
-          subtitle_long
+          navbar_title
           images {
             logo_title
             logo_navbar
@@ -42,12 +41,11 @@ export const useSiteMetadata = () => {
 
   return {
     title: data.site.siteMetadata.title,
+    subtitle: data.site.siteMetadata.subtitle,
     description: data.site.siteMetadata.description,
-    author: data.site.siteMetadata.author,
     organisation: data.site.siteMetadata.organisation,
     organisation_url: data.site.siteMetadata.organisation_url,
-    subtitle_short: data.site.siteMetadata.subtitle_short,
-    subtitle_long: data.site.siteMetadata.subtitle_long,
+    navbar_title: data.site.siteMetadata.navbar_title,
     images: {
       logo_title: getImage(findImage(data.site.siteMetadata.images.logo_title)),
       logo_navbar: getImage(findImage(data.site.siteMetadata.images.logo_navbar)),

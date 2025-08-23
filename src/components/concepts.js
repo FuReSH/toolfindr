@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { graphql, useStaticQuery } from "gatsby";
-import { GoMultiSelect, GoLinkExternal } from "react-icons/go";
+import { GoTag, GoLinkExternal } from "react-icons/go";
 import Select from "react-select";
 import useIsBrowser from "../hooks/use-is-browser";
 
@@ -12,15 +12,15 @@ const Concepts = ({ filters, updateFilter }) => {
     query {
       allTadirahConcept {
         nodes {
-          tadirahLabel
+          label
         }
       }
     }
   `);
 
   const options = data.allTadirahConcept.nodes.map((concept) => ({
-    value: concept.tadirahLabel,
-    label: concept.tadirahLabel,
+    value: concept.label,
+    label: concept.label,
   }));
 
   // Initialisiere die ausgewählten Optionen
@@ -46,6 +46,8 @@ const Concepts = ({ filters, updateFilter }) => {
   const secondaryColor =
     isBrowser ? getComputedStyle(document.documentElement).getPropertyValue("--bs-gray-300").trim() : "";
 
+  const [menuIsOpen, setMenuIsOpen] = useState(true);
+
   const customStyles = {
     control: (styles) => ({
       ...styles,
@@ -57,12 +59,23 @@ const Concepts = ({ filters, updateFilter }) => {
       minHeight: "initial",
       width: "100%",
     }),
+    menu: (styles) => ({
+      ...styles,
+      backgroundColor: "rgba(255, 255, 255, 0)",
+      boxShadow: "none",
+    }),
+    menuList: (styles) => ({
+      ...styles,
+      minHeight: "150px",
+      maxHeight: "600px",
+    }),
     option: (styles, { isSelected, isFocused }) => ({
       ...styles,
       backgroundColor: isSelected ? primaryColor : isFocused ? secondaryColor : undefined,
       color: isSelected ? "white" : "black",
       cursor: "pointer",
-      fontSize: "initial",
+      fontSize: "large",
+      fontFamily: "DDIN-Bold",
       padding: "0.2rem 0.8rem",
     }),
     multiValue: (styles) => ({
@@ -83,17 +96,17 @@ const Concepts = ({ filters, updateFilter }) => {
   return (
     <div className="sticky-top top-10">
       <h5>
-        <GoMultiSelect /> Filter by Tool Categories
+        <GoTag className="icon-color-secondary" /> Tool Categories
       </h5>
       <hr />
       <p className="fs-6 my-2">Select one or more categories from the list below.</p>
-      <p className="fs-6 my-3">
-        We use the TaDiRAH taxonomy established in the DH to group tools. Further information on the TaDiRAH concepts
-        can be found on the
-        <a href="https://de.dariah.eu/tadirah" target="_blank" rel="noopener noreferrer" className="icon-link icon-hover-link">
-          official taxonomy website <GoLinkExternal />
-        </a>
-        .
+      <p className="fs-6 my-2">
+        We use the TaDiRAH taxonomy established in the DH to group tools. 
+      </p>
+      <p className="fs-6">Further information on the TaDiRAH concepts
+        can be found on the <a href="https://de.dariah.eu/tadirah" target="_blank" rel="noopener noreferrer" className="icon-link icon-hover-link">
+        official taxonomy website <GoLinkExternal />
+        </a>.
       </p>
       <div className="shadow-sm">
         <Select
@@ -104,8 +117,11 @@ const Concepts = ({ filters, updateFilter }) => {
           isMulti
           value={selectedOptions}
           onChange={handleChange}
-          placeholder="Select categories..."
+          placeholder="Search..."
           styles={customStyles}
+          menuIsOpen={menuIsOpen}
+          onMenuOpen={() => setMenuIsOpen(true)}
+          onMenuClose={() => setMenuIsOpen(false)}
         />
       </div>
     </div>

@@ -1,31 +1,15 @@
-# Query for retrieving tools from Wikidata that are linked to Tadirah methods
+# Query for retrieving tools from Wikidata that are linked to Tadirah concept
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX p: <http://www.wikidata.org/prop/>
-PREFIX ps: <http://www.wikidata.org/prop/statement/>
-PREFIX bd: <http://www.bigdata.com/rdf#>
-PREFIX wikibase: <http://wikiba.se/ontology#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?tool 
-       ?toolLabel 
-       (GROUP_CONCAT(DISTINCT ?tadirahID; separator = ", ") AS ?tadirahIDs)
+SELECT DISTINCT ?tool ?tadirahId
 WHERE {
-  ?method wdt:P9309 ?tadirahIDString.
-  
-  # Auswahl aller Tools, die mit diesen Methoden durch "has use" verknüpft sind
-  ?tool wdt:P366 ?method;
-        (wdt:P31/(wdt:P279*)) wd:Q7397.  # Software oder Subklasse von Software
-
+  ?concept wdt:P9309 ?tadirahId. #find all TaDiRAH classes
+  ?tool wdt:P366 ?concept;       # find all items, which claim to implement this method
+    (wdt:P31/(wdt:P279*)) wd:Q7397.
   # Tadirah-ID als IRI for further processing
-  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahIDString))) AS ?tadirahID)
+  BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahID))) AS ?tadirahID)
 
-  # Labels effizient abrufen
-  SERVICE wikibase:label {
-    bd:serviceParam wikibase:language "en".
-    ?tool rdfs:label ?toolLabel;
-  }
 }
-GROUP BY ?tool ?toolLabel
-ORDER BY ?toolLabel
-LIMIT 5000
+ORDER BY ?tool
+LIMIT 1000000

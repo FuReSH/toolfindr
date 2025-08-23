@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { GoListUnordered } from "react-icons/go";
+import { GoFoldDown, GoFoldUp, GoListUnordered } from "react-icons/go";
 
 import "./toc.scss";
 
 const Toc = ({ headings }) => {
   const [activeHeading, setActiveHeading] = useState(null);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const cleanedString = (str) => {
     return str
@@ -14,28 +15,71 @@ const Toc = ({ headings }) => {
   };
 
   const handleClick = (id) => {
-    setActiveHeading((prev) => (prev === id ? null : id)); // Toggle Logik
+    setActiveHeading((prev) => (prev === id ? null : id)); // Toggle logic
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
   return (
-    <div className="sticky-top top-10">
-      <h5><GoListUnordered /> On this page</h5>
-      <hr />
-      <nav className="nav flex-column">
-        {headings.map((heading) => {
-          const id = cleanedString(heading.value);
-          return (
-            <a
-              key={id}
-              className={`nav-link depth-${heading.depth} ${activeHeading === id ? "active" : ""}`}
-              href={`#${id}`}
-              onClick={() => handleClick(id)}
-            >
-              {heading.value}
-            </a>
-          );
-        })}
-      </nav>
+    <div className="mb-4 text-body-secondary fs-6 bd-toc">
+      <div className="sticky-top top-10">
+        {/* Mobile View */}
+        <div className="toc-mobile">
+          <button 
+            className="form-control d-flex justify-content-between align-items-center"
+            type="button"
+            onClick={toggleCollapse}
+            aria-expanded={!isCollapsed}
+          >
+            <span><GoListUnordered /> On this page</span>
+            <span className={`ms-2 ${isCollapsed ? '' : 'rotate-180'}`}> 
+              { isCollapsed ? <GoFoldDown /> : <GoFoldUp /> } 
+            </span>
+          </button>
+          <div className={`collapse ${!isCollapsed ? 'show' : ''}`}>
+            <div className="card card-body mt-2 p-2">
+              <nav className="nav flex-column">
+                {headings.map((heading) => {
+                  const id = cleanedString(heading.value);
+                  return (
+                    <a
+                      key={id}
+                      className={`nav-link py-1 px-2 depth-${heading.depth} ${activeHeading === id ? "active" : ""}`}
+                      href={`#${id}`}
+                      onClick={() => handleClick(id)}
+                    >
+                      {heading.value}
+                    </a>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop View */}
+        <div className="toc-desktop">
+          <h5><GoListUnordered /> On this page</h5>
+          <hr />
+          <nav className="nav flex-column">
+            {headings.map((heading) => {
+              const id = cleanedString(heading.value);
+              return (
+                <a
+                  key={id}
+                  className={`nav-link depth-${heading.depth} ${activeHeading === id ? "active" : ""}`}
+                  href={`#${id}`}
+                  onClick={() => handleClick(id)}
+                >
+                  {heading.value}
+                </a>
+              );
+            })}
+          </nav>
+        </div>
+      </div>
     </div>
   );
 };

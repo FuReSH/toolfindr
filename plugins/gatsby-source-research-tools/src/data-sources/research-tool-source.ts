@@ -1,0 +1,216 @@
+import { BaseDataSource } from './base-data-source';
+import { QueryEngine } from '@comunica/query-sparql';
+import { IResearchToolInput } from '../types';
+
+/**
+ * Data source for fetching research tool data from a SPARQL endpoint.
+ * 
+ * This class constructs a SPARQL query to retrieve research tool information,
+ * including labels, descriptions, modification dates, Tadirah concepts, licenses,
+ * and copyright. This is necessary because the Wikidata LDF server does not yet 
+ * support language filtering for property values (as of 05/2025).
+ * 
+ * @extends BaseDataSource<IResearchToolInput>
+ * 
+ * @see https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service
+ * @see https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/Alternative_endpoints
+ * @see https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_backend_update/WDQS_backend_alternatives
+ */
+export class ResearchToolSource extends BaseDataSource<IResearchToolInput> {
+
+    /**
+     * Constructs a new ResearchToolSource.
+     * @remarks
+     * This class uses Wikidata's SPARQL endpoint to fetch research tool data by default. You can also use QLever as an alternative endpoint. 
+     * When using QLever as Triple Store STR() conversion required for GROUP_CONCAT with IRI values
+     * Without explicit string conversion, GROUP_CONCAT may return empty results
+     * @see https://github.com/FuReSH/tool-storage-interface/issues/24
+     * 
+     * @param endpoint - The SPARQL endpoint URL.
+     * @param lastFetchedDate - Only fetch tools modified since this date. If not provided, fetches all. The date is displayed as Universal Time (as in Wikidata) and is converted to ISO format.
+     */
+    constructor(endpoint: string, lastFetchedDate: Date) {
+        const query = `
+            PREFIX wd: <http://www.wikidata.org/entity/>
+            PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+            PREFIX p: <http://www.wikidata.org/prop/>
+            PREFIX ps: <http://www.wikidata.org/prop/statement/>
+            PREFIX bd: <http://www.bigdata.com/rdf#>
+            PREFIX wikibase: <http://wikiba.se/ontology#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX schema: <http://schema.org/>
+
+            SELECT 
+            ?tool 
+            ?label 
+            ?description 
+            ?copyright_label 
+            ?date_modified
+            (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=" | ") AS ?license_labels)
+            (GROUP_CONCAT(DISTINCT ?instanceof_label; separator = " | ") AS ?instanceof_labels) 
+            (GROUP_CONCAT(DISTINCT ?tadirahIRI; separator = " | ") AS ?tadirahIRIs)
+            WHERE {
+            ?concept wdt:P9309 ?tadirahId.            
+            ?tool wdt:P366 ?concept ;
+                (wdt:P31/(wdt:P279*)) wd:Q7397 ;
+                schema:dateModified ?date_modified .
+             ${lastFetchedDate ? `
+            FILTER (?date_modified >= "${lastFetchedDate.toISOString()}"^^xsd:dateTime)
+            ` : ''}
+
+            ?tool wdt:P31 ?instanceof .
+
+            OPTIONAL { ?tool wdt:P6216 ?copyright . }
+            OPTIONAL { ?tool wdt:P275 ?license . }
+
+            BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)
+
+            SERVICE wikibase:label {
+                bd:serviceParam wikibase:language "en" .
+                ?tool rdfs:label ?label ;
+                    schema:description ?description .
+                ?instanceof rdfs:label ?instanceof_label .
+                ?copyright rdfs:label ?copyright_label .
+                ?license rdfs:label ?license_label .
+            }
+            }
+            GROUP BY ?tool ?label ?description ?copyright_label ?date_modified
+            LIMIT 10000
+        `;
+        super(endpoint, new QueryEngine(), query);
+        // Overwrites the Wikidata query with the Qlever query for better performance e.g. for debugging purposes
+        //this.query = this.getQleverQuery(lastFetchedDate);
+    }
+
+    /**
+     * Fetches research tool data from the SPARQL endpoint.
+     * 
+     * @remarks
+     * This method executes the SPARQL query defined in the constructor and processes the results
+     * into an array of {@link IResearchToolInput} objects.
+     * 
+     * @param none This method does not take any parameters.
+     * @returns A promise that resolves to an array of research tool inputs.
+     * @throws If the query fails or the stream emits an error.
+     */
+    public async fetchData(): Promise<IResearchToolInput[]> {
+
+        try {
+            const bindingsStream = await this.engine.queryBindings(this.query, {
+                sources: [{
+                    type: 'sparql',
+                    value: this.endpoint,
+                }],
+                httpRetryOnServerError: true,
+                httpRetryCount: 3,
+                httpRetryDelay: 100,
+                noCache: false,
+            });
+
+            return new Promise((resolve, reject) => {
+
+                const researchTools: IResearchToolInput[] = [];
+
+                bindingsStream.on('data', (binding) => {
+                    try {
+                        const getBindingArray = (binding: any, key: string): string[] => {
+                            const value = binding.get(key);
+                            return value ? value.value.split(' | ') : null;
+                        };
+                        
+                        researchTools.push({
+                            id: binding.get('tool').value,
+                            label: binding.get('label').value,
+                            slug: binding.get('tool').value.split('/').pop().toLowerCase(),
+                            concepts: getBindingArray(binding, 'tadirahIRIs'),
+                            instancesof: getBindingArray(binding, 'instanceof_labels'),
+                            dateModified: new Date(binding.get('date_modified').value),
+                            description: binding.get('description')?.value || null,
+                            license: (() => {
+                                const l = getBindingArray(binding, 'license_labels');
+                                return l[0]==="" ? null : l;
+                            })(),
+                            copyright: binding.get('copyright_label')?.value || null
+                        });
+                    } catch (error) {
+                        return reject(this.handleError(error, "ResearchToolsSource"));
+                    }
+                });
+
+                bindingsStream.on('end', () => {
+                    resolve(researchTools);
+                });
+
+                bindingsStream.on('error', (error) => {
+                    reject(this.handleError(error, "ResearchToolsSource"));
+                });
+            });
+
+        } catch (error) {
+            return Promise.reject(this.handleError(error, "ResearchToolsSource"));
+        }
+    }
+
+    protected getQleverQuery(date: Date): string {
+        return ` 
+            PREFIX wd: <http://www.wikidata.org/entity/>
+            PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX schema: <http://schema.org/>
+            PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT 
+            ?tool 
+            (SAMPLE(?label_final) AS ?label) 
+            ?description 
+            ?date_modified 
+            (GROUP_CONCAT(DISTINCT STR(?tadirahIRI); SEPARATOR=" | ") AS ?tadirahIRIs)
+            (GROUP_CONCAT(DISTINCT ?instanceof_label; SEPARATOR=" | ") AS ?instanceof_labels)
+            (GROUP_CONCAT(DISTINCT ?license_label; SEPARATOR=" | ") AS ?license_labels)
+            ?copyright_label
+            WHERE {
+            ?concept wdt:P9309 ?tadirahId .
+            ?tool wdt:P366 ?concept ;
+                    wdt:P31/wdt:P279* wd:Q7397 ;
+                    ^schema:about/schema:dateModified ?date_modified .
+             ${date ? `
+            FILTER (?date_modified >= "${date.toISOString()}"^^xsd:dateTime)
+            ` : ''}
+
+            ?tool wdt:P31 ?instanceof .
+            ?instanceof rdfs:label ?instanceof_label .
+            FILTER (LANG(?instanceof_label) = "en") .
+
+            OPTIONAL {
+                ?tool rdfs:label ?label_en .
+                FILTER (LANG(?label_en) = "en") 
+            }
+            OPTIONAL {
+                ?tool schema:description ?description .
+                FILTER (LANG(?description) = "en")
+            }
+            OPTIONAL {
+                ?tool wdt:P6216 ?copyright .
+                ?copyright rdfs:label ?copyright_label .
+                FILTER (LANG(?copyright_label) = "en")
+            }
+            OPTIONAL {
+                ?tool wdt:P275 ?license .
+                ?license rdfs:label ?license_label .
+                FILTER (LANG(?license_label) = "en")
+            }
+            BIND(STRAFTER(STR(?tool), "http://www.wikidata.org/entity/") AS ?qid)
+            BIND(COALESCE(?label_en, ?qid) AS ?label_final)
+            BIND(IRI(CONCAT("https://vocabs.dariah.eu/tadirah/", STR(?tadirahId))) AS ?tadirahIRI)            
+            }
+            GROUP BY 
+            ?tool 
+            ?description 
+            ?date_modified 
+            ?copyright_label
+            LIMIT 10000
+            `;
+    }
+
+}

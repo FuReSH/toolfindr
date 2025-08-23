@@ -42,17 +42,29 @@ $position-values: (
     url('#{$font-path}/D-DIN-Italic.woff2') format("woff2");
 }
 
-
 body {
   background-image: $background;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-#subtitle {
+#title {
   color: $primary;
+}
+
+.card {
+  background: #ffffff;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 100%) !important;
+}
+.item-box {
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .react-icons {
   vertical-align: middle;
+  color: $primary
 }
 
 a:hover {
@@ -87,13 +99,21 @@ a {
   background-color: $primary;
 }
 
-.start-page-container {
-  -webkit-filter: drop-shadow(1px 1px 5px #717171);
-  filter: drop-shadow(1px 1px 5px #717171);
-}
-
 .kdh-short-desc {
   font-size: calc(1.275rem + .2vw);
+  color: var(--text-secondary)
+}
+
+.start-page-container {
+  h1, h2 {
+    -webkit-filter: drop-shadow(1px 1px 8px #717171);
+    filter: drop-shadow(1px 1px 8px #717171);
+  }
+
+  img {
+    -webkit-filter: drop-shadow(1px 1px 5px #002FEA);
+    filter: drop-shadow(1px 1px 5px #002FEA);
+  }
 }
 
 hr {
@@ -106,4 +126,38 @@ a.anchor {
 
 .custom-anchor {
   fill: $primary;
+}
+
+.icon-color-secondary {
+  color: $secondary;
+}
+
+.item-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+  }
+}
+
+.hero-section {
+  // 1. Die Sektion so hoch wie der Bildschirm machen
+  //height: 100vh; // vh = viewport height (100% der Bildschirmhöhe)
+
+  // 2. Den Inhalt (die TitleBox) perfekt zentrieren
+  //display: flex;
+  //align-items: center;      // Vertikal zentrieren
+  //justify-content: center;  // Horizontal zentrieren
+
+  // 3. (Optional) Einen dezenten Hintergrund für den Kontrast
+  //background-color: #f8f9fa; 
+}
+
+/* * Dies sorgt für den "Slide"-Effekt, wenn man z.B. einen 
+ * Anker-Link zum Scrollen nutzt (siehe Schritt 3)
+ */
+html {
+  scroll-behavior: smooth;
 }

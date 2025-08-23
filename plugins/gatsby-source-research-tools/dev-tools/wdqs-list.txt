@@ -1,0 +1,1622 @@
+Google+
+X
+Skype
+Camtasia
+CiteULike
+SlideShare
+H-Net
+Snagit
+WordPress.com
+BuddyPress
+Basecamp Classic
+Academia.edu
+Open Conference Systems
+Jing
+Topincs
+Trello
+Oxygen XML Editor
+Zitrr camera
+Tradusa
+Tyda.se
+O-live
+Wickr Me
+LIBSVM
+mlpack
+Plotly
+TensorFlow
+XGBoost
+Google Allo
+Mastodon
+SpaCy
+VSCO
+AllenNLP
+Pattern
+TensorFlow Lite
+Classical Language Toolkit
+ML.NET
+Termux
+Pleroma
+Misskey
+distributed multimedia communications platform
+Soapbox
+kraken
+quanteda
+Jupyter Notebook
+PolyAnalyst
+Doko Demo Issyo
+Weblin
+Lucidpress
+Conversations
+Slack
+Open Science Framework
+Zenodo
+Sigma
+Dino
+nodegoat
+MediaWiki
+GIMP
+Inkscape
+identi.ca
+StatusNet
+Weka
+Ruby on Rails
+R
+AWK
+groff
+Tumblr
+OCR-B
+OCR-A font
+Meld
+Calibre
+Bootstrap
+Gwibber
+Friendica
+Natural Language Toolkit
+GNU Ocrad
+Pandoc
+GNU Freetalk
+translate-shell
+OCRmyPDF
+Readiris
+ABBYY FineReader 11
+eScriptorium
+FineReader OCR
+Sideband
+Bonfire
+Mastodon for Android
+Mastodon for iOS
+Hometown
+Q118218533
+oStorybook
+BunkaTopics
+CAMeL Tools
+Camera
+Hollo
+Pixelfed
+Sharkey
+SLING
+SpaceHey
+Nomad Network
+Q115349187
+Firefish
+pybrain
+GPT-J
+MediaPipe
+Easybie
+Kookie
+Q131007454
+D3.js
+MALLET
+OpenRefine
+Apache OpenNLP
+publify
+Twister
+GNU social
+Extension:Translate
+Matrix
+LingPipe
+twtxt
+Bluesky
+Flux
+Stanza
+Google Drive
+Google Talk
+Pro Tools
+OCRopus
+XnView
+Bluefish
+Tweetie
+Tesseract
+Galaxium
+scikit-learn
+CuneiForm
+REAPER
+FineReader PDF
+GOCR
+Open Journal Systems
+libpurple
+Camera+
+Chikka
+Feature Selection Toolbox
+Hackety Hack
+Autoweb
+link grammar
+IRMA
+Google Translate
+PDFtk
+Fractint
+QuarkXPress
+GoldenDict
+PDF Split and Merge
+OCRFeeder
+mlpy
+Apache Mahout
+CTAKES
+Coding Analysis Toolkit
+JavaScript InfoVis Toolkit
+Puma.NET
+Jubatus
+Distributed R
+Apache SystemDS
+Catmandu
+fastText
+JSFiddle
+polyglot
+Element
+SIMILE Widgets: JsTeX
+Sketch2Code
+Sketchbook Pro
+SNAP
+SSELab
+StoryMapJS
+Survey Daddy
+TagCrowd
+TerraME
+Textable
+The Change Lab
+timesheet.js
+TwitterPad
+Wiggio
+Bibliogo
+Calenda
+Cinco
+Code Bubbles
+Colaboratory
+ConfTool
+CorpusExplorer
+DARIAH-DE Indico Event Management
+DARIAH-DE Mailing lists
+DARIAH-DE OpenProject
+DARIAH-DE Survey Provisioning
+DARIAH ELDAH Consent Form Wizard (CFW)
+DH Press
+ECHODamp
+FISHER
+Flare
+Google Colab
+Google Scholar Citations
+igraph
+ImageJ
+Image Map Tool
+iShowU
+IssueLab
+JuxtaposeJS
+Lynks - Create Explore Share
+MyIndicators
+textblob
+rasa-sdk
+flair
+socialhome
+Honk
+GPT-4
+Stanza
+DraCor
+OCR4all
+Mitra
+Adobe Photoshop Express
+TUSTEP
+Yabasic
+OmniPage
+Lexico
+Sumo Paint
+GraphLab
+Ultralingua
+Vowpal Wabbit
+Yinztagram
+Q12005206
+Asprise OCR
+Transkribus
+E-aksharayan
+Fishbrain
+DeepArt
+Wisgoon
+PrimeOCR
+VZOchat
+psyc
+OpenAI Codex
+OmniPage Pro 12
+Calamari
+4th Dimension
+Aelfred
+Afloat
+NowComment
+Onodo
+Polldaddy
+Processing
+ProIcon
+Prolog
+Pycoon
+RATS (Random-Accessible Text Systems)
+RAW
+SCAN
+SentimentBuilder.com
+Shiny Dracor
+SigmaJS
+RStudio
+Baidu Fanyi
+TLTK
+Papers with Code
+Wu Dao
+scholar
+Q119139333
+Cwtch.im
+Posterous Spaces
+SentiStrength
+Transkribus
+TreeTagger
+UDPipe
+Voicecup dictionary of pronunciation
+WebLicht
+Automatic Verification Tool (AVT)
+congree
+DaCy
+DARIAH-DE Publikator
+DfR Browser
+Global Translator
+KH Coder
+Machine Translation
+Google Docs
+Praat
+Evernote
+Microsoft OneNote
+Google Notebook
+Openmeetings
+Tiki Wiki CMS Groupware
+Freebase
+Dropbox
+Audacity
+GNU bison
+CelerCOM
+Anonymous Messenger
+Claude 3 Haiku
+Stanford Dependencies
+IBM Connections
+WordSmith
+LucidChart
+Gensim
+NVivo
+RDFLib
+Cita
+Wikidot
+CIÊNCIA ID
+Whatt.co
+Toolbox
+eXist
+Adobe Captivate
+CamStudio
+Flock
+Tinderbox
+Dedoose
+Gephi
+RQDA
+Sketchfab
+Project:Creating a bot
+Medium
+Figshare
+Beautiful Soup
+Ps2pdf
+Visual Understanding Environment
+WordStat
+Replica
+Nokogiri
+OBS Studio
+Teamwork
+R2 Docuo
+rdflib.js
+rdflib
+Recogito
+HathiTrust Digital Library
+bubbl.us
+Parsoid
+Discord
+ontop
+Pressbooks
+Scholastica (publishing platform)
+Manifold Scholarship
+Geovistory
+Salla Twilight
+TextRazor
+part-of-speech tagger
+Bun
+PDFCreator
+Apache UIMA
+Hypothesis
+NeOn Toolkit
+Logic Pro X
+WALTR
+Overleaf
+A-Frame
+ClickMeeting
+ngPDF
+Classical Text Editor
+mapshaper
+geojson.io
+Ushahidi platform
+OntoGPT
+Google Docs
+Annotate
+Biopragmatics Stack
+Apache Subversion
+Git
+ggplot2
+Scrapy
+Fossil
+XMind
+Monotone
+Source Code Control System
+Q2187130
+Ulead MediaStudio Pro
+PVCS
+Omeka
+Sweble
+FFmpeg
+Alfresco
+SurveyMonkey
+iPhoto
+MATLAB
+IrfanView
+CHKDSK
+ArcGIS
+OpenLayers
+Alienbrain
+Dragon NaturallySpeaking
+FreeMind
+HandBrake
+recordMyDesktop
+XVidCap
+Co-ment
+OpenOMR
+Skim
+Audiveris
+SimpleScreenRecorder
+Iramuteq
+Ketida
+Fidus Writer
+Jitsi Meet
+ua-parser
+weasyprint
+netcdf-conv
+DaVinci Resolve
+Blacklight
+Animaker
+Likee
+discovertext
+scrapestack
+ScrapingBee
+searchRxiv
+SkoHub
+ATLAS.ti
+QVCS
+Color
+Dataverse
+Tableau Software, Inc.
+TimeMap
+ContentMine
+lsblk
+Linkurious Enterprise
+Web Scraper
+Instant Data Scraper
+Android Media Editor
+Bunny Media Editor
+GeoNode
+Mapstraction
+Darcs
+Mercurial
+OmniGraffle
+LiveType
+GNU arch
+MAXQDA
+MindManager
+TortoiseCVS
+Matplotlib
+Analyse-it
+FusionCharts
+Graph-tool
+NetworkX
+OutWit Hub
+EditGrid
+A.nnotate
+Paperpile
+Metashape
+Voyant Tools
+PDF Expert (software)
+Writefull
+GROBID
+HedgeDoc
+Screencast Capture Lite
+Annotation Studio
+Annotator's Workbench
+Annotum
+Apple Pie Parser
+Nomenklatura
+OpenETD
+PANVS
+Pliny
+RoSE
+Screencast-o-matic
+Scripto
+Sigil
+SimpleTCT
+Snipshot
+Creately
+xxd
+Amazon Comprehend
+Azure Data Factory
+HyperResearch
+FieldWorks Language Explorer (FLEx)
+Microsoft Power BI
+inventaire.io
+easytranscript
+Parlatype
+casualtranscriber
+ELAN
+Express Scribe
+f4transkript
+Feldpartitur
+Folker
+HyperTRANSCRIBE
+Sonal
+Transcribe
+Gretl
+DSpace
+Modular Audio Recognition Framework
+General Architecture for Text Engineering
+Vaadin
+Archon
+Transana
+TranscriberAG
+CVS
+GNU RCS
+ViewVC
+Minitab
+Julius
+Apache Solr
+SplitsTree
+Leaflet
+OggConvert
+Speech Recognition & Synthesis
+Adobe Media Encoder
+ConedaKOR
+fpart
+Freeplane
+Semantik
+Cytoscape
+Dataplot
+Q3045854
+circos
+Qualrus
+Weft QDA
+Advene
+All Our Ideas
+Alveo
+Annozilla (Annotea on Mozilla)
+Anthologize
+ANTHROPAC
+Asset Bank
+Audiotool
+Ning
+NoodleTools
+Nota Bene (NB)
+Open Attribute
+Open Harvester Systems
+PACTE
+Panda and CSV of Tweets
+Paper
+Participad
+Photogrammar
+Pivotal Tracker
+PLATIN
+Prezi
+Prism
+Project Pad
+ProProfs eLearning Software
+Pundit
+Reframe It
+SARIT
+SEASR
+Segrada
+Snapzen
+Sophie
+Stanford HCI Group: Gigapixel
+InTEXT
+jsLDA
+Juxta
+Juxta Commons
+Kaleidoscope
+LATtice
+LEMMA
+Lexa
+Mr. Data Converter
+Navicat for MySQL
+NodeBox
+RabbitVCS
+DIALIGN-TX
+JAligner
+Yass
+The Field Linguist’s Toolbox
+TILE (Text Image Linking Environment)
+Tokenization using NLTK
+T-PEN
+TXM
+UAM CorpusTool
+Versioning Machine
+VodBurner
+Microsoft Excel
+ASP.NET
+Adobe Dreamweaver
+Haxe
+HTTrack
+RapidMiner
+T-Coffee
+strace
+Node.js
+Plone
+Fedora
+Gordian Knot
+SoundConverter
+GitHub
+Joomla
+Drupal
+Microsoft SQL Server
+archival informatics
+MindView
+Microsoft Visual SourceSafe
+Tanagra
+Veracity
+VisualSVN
+Windows Speech Recognition
+Vault
+IBM ViaVoice
+BLAT
+CodonCode Aligner
+MUMmer
+MUSCLE
+YouTube Data API
+ProcessingJS
+Project Quincy
+Prospect
+Ptolemaic
+Quadrigram
+RDF2SVG (Rhizomik)
+RDF Gravity
+Reception Reader
+Recollection
+RelFinder
+Sci2 Tool
+SEASR: Date Entities to Simile Timeline
+Finnish Media Scrapers
+Google News Scraper
+Insync
+Intelligent Archive
+Jumpchart
+JuxtaEditions (HumEdit)
+Lexos
+LitViz
+Lynks
+MorphAdorner
+Mozdeh
+MyStickies
+Attensity
+NLTK 3.3 (Natural Language Toolkit)
+Parser 1.0
+PC-KIMMO
+Profiler Plus
+Prose (Virtual Muse)
+PyDelta
+Readware Information Processor
+REDUX
+RiTa
+SALEM
+SEASR: Flesch-Kincaid Readability Test
+Semantria
+Simple Sentiment Analysis
+SRILM (SRI Language Modelling Toolkit)
+Stanford NLP Group: Classifier
+Stanford NLP Group: CoreNLP
+Stanford NLP Group: Stanford Parser
+Stanford NLP Group: Stanford Phrasal
+Stanford NLP Group: Stanford Tokenizer
+Stanford Sentiment Analysis
+TATOO (ISSCO Tagger Tool)
+TensiStrength
+Text Analysis Online
+Text Analyzer
+The Macro-Etymological Analyzer
+The Networked Corpus
+The Scandroid 1.1
+TnT (Trigrams'n'Tags)
+Topic Modeling Tool
+Topic Modelling Tool
+Typical
+UMDHMM: Hidden Markov Model Toolkit
+Umigon
+Unlock Text
+VINCI
+WORDS
+AUTOSTYL
+AVOBMAT
+CasualConc
+CompHistSem
+Contropedia
+Corpkit
+DISCAN
+ELSE
+E-Parser
+ESTMORF
+EXPLEX
+FANGORN
+GERTWOL
+GINGER II
+Lexipedia
+Google Ngram Viewer
+HDF Explorer
+QuickCode
+YouTube Comment Scraper
+Chorus
+Commentpress
+CommentSpace
+Complex Sentiment Analysis
+Critic Markup
+CSV Sort
+DEVONthink
+Digress.it
+ezlinavis
+eLaborate
+FieldWorks
+Finding Popular Hashtags
+Frequency Sorter
+FromThePage
+General Inquirer Category
+Graphing Twitter Data
+Heurist
+ImageMagik
+INKE: Dynamic Table of Contexts
+Kartograph
+Keyhole
+minezy
+NetDraw
+Netlytic
+Netvizz
+RSiena
+Seealsology
+YouTube Data Tools
+CONDOR
+EgoWeb 2.0
+Facepager
+ICTA (internet community text analyzer)
+iScience Maps
+Naoyun
+Galène
+Wink
+AntWordProfiler
+ASV Online Toolbox
+OPCOL
+PhiloLogic
+Pompamo
+Prepare and Visualize Mallet Topics
+SEASR: Location Entities To Google Map
+Serendip
+Sort My List
+Stanford Mobisocial Lab: Muse
+Stanford Vis Group: Data Wrangler
+STAP
+Stemming and Lemmatization using NLTK
+Superfastmatch
+TACTweb 1.0
+Tesserae
+Text2DDC
+TextAnnotator
+Text Fixer
+Textflo
+TextGrid Repository & Laboratory
+TextImager
+Textpresso
+Textual Communities
+Textual Geography Analyzer
+Text Variation Explorer (TVE)
+TOSCA
+Tropes
+URICA! II
+VAnnotatoR
+VassarStats
+Virtual Lightbox
+Visualizing Literature: Sentiment
+VOCAB - U - LISTER
+Voyant 2.0: Bubblelines
+Voyant 2.0: Terms Radio
+Wmatrix
+WordCruncher
+WordHoard
+WordWanderer
+Wufoo
+BookLamp Labs: Sentiment Viewer
+CETA Parser
+CLARIN-PL
+Compare Lists
+Compare Networks Over Time
+Cowo
+CQPweb
+Crawdad Text Analysis Software
+cue.language
+CulturalAnalytics
+Data Dictionary Generator (DDG)
+DEREDEC
+DériF (Dérivation en Français)
+Digital DNA
+DocuBurst
+Dundas
+Ethnograph
+EURAC: Comparison Arcs
+EURAC: Structured Parallel Coordinates
+FastSense
+fixed
+forTEXT
+FRANTEXT / Stella
+FUNES
+IITagger
+Infegy
+InPh0 Topic Explorer
+INRAC Language Compiler
+INTEX
+HyperCam
+ScreenFlow
+ActivePresenter
+FlashBack Pro
+IBM InfoSphere DataStage
+Overcast Media
+Prince XML
+Screencam
+Snapz Pro X
+Antenna House Formatter
+CLAWS
+NodeXL
+Piktochart
+Adobe Presenter Video Express
+Sketch Engine
+Hoodie
+Debut Video Capture Software
+HTML5 Boilerplate
+Diction
+Annotation Graph Toolkit
+Yoshikoder
+Leximancer
+TextQuest
+Overview
+pachyderm
+PDFmyURL
+PhotoScore
+RAISE - Restore dAta Integration SuitE
+ScreenFlick
+Smallpdf- Online PDF Tools
+SSH Conversion Hub
+TEICORPO
+Templated
+Textometrica
+TipCam
+WebSlides
+xMod
+Yāna
+ZeeMaps
+brat rapid annotation tool
+CLAWS Tagger
+Commons In A Box
+Crowdmap
+CVCE.eu
+Digital Libraries Federation
+Exhibit 3.0
+Flot
+History of Slovenia - SIstory portal
+HTMLUP
+ICE (Integrated Content Environment)
+Eclipse Buckminster
+FishEye
+Historypin
+Lively Kernel
+PTC Integrity
+Symbolic Stream Generator
+Razor
+Tropy
+Gitblit
+Rational BI
+Django
+Greenstone
+ArX
+Dragon Dictation
+POPmail
+I Write Like
+SearchTeam
+SharedCopy
+SmartScore
+Zamzar
+Carrd
+regex101
+Typst
+Trismegistos Data Services
+UVic Image Markup Tool
+VARD
+VARD 2
+MEncoder
+MediaCoder
+VennMaker
+CMU Sphinx
+CVSNT
+Power Pivot
+Neural Designer
+CONTENTdm
+otter.ai
+Open Monograph Press
+oTranscribe
+SEASR: NGram Tag Cloud Viewer
+SEASR: Tag Cloud Viewer With Stemming
+SemLens
+Storyblok
+Official Website of the Fukuoka Prefectural Police
+Writeboard
+Clipping Magic
+Kotahi
+csv2ledger
+EVI-LINHD
+Exploratree
+Filecamp
+Flashcard Machine
+Google 3D Warehouse
+GoTriple Discovery Platform
+iAnnotate
+Jarnal
+Listango
+MantisBT
+Media Share
+Mediathread
+Mural
+Geotime
+VOSviewer Online
+Palladio
+Panda Dataframe Manipulation
+Popoto.js
+SimCA 2.0
+SylvaDB
+Textal
+Timeline JS
+TouchGraph SEO Browser
+Tweet Archivist
+Twitter Archiver (Google Sheets Add-On)
+twXplorer
+UCINET
+WIScker
+yED Files
+Youtube Scraper CSV Cleaner
+Zubrag HTML Tags Stripper
+Blackboard Scholar
+Cestagi
+Clarify-it
+Coggle
+DARIAH-DE Hedgedoc
+digilib
+Digital Mappa
+Diva.js
+Domeo Annotation Toolkit
+Edit Flow
+Editors' Notes
+jqplot
+KwMap
+Lippmannian Device to Gephi
+LodLive
+Lyra
+ManagedQ
+Manuscript Desk
+MapAList
+MapStory
+Massive Pixel Environment
+Miiget
+Mnemomap
+file converter
+Thinkport Annotator
+Yutzu
+BibApp
+InstantAtlas
+Coda
+Databricks
+Snowflake Inc.
+Palantir Gotham
+TextAnalyst
+ORTOLANG
+PhiloGL
+Projects
+Qigga
+TextDNA
+Twapper Keeper
+VisualEyes
+Voyant Reader
+WebClust
+myHistro
+HyperPo
+KLIC (Key Letter in Context)
+Linguistic Inquiry and Word Count
+MALLET package for R
+Micro-EYEBALL
+MITRE Syntactic Analysis Procedure
+MONK Project
+NETMET
+Indexhibit
+EXMARaLDA
+Q5653134
+Oral History Metadata Synchronizer
+Archive-It
+inqscribe
+pmTrans
+SoundScriber
+Transcriva
+AmeliCA XML
+Archive in a Box
+Archivematica
+ARIADNE Portal
+Artifex Press
+Atom
+SiteSucker
+Voilabits MediaConverterUltimate
+VoxcribeCC
+WikiPack
+XML to TEILex0
+Your Twapper Keeper
+Zoho
+Zoomerang
+BITEXT
+COCOON
+CollateX
+Cinema Tools
+ZingChart
+BatchGeo
+BibExcel
+bl.ock
+BookLamp Labs: Suggestion Viewer
+Bookworm
+Casual
+Chronos Timeline
+Concordance
+CorpusSearch
+Crossfilter
+Data Desk
+DataHero
+Data-illustrator
+DataTank
+DeeperWeb
+Density Design - Knot
+Discursis
+DocuScope
+EURAC: Corpus Clouds
+EURAC: Double Tree
+EURAC: End to End
+EURAC: interHist
+GAMS
+GapVis
+GeoTemCo
+Gerbil
+gFacet
+Google Wonder Wheel
+GPS Visualizer
+Grokker
+GUESS: The Graph Exploration System
+HT-Bookworm
+I-Analyzer
+Improvise
+IsaViz
+Issuecrawler
+Jigsaw
+JpGraph
+JConcorder
+KWIC
+Lexomics
+LitStats
+Micro-OCP
+MicrOsiris
+MIX 2.0
+Morfeusz 2
+SUPER
+Microsoft Expression Encoder
+AccuRev SCM
+Plastic SCM
+Foundation
+HTK
+SPSS Modeler
+Surround SCM
+VisualSVN Server
+Map Warper
+Cornell Notes PDF Generator
+CorpusSearch 2
+Textalyser
+TEXTCORD
+TEXTPACK V
+TextSTAT
+Themas - Thesaurus Management System
+TRICON
+UNICON
+UNICORN
+Voyant Corpus Grid
+Voyant Corpus Term Frequencies
+Voyant Document Term Frequencies
+WATCON
+WebLicht Morphology DE
+WebLicht Morphology EN
+Wisdom
+AUTHOR
+BIBCON
+CheckText
+COCOA
+Collocate
+CONCORD
+Concordle
+ContaWords
+DISCON
+DYAS Humanities Thesaurus
+FastKwic
+grling-sdm
+Harvard Predictive Analyser
+HAWKEYE
+Hermetic Word Frequency Counter
+CA Software Change Manager
+SIMILE Widgets: Exhibit 3.0
+SIMILE Widgets: Timeline
+SIMILE Widgets: Timeplot
+SIMILE Widgets: Welkin
+Simple Authorship Clustering
+Stanford HCI Group: PaperToolkit
+Stanford Vis Group: Protovis
+Statwing
+Tangle
+Text 2 Mind Map
+TextArc
+Textexture
+tFacet
+Tianamo
+TileMill
+Timeflow
+TimeGlider
+TimeLineCurator
+TimeMapper
+TimeRime
+TimeToast
+TokenX
+Tom Sawyer Perspectives
+TravelTime Maps
+TRAViz
+TuneGlue
+Viewshare
+Virtual Transcription Laboratory
+Visual Browser
+Visualize Free
+Visualizing Literature: Virtue and Vice
+VisuWords
+Voronoi Diagram with Word Embedding
+Voyager 2
+Voyant 2.0: Knots
+Voyant 2.0: ScatterPlot
+Voyant Lava
+Voyant Links
+Voyant Term Frequencies Chart
+W3C RDF Validation Service
+WordFreak
+WORDij
+Wordle
+WordSeer
+wordsimilarity (Word 2 Word)
+word tree
+Codeville
+Distributed Concurrent Versions System
+Tazti
+Kaldi
+Panvalet
+Any Video Converter
+Autodesk Vault
+CADES
+Code Bisection
+Code Co-op
+Data for Research (DFR)
+DownThemAll
+Googlescraper (Lippmannian Device)
+InfoExtractor
+Madison Digital Image Database (MDID)
+MassMine
+Neatline
+ManageWP
+METS Page Turner
+Modest Maps
+Mozilla Thimble
+Mukurtu CMS
+Statistical Lab
+STRAP 2.0
+Table 2 Net
+MicroStrategy
+Carrot2
+Netvibes
+Pinboard
+Hyphanet
+Adobe Illustrator
+Koha
+trint
+mat2
+Wget
+Adobe Bridge
+PCS-Transcriber
+Q120438087
+Biblissima Portal
+Q131197410
+Adobe Photoshop Lightroom
+Highcharts
+Chart.js
+Google Currents
+Vega-Lite
+Mozilla Stumbler
+Apache Superset
+dygraphs
+ol-ext
+MEI Friend
+WaveSurfer
+Blackboard Learn
+Jekyll
+Blogak.com
+Infogram
+WriteFreely
+Plume
+Transcribear
+SketchUp
+Blogger
+Interactive Disassembler
+Yahoo! Pipes
+Picasa Web Albums
+EndNote
+Electric Fence
+Gliffy
+Extension:WikiMindMap
+Greenshot
+JabRef
+stet
+Quirkos
+Jgraph
+BuzzData
+CHET-C
+Cisdem PDFConverterOCR for Mac
+iTunesCyrFix
+LoCloud Collections
+MEI-Friend Package for Atom
+MEI Garage
+Pocket
+ltrace
+VSim
+VisualVM
+Prefuse
+Adobe Edge
+Protovis
+Cocaine
+dokieli
+Pajek
+Old Maps Online
+Portal:Higher Education
+Aptana Studio
+aTrain
+noScribe
+Adobe InDesign
+AntConc
+Annotations for Mac
+140kit
+Portal Znameniti.hr
+Ranke.2
+SiteCrawler
+SPPAS
+STACKS
+SwiftRiver
+Whatizit
+DARIAH-DE TopicsExplorer
+Madoc
+MMax2
+metadata removal tool
+Prismatic
+Tabello
+SteadyPRINT
+trAVis
+XTrans
+Easy Transcript
+Aeon Timeline
+Aïoli platform
+Alt.Text
+AMADO-online
+Analyse-it Method Validation Edition
+Analyse-it Standard Edition
+Anvil
+NewRadial (INKE)
+Old Bailey Data Warehousing Interface
+OntoViz
+Orange
+OrlandoVision (OVis)
+oSkope
+OSoMe
+Paper Machines
+Parzu
+Personal Brain
+Poem Viewer
+Spejd
+SSH Training Discovery Toolkit
+VoiceWalker
+WebLicht Const Parsing DE
+WebLicht Const Parsing EN
+WebLicht Dep Parsing DE
+WebLicht Dep Parsing EN
+Berkeley Parser
+Looker Studio
+Entity Explosion
+Sente
+BLLIP Parser
+Blog Analysis Toolkit (BAT)
+Concraft -> DependencyParser
+Concraft->Spejd
+DARIAH-DE Collection Registry
+DHd Blog
+epcEdit
+Finale
+Hypotheses, Academic Blogs
+Iobber
+LiveJournal
+MaltParser
+Neo4j Console
+Research Data Management Organiser
+Partitur Editor
+IBM AeroText
+IIIF Universal Viewer
+Q134888798
+GeoNames
+Google Charts
+Crowdsource
+WebAnno
+Qlik Sense
+Wooclap
+VisFlow
+SAP Analytics Cloud
+Pastpin
+Piazza
+StoryKit
+Digital Humanities Course Registry
+MapCraft
+Omeka S
+Dioscuri
+Ghidra
+iMindQ
+Balsamiq Mockups
+BBT - BackBone Thesaurus
+ColorBrewer
+CoolText
+AT Emulator
+Annotorious
+Edebug
+HIPE scorer
+Ghost
+JSAN
+Paulina
+visual.ly
+Le Club Mediapart
+Word Art (MakeWordArt)
+WriteRoom
+AskSam
+WikiMap
+Wikiframe Visual Graph
+SPITBOL compiler
+ScrapBook
+Oracle Database
+ProcessOn
+CMAP Tools
+MindMapper
+Paletton (Color Scheme Designer 4)
+The ROSSIO vocabularies
+ZEXALL
+Bitly
+Module:Listtable
+MindMap AI
+International Image Interoperability Framework
+DeezyMatch
+Reader
+Bibus
+truss
+Electoral Studies Knowledge Graph
+Zotero
+BibDesk
+Citavi
+Mendeley
+80legs
+Yojimbo
+ResCarta Toolkit
+xev
+d-spy
+VueScan
+INCEpTION
+CATMA
+hurl.it
+Notational Velocity
+Noter
+Skitch
+SpatialNote
+Trailfire
+ZotFile
+AVA (Advanced Video Annotations)
+Concraft-pl 2.0
+CosmoTool
+ELAN
+Lextek
+Unhide
+Ssspsx
+Sondera
+Metax
+Papers
+RefWorks
+Bookends
+saneadf
+FontStruct
+HP Smart
+Sourcegraph
+stylo()
+Simple Scan
+GNU MIX Development Kit
+EULER
+Express Scribe Transcription Software
+Fleck
+FocusOPEN Digital Asset Manager
+LitBlitz Literature Notes Manager
+Arweave
+Chromium Code Search
+Android Code Search
+Ear Tag
+makepkg
+novamind
+popplet
+text2mindmap
+mind map online
+NITE XML Toolkit (NXT)
+Orlando Breadboard
+Orlando Degrees of Separation
+Polish Literary Bibliography (PBL)
+DARIAH-DE Generic Search
+Mukurtu
+RemoTea
+Q133854462
+Microsoft Visio
+Google Drawings
+QGIS
+GRASS GIS
+VirtualDubMod
+SentiStrength
+MindMaster
+Axon2013
+Youminds Composer
+Labyrinth
+Q107541498
+bioNerDS
+NoteBook
+Ontop
+Mapping Memory Manager
+NLP-HUB (multiple NER tools)
+WebLicht NamedEntities DE
+WebLicht NamedEntities EN
+WebLicht NamedEntities SL
+Concraft -> Nerf
+Liner2
+NER NLTK
+KORA
+draw.io
+DOSBox
+yEd
+youtube-dl
+Zello
+VirtualBox
+Kernel-based Virtual Machine
+Rosetta
+DiagramEditor
+GNU Mailman project
+Dia
+Adobe Acrobat
+FacultyFiles
+flokoon
+Heritrix
+EPrints
+JHOVE
+Samvera
+ScummVM
+Erdas Imagine
+DriveImage XML
+ScopeArchiv
+Forensic Toolkit
+KryoFlux
+Digital Information Archiving System
+GOOSY
+Qnotero
+Roambi Flow
+SIMILE Widgets: Gadget
+Sortd
+Specify Collections Management Software
+Anki
+Neo4j
+Protégé
+LOCKSS
+StatCrunch
+Snippet
+ImageJ
+Union List of Artist Names
+Sinopia
+SI-DIH Search Engine and Repository
+VoodooPad
+Biblioteca anatomica
+ConedaKOR
+DARIAH-DE Repository dhrep
+FINNMORF
+Flamenco Search
+Google Blogsearch Scraper
+HAL, a CCSD service
+iBoogie
+IMS Open Corpus Workbench (CWB)
+INL BlackLab
+Textfree
+peepdf
+Bad Peggy
+Brunnhilde
+ImageVerifier
+PyFlag
+SmartDraw
+Aruspix
+OpenAtlas
+Issue Discovery
+JEUDEMO
+JSTOR Text Analyzer
+Jupyter notebooks to access e-periodica
+Jupyter notebooks to access e-rara
+KonText
+Laurence Anthony: AntWordProfiler
+NAKALA, a tool to expose research data
+Denemo
+Extension:CETEIcean
+Wikipedia:Redirects for discussion
+pdfminer
+pdfminer
+Apache Xalan
+TACT (Text Analysis Computing Tools)
+TagClouder
+TEXTAN
+The Chicago Homer
+Tofu
+Web-App »Places of Jewish history«
+Word and Phrase
+Zandy
+BookLamp
+BookLamp Labs: StoryDNA Viewer
+BookLamp Labs: Stream Graph Viewer
+Cluuz
+CNRTL Extension for Firefox
+Compfight
+Collation Works
+DARIAH-DE Data Modeling Environment
+Instaviz
+MapHub
+AROUNDMe
+docuteam cosmos
+Dingtone
+CETEIcean
+T.A.P (Text Analysis Program)
+FAIMS Mobile Platform
+Gamera
+LC Newspaper Viewer
+Nerf
+Artlas / Geomap
+Pygmalion’s code
+RivEx
+VADER
+Concraft -> Sentipejd
+mapline
+Palmyra
+Hexatomic
+Voyant Document KWICs
+COGS-3
+Adlib Archive
+Sloveniščina 2.0 - Journal
+Smithsonian Voyager
+NeMO NeDiMAH Methods Ontology
+Sifter
+Silobreaker
+WebSty
+Q133854397
+warctools
+DeepArc
+Portico
+EditGroups
+vim-mediawiki-editor
+Sampo-UI
+Literature Mapper
+chcon
+Wikimaps Warper
+Tweetster
+SATySFi
+digital archive
+Google Alerts
+WoPeD
+Journler
+ArchiveReady
+OttoBib.com
+iwctl
+Archivematica
+DAITSS
+iRODS
+Repository of Authentic Digital Objects
+Preservica
+Guymager
+BitCurator
+Aid4Mail
+TrID
+Siegfried
+FSlint
+Vitam Program
+veraPDF
+Scout
+Archifiltre
+DArcMail
+Emailchemy
+ARRAS
+Feedity
+myPeers
+GRID
+Yahoo! Livetext
+Fossilo
+Libsafe
+Arkivum
+Simple Dynamic Modelling
+SSHOC Reference Ontology (SSHOCro)
+TurnTool
+XSugar
+Nawmal
+Opentheso
+Scanner for Zotero
+Zotpress
+Mozenda
+DITA Open Toolkit
+ResearchSpace
+Polymny
+Abbot
+QuickVoice iP
+ROSSIO Portal
+ABFREQ
+Altmetric
+Chartle
+DARIAH-DE Working Papers
+EPrints.org
+iWrite
+Scorecloud
+lemmatizer
+Scharfenberg-Smith Concordance Program
+SciencesConf.org, a CCSD service
+Second Life
+Soundcite
+TEI Boilerplate
+digitales schaudepot
+digital humanities austria (DHA)
+Formspring
+HearPlanet
+Nature mobile
+Alveo Virtual Laboratory
+Ngram Statistics Package (NSP)
+Oxford Concordance Program (OCP)
+Parser TEI-Neo4j Import
+PRORA
+Python Tools for Text-Analysis
