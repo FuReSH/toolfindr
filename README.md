@@ -5,7 +5,7 @@
 </div>
 </h1>
 
-[![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml)
+[![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/gatsby.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/deploy.yml)
 
 ## A Lightweight Explorer for Discovering Research Tools in the Digital Humanities
 
