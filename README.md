@@ -1,11 +1,11 @@
 
 <h1 align="center">
-  < ToolFindr /><br>
+  <span style="font-size:smaller; color:#d63384"><</span> <span style="color:#0a05f9">ToolFindr</span> <span style="font-size:smaller; color:#d63384">/></span><br>
   <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="90" alt="Logo of the ToolFindr Website" /> 
 </div>
 </h1>
 
-[![Build and Deploy](https://github.com/FuReSH/tool-storage-interface/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/deploy.yml)
+[![Deploy pages](https://github.com/FuReSH/tool-storage-interface/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/FuReSH/tool-storage-interface/actions/workflows/deploy.yml)
 
 ## A Lightweight Explorer for Discovering Research Tools in the Digital Humanities
 
