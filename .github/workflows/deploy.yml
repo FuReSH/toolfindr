@@ -1,3 +1,7 @@
+# Sample workflow for building and deploying a Gatsby site to GitHub Pages
+#
+# To get started with Gatsby see: https://www.gatsbyjs.com/docs/quick-start/
+#
 name: Build and Deploy
 
 on:
@@ -27,53 +31,42 @@ defaults:
   run:
     shell: bash
 
-jobs:          
+jobs:     
   # Build job
   build:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v3
-        #with:
-          # Automatically inject pathPrefix in your Gatsby configuration file.
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          #static_site_generator: gatsby
+        uses: actions/configure-pages@v4
+        # Automatische Gatsby-Konfiguration deaktivieren
+        # with:
+        #   static_site_generator: gatsby
       - name: Restore cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         if: github.event_name == 'schedule'
         with:
           path: |
             public
             .cache
             node_modules
-          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('package-lock.json') }}
+            plugins/gatsby-source-research-tools/dist
+            plugins/gatsby-source-research-tools/node_modules
+          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('package-lock.json', 'plugins/*/package.json') }}
           restore-keys: |
             ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
-        if: github.event_name != 'schedule'
         run: npm ci
-      - name: Debug configuration files
-        run: |
-          echo "=== Current working directory ==="
-          pwd
-          echo -e "\n=== Find all gatsby-config.js files ==="
-          find . -name "gatsby-config.js" -type f
-          echo -e "\n=== Git status ==="
-          git status --porcelain
-          echo -e "\n=== Git log (last commit) ==="
-          git log --oneline -n 1
-          echo -e "\n=== Content of ./gatsby-config.js ==="
-          cat ./gatsby-config.js
       - name: Build TypeScript Plugin
+        if: github.event_name != 'schedule'
         run: npm run build:plugin
       - name: Build with Gatsby
         env:
@@ -91,7 +84,7 @@ jobs:
           GATSBY_COMMONS_API_URL: 'https://commons.wikimedia.org/w/api.php'
         run: npm run build --prefix-paths
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
 
@@ -106,4 +99,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      
