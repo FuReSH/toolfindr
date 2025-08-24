@@ -1,6 +1,6 @@
 
 <h1 align="center">
-  <span style="font-size:smaller; color:#d63384"><</span> <span style="color:#0a05f9">ToolFindr</span> <span style="font-size:smaller; color:#d63384">/></span><br>
+  <small><</small> <strong>ToolFindr</strong> <small>/></small><br>
   <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="90" alt="Logo of the ToolFindr Website" /> 
 </div>
 </h1>
