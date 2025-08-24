@@ -1,6 +1,5 @@
-
 <h1 align="center">
-  <small><</small> <strong>ToolFindr</strong> <small>/></small><br>
+  <code><</code> ToolFindr <code>/></code><br>
   <div align="center"><img src="./docs/assets/Wikidata_stamp.png" width="90" alt="Logo of the ToolFindr Website" /> 
 </div>
 </h1>
