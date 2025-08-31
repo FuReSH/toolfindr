@@ -6,13 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 - Switch to gatsby-plugin-local-search and flexsearch for the search index
 - Add screenshots to the Wikidata tutorial (Get involved)
 - Add documentation for the QLever SPARQL endpoint
 
+## [1.1.0] - 2025-08-31
+
+### Added
+
+- Optional cache usage for manually triggered workflows (`workflow_dispatch`)  
+  → selectable via dropdown input (`useCache: true/false`).
+- Build logs now include cache statistics (Cached / Created / Deleted nodes) plus the total number of Wikidata nodes.
+- Automatic cleanup of `.cache` and `public` directories when cache is disabled, ensuring clean builds.
+
+### Changed
+
+- Outdated remote GitHub repository path from “tool-storage-interface” to the new name "toolfindr"
+- You can check the URL of your remote repository with the Git command `git remote -v`.
+- Use the Git command `git remote set-url origin git@github.com:FuReSH/toolfindr.git` (ssh) to change the remote URL of your local repository if necessary.
+- Set new repo name as path prefix in Gatsby configuration.
+- GitHub Actions workflow now applies different cache strategies based on event type:  
+  - `push`: cache is restored but not saved.  
+  - `schedule`: cache is restored and saved after the build.  
+  - `workflow_dispatch`: cache disabled by default, but can be explicitly enabled.
+
 ## [1.0.1] - 2025-08-23
 
 ### Fixed
+
 - Snyc error with the package-lock.json and `npm cli`
 
 ## [1.0.0] - 2025-08-23

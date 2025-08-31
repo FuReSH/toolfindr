@@ -2,7 +2,7 @@
   "name": "@furesh/toolfindr",
   "private": false,
   "description": "A Lightweight DH Tool Explorer – based on Wikidata and TaDiRAH",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": {
     "name": "@sopheck",
     "url": "https://github.com/sopheck"
