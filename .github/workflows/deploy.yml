@@ -87,17 +87,7 @@ jobs:
         if: always()
         run: |
           echo "📊 Gatsby cache stats:"
-          CACHED=$(grep -oE "Cached [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
-          CREATED=$(grep -oE "Created [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
-          DELETED=$(grep -oE "Deleted [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
-
-          TOTAL=$((CACHED + CREATED - DELETED))
-
-          echo "  Cached:  $CACHED"
-          echo "  Created: $CREATED"
-          echo "  Deleted: $DELETED"
-          echo "  -----------------"
-          echo "  Total:   $TOTAL"
+          grep -E "Cached|Created|Deleted" build.log || echo "Keine Cache-Infos gefunden"
 
       - name: Save Gatsby Cache
         if: github.event_name == 'schedule'
