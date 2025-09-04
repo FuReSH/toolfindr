@@ -46,22 +46,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Gatsby cache stats
-        if: always()
-        run: |
-          echo "📊 Gatsby cache stats:"
-          CACHED=$(grep -oE "Cached [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
-          CREATED=$(grep -oE "Created [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
-          DELETED=$(grep -oE "Deleted [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
-
-          TOTAL=$((CACHED + CREATED - DELETED))
-
-          echo "  Cached:  $CACHED"
-          echo "  Created: $CREATED"
-          echo "  Deleted: $DELETED"
-          echo "  -----------------"
-          echo "  Total:   $TOTAL"
-
       - name: Clear Gatsby cache dirs
         if: env.CACHE_ENABLED != 'true'
         run: |
@@ -83,14 +67,37 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          NODE_ENV: production
+          PREFIX_PATHS: 'true'
+          # Path prefix for GitHub Pages deployment
+          GATSBY_PATH_PREFIX: '/toolfindr'
+          # Wikidata SPARQL data source
+          GATSBY_WD_SPARQL_URL: 'https://query.wikidata.org/sparql'
+          # Wikidata Linked Data Fragments server
+          GATSBY_WD_LDF_URL: 'https://query.wikidata.org/bigdata/ldf'
+          # TaDiRAH SPARQL data source
+          GATSBY_TADIRAH_FILE_URL: 'https://vocabs-downloads.acdh.oeaw.ac.at/vocabs-main/Humanities/TaDiRAH/tadirah.ttl'
+          # MediaWiki Commons API Endpoint
+          GATSBY_COMMONS_API_URL: 'https://commons.wikimedia.org/w/api.php'
         run: |
-          npm run build | tee build.log
+          npm run build 2>&1 | tee build.log
 
       - name: Gatsby cache stats
         if: always()
         run: |
           echo "📊 Gatsby cache stats:"
-          grep -E "Cached|Created|Deleted" build.log || echo "Keine Cache-Infos gefunden"
+          CACHED=$(grep -oE "Cached [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
+          CREATED=$(grep -oE "Created [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
+          DELETED=$(grep -oE "Deleted [0-9]+" build.log | awk '{s+=$2} END {print s+0}')
+
+          TOTAL=$((CACHED + CREATED - DELETED))
+
+          echo "  Cached:  $CACHED"
+          echo "  Created: $CREATED"
+          echo "  Deleted: $DELETED"
+          echo "  -----------------"
+          echo "  Total:   $TOTAL"
 
       - name: Save Gatsby Cache
         if: github.event_name == 'schedule'
@@ -100,6 +107,12 @@ jobs:
             .cache
             public
           key: ${{ runner.os }}-gatsby-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('gatsby-node.js') }}-${{ hashFiles('plugins/**') }}
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
   # Deployment job
   deploy:
     environment:
