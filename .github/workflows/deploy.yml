@@ -37,13 +37,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Fallback for events without inputs (push, schedule)
-      USE_CACHE_INPUT: ${{ github.event.inputs.useCache || 'false' }}
       # Decide when cache is enabled
       CACHE_ENABLED: ${{ 
         (github.event_name == 'push') ||
         (github.event_name == 'schedule') ||
-        (github.event_name == 'workflow_dispatch' && env.USE_CACHE_INPUT == 'true')}}
+        (github.event_name == 'workflow_dispatch' && (github.event.inputs.useCache || 'false') == 'true')}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
