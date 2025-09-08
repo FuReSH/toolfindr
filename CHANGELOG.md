@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - GitHub Actions cache handling adjusted to avoid `Unable to reserve cache` errors.  
   Cache keys are now stable (`gatsby-cache-${branch}-${package-lock hash}`) instead of run-specific, ensuring proper reuse and preventing conflicts.
+- Unnecessary variable output on the tools page (right-hand column) has been removed. This was accidentally included during refactoring.
 
 ### Changed
 - Removed Gatsby cache statistics step to simplify workflow logs.
