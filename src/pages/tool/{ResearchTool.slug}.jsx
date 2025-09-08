@@ -193,7 +193,7 @@ export default function ToolPage({ data }) {
             <div>
               <h5><GoPencil className='icon-color-secondary' /> Enhance the Tool Data</h5>
               <hr />
-              <p className='fs-6'>Help us to improve the information about this researchTool.by editing the Wikidata item.</p>
+              <p className='fs-6'>Help us to improve the information about this tool by editing the Wikidata item.</p>
               <p className='fs-6'>Need help getting started with editing data in Wikidata? Then start <Link to='/get-involved' className='icon-link'>here</Link>.</p>
               <div className="alert alert-info shadow-sm">
                 <p className='fs-6'>We recommend that you use your own Wikimedia account for editing on Wikidata. Otherwise, your current IP address will be saved and published as an editor.</p>
@@ -210,9 +210,9 @@ export default function ToolPage({ data }) {
             <div className="mt-5">
               <h5><GoInfo className='icon-color-secondary' /> About the Tool Data</h5>
               <hr />
-              <p className="fs-6">All metadata for the researchTool.in the box comes from Wikidata as the data source. The image including credits are obtained directly from Commons.</p>
+              <p className="fs-6">All metadata in the box comes from Wikidata as the data source. The image including credits are obtained directly from Commons.</p>
               <p className="fs-6">
-                Please note that you will only see selected properties for the researchTool.here. For complete information, please refer to the Wikidata Linked Data Interface. Simply click on the ‘Edit on Wikidata’ button.</p>
+                Please note that you will only see selected properties here. For complete information, please refer to the Wikidata Linked Data Interface. Simply click on the ‘Edit on Wikidata’ button.</p>
 
             </div>
 
