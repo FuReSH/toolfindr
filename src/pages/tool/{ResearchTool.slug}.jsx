@@ -210,7 +210,7 @@ export default function ToolPage({ data }) {
             <div className="mt-5">
               <h5><GoInfo className='icon-color-secondary' /> About the Tool Data</h5>
               <hr />
-              <p className="fs-6">All metadata in the box comes from Wikidata as the data source. The image including credits are obtained directly from Commons.</p>
+              <p className="fs-6">All metadata comes from Wikidata as the data source. The image including credits are obtained directly from Commons.</p>
               <p className="fs-6">
                 Please note that you will only see selected properties here. For complete information, please refer to the Wikidata Linked Data Interface. Simply click on the ‘Edit on Wikidata’ button.</p>
 
