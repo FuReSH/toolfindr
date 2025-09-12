@@ -85,7 +85,7 @@ jobs:
         run: npm run build
 
       - name: Save Gatsby cache
-        if: env.CACHE_ENABLED == 'true'
+        #if: env.CACHE_ENABLED == 'true'
         uses: actions/cache/save@v4
         with:
           path: |
