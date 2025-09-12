@@ -51,14 +51,16 @@ jobs:
 
       - name: Restore Gatsby cache
         if: env.CACHE_ENABLED == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             .cache
             public
-          key: gatsby-cache-${{ github.ref }}-${{ hashFiles('package-lock.json') }}
+          # Use main branch for consistent cache key across all events
+          key: gatsby-cache-main-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            gatsby-cache-${{ github.ref }}-
+            gatsby-cache-main-
+            gatsby-cache-
 
       - name: Clear Gatsby cache dirs if disabled
         if: env.CACHE_ENABLED != 'true'
@@ -83,13 +85,13 @@ jobs:
         run: npm run build
 
       - name: Save Gatsby cache
-        if: github.event_name == 'schedule'
+        if: env.CACHE_ENABLED == 'true'
         uses: actions/cache/save@v4
         with:
           path: |
             .cache
             public
-          key: gatsby-cache-${{ github.ref }}-${{ hashFiles('package-lock.json') }}
+          key: gatsby-cache-main-${{ hashFiles('package-lock.json') }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
