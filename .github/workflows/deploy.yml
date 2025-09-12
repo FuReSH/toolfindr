@@ -57,9 +57,8 @@ jobs:
             .cache
             public
           # Use main branch for consistent cache key across all events
-          key: gatsby-cache-main-${{ hashFiles('package-lock.json') }}
+          key: gatsby-cache-${{ github.run_number }}
           restore-keys: |
-            gatsby-cache-main-
             gatsby-cache-
 
       - name: Clear Gatsby cache dirs if disabled
@@ -91,7 +90,7 @@ jobs:
           path: |
             .cache
             public
-          key: gatsby-cache-main-${{ hashFiles('package-lock.json') }}
+          key: gatsby-cache-${{ github.run_number }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
