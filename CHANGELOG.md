@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add screenshots to the Wikidata tutorial (Get involved)
 - Add documentation for the QLever SPARQL endpoint
 
+## [1.1.2] - 2025-10-23
+
+### Fixed
+- Upgrade axios to fix 1 high Dependabot alert in package-lock.json
+
+### Added
+- Dev-tools script for testing ldf server
+
 ## [1.1.1] - 2025-09-08
 
 ### Fixed
